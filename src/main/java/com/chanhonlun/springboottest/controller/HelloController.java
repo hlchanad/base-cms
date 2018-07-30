@@ -1,13 +1,13 @@
 package com.chanhonlun.springboottest.controller;
 
+import com.chanhonlun.springboottest.constant.Status;
 import com.chanhonlun.springboottest.repository.SystemParameterRepository;
+import com.chanhonlun.springboottest.req.SystemParameterRequest;
 import com.chanhonlun.springboottest.vo.SystemParameterVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,5 +29,17 @@ public class HelloController {
     @GetMapping("/system-parameter/{id}")
     public SystemParameterVO getSystemParameter(@PathVariable Long id) {
         return new SystemParameterVO(systemParameterRepository.findByIdAndIsDeleteFalse(id));
+    }
+
+    @PutMapping("/system-parameter")
+    public boolean upsertSystemParameter(@RequestBody SystemParameterRequest request) {
+
+        Long user = 0L;
+        Date now  = new Date();
+
+        systemParameterRepository.upsert(request.getCategory(), request.getKey(), request.getValue(),
+                request.getDescription(), request.getDataType().name(), request.getIsConfigurableInCms(),
+                Status.NORMAL.name(), false, user, now, user, now);
+        return true;
     }
 }
