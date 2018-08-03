@@ -18,6 +18,11 @@ public class HelloController {
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
+    @GetMapping("current-timestamp")
+    public String currentTimestamp() {
+        return new Date().toString();
+    }
+
     @GetMapping("/system-parameter")
     public List<SystemParameterVO> getSystemParameterList() {
         return systemParameterRepository.findByIsDeleteFalse()
