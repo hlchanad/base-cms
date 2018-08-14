@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty name="LOG_TO_FILE" source="com.chanhonlun.logging.logToFile"/>
+    <springProperty name="LOG_FOLDER"  source="com.chanhonlun.logging.folder"/>
+    <springProperty name="LOG_LEVEL"   source="com.chanhonlun.logging.level"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${LOG_LEVEL}</level>
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <if condition='isDefined("LOG_TO_FILE") &amp;&amp; property("LOG_TO_FILE").equals("true")'>
+        <then>
+
+            <!-- ALL LOG -->
+            <appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>${LOG_LEVEL}</level>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${LOG_FOLDER}/log.all.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+                </encoder>
+            </appender>
+
+            <!-- DEBUG LOG -->
+            <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>DEBUG</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${LOG_FOLDER}/log.debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+                </encoder>
+            </appender>
+
+            <!-- INFO LOG -->
+            <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>INFO</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${LOG_FOLDER}/log.info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+                </encoder>
+            </appender>
+
+            <!-- ERROR LOG -->
+            <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>ERROR</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${LOG_FOLDER}/log.error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+                </encoder>
+            </appender>
+
+        </then>
+    </if>
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="STDOUT"/>
+
+        <if condition='isDefined("LOG_TO_FILE") &amp;&amp; property("LOG_TO_FILE").equals("true")'>
+            <then>
+                <appender-ref ref="DEBUG"/>
+                <appender-ref ref="INFO"/>
+                <appender-ref ref="ERROR"/>
+                <appender-ref ref="ALL"/>
+            </then>
+        </if>
+    </root>
+
+</configuration>

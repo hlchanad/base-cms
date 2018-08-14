@@ -5,6 +5,7 @@ import com.chanhonlun.springboottest.repository.SystemParameterRepository;
 import com.chanhonlun.springboottest.req.SystemParameterRequest;
 import com.chanhonlun.springboottest.vo.SystemParameterVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -17,6 +18,14 @@ public class HelloController {
 
     @Autowired
     private SystemParameterRepository systemParameterRepository;
+
+    @Value("${com.chanhonlun.profile}")
+    private String profile;
+
+    @GetMapping("active-profile")
+    public String activeProfile() {
+        return profile;
+    }
 
     @GetMapping("current-timestamp")
     public String currentTimestamp() {
