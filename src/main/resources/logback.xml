@@ -11,18 +11,18 @@
             <level>INFO</level>
         </filter>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</Pattern>
+            <Pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</Pattern>
         </layout>
     </appender>
 
     <appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FOLDER}/api_all_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_FOLDER}/log.all.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+            <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -34,11 +34,11 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FOLDER}/api_debug_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_FOLDER}/log.debug.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+            <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -50,11 +50,11 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FOLDER}/api_info_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_FOLDER}/log.info.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+            <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -66,11 +66,11 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FOLDER}/api_error_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_FOLDER}/log.error.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+            <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
         </encoder>
     </appender>
 
