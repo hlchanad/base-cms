@@ -16,7 +16,7 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        logger.info("Request Path: {}", request.getRequestURL());
+//        logger.info("Request Path: {}", request.getRequestURL());
 
         return true;
     }
