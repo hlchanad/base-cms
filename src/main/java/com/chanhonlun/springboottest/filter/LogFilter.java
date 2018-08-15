@@ -40,7 +40,7 @@ public class LogFilter implements Filter {
         MDC.clear();
         MDC.put("threadID", threadId);
 
-        logger.info("Request URI: {}", httpServletRequest.getRequestURI());
+        logger.info("request path   : {} {}", httpServletRequest.getMethod(), httpServletRequest.getRequestURI());
 
         httpServletRequest.getSession().setAttribute(SessionAttributes.THREAD_ID, threadId);
         httpServletResponse.setHeader(MyHeaders.X_THREAD_ID, threadId);

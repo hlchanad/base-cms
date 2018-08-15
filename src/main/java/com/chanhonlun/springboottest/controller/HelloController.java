@@ -3,6 +3,7 @@ package com.chanhonlun.springboottest.controller;
 import com.chanhonlun.springboottest.constant.Status;
 import com.chanhonlun.springboottest.repository.SystemParameterRepository;
 import com.chanhonlun.springboottest.req.SystemParameterRequest;
+import com.chanhonlun.springboottest.req.TestLogPostJsonRequest;
 import com.chanhonlun.springboottest.vo.SystemParameterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,21 @@ public class HelloController {
 
     @Value("${com.chanhonlun.profile}")
     private String profile;
+
+    @GetMapping("/test-log-get")
+    public String testLogGet() {
+        return "test-log-get";
+    }
+
+    @PostMapping("/test-log-post-string")
+    public String testLogPostString(@RequestBody String request) {
+        return "test-log-post, hello: " + request;
+    }
+
+    @PostMapping("/test-log-post-json")
+    public String testLogPostJson(@RequestBody TestLogPostJsonRequest request) {
+        return "test-log-post, hello: " + request.getHello();
+    }
 
     @GetMapping("/active-profile")
     public String activeProfile() {
