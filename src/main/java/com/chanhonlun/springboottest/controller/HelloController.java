@@ -22,12 +22,12 @@ public class HelloController {
     @Value("${com.chanhonlun.profile}")
     private String profile;
 
-    @GetMapping("active-profile")
+    @GetMapping("/active-profile")
     public String activeProfile() {
         return profile;
     }
 
-    @GetMapping("current-timestamp")
+    @GetMapping("/current-timestamp")
     public String currentTimestamp() {
         return new Date().toString();
     }
