@@ -3,13 +3,14 @@ package com.chanhonlun.springboottest.filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 @Order(1)
-@WebFilter(filterName = "DecryptFilter", urlPatterns = "/*")
+@Component
 public class DecryptFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(DecryptFilter.class);
