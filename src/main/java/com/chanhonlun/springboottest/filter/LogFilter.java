@@ -10,18 +10,16 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Random;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 public class LogFilter implements Filter {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogFilter.class);
+    private static final Logger fullRequestLogger = LoggerFactory.getLogger("FULL_REQUEST_LOGGER");
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,7 +38,7 @@ public class LogFilter implements Filter {
         MDC.clear();
         MDC.put("threadID", threadId);
 
-        logger.info("request path   : {} {}", httpServletRequest.getMethod(), httpServletRequest.getRequestURI());
+        fullRequestLogger.info("request path   : {} {}", httpServletRequest.getMethod(), httpServletRequest.getRequestURI());
 
         httpServletRequest.getSession().setAttribute(SessionAttributes.THREAD_ID, threadId);
         httpServletResponse.setHeader(MyHeaders.X_THREAD_ID, threadId);

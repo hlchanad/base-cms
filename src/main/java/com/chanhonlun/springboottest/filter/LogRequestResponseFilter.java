@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Component
 public class LogRequestResponseFilter implements Filter {
 
-    private static final Logger paramLogger = LoggerFactory.getLogger(LogRequestResponseFilter.class);
+    private static final Logger fullRequestLogger = LoggerFactory.getLogger("FULL_REQUEST_LOGGER");
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -43,16 +43,16 @@ public class LogRequestResponseFilter implements Filter {
         LogRequestWrapper  requestWrapper  = new LogRequestWrapper(httpServletRequest);
         LogResponseWrapper responseWrapper = new LogResponseWrapper(httpServletResponse);
 
-        paramLogger.info("request headers: {}", getHeaders(Collections.list(httpServletRequest.getHeaderNames()), httpServletRequest::getHeader));
+        fullRequestLogger.info("request headers: {}", getHeaders(Collections.list(httpServletRequest.getHeaderNames()), httpServletRequest::getHeader));
         if (HttpMethod.GET.matches(httpServletRequest.getMethod())) {
-            paramLogger.info("request query  : {}", httpServletRequest.getQueryString());
+            fullRequestLogger.info("request query  : {}", httpServletRequest.getQueryString());
         } else {
             if (MediaType.APPLICATION_JSON_VALUE.equalsIgnoreCase(httpServletRequest.getContentType())) {
                 String jsonString = requestWrapper.getBody();
                 JsonNode jsonNode = new ObjectMapper().readValue(jsonString, JsonNode.class);
-                paramLogger.info("request body   : {}", jsonNode.toString()); // transform to compact json
+                fullRequestLogger.info("request body   : {}", jsonNode.toString()); // transform to compact json
             } else {
-                paramLogger.info("request body   : {}", requestWrapper.getBody());
+                fullRequestLogger.info("request body   : {}", requestWrapper.getBody());
             }
         }
 
@@ -60,8 +60,8 @@ public class LogRequestResponseFilter implements Filter {
             filterChain.doFilter(requestWrapper, responseWrapper);
             responseWrapper.flushBuffer();
         } finally {
-            paramLogger.info("response headers: {}", getHeaders(httpServletResponse.getHeaderNames(), httpServletResponse::getHeader));
-            paramLogger.info("response body   : {}", new String(responseWrapper.getCopy(), StandardCharsets.UTF_8));
+            fullRequestLogger.info("response headers: {}", getHeaders(httpServletResponse.getHeaderNames(), httpServletResponse::getHeader));
+            fullRequestLogger.info("response body   : {}", new String(responseWrapper.getCopy(), StandardCharsets.UTF_8));
         }
 
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <springProperty name="LOG_FULL_REQUEST_TO_FILE" source="com.chanhonlun.logging.logFullRequestToFile"/>
     <springProperty name="LOG_TO_FILE" source="com.chanhonlun.logging.logToFile"/>
     <springProperty name="LOG_FOLDER"  source="com.chanhonlun.logging.folder"/>
     <springProperty name="LOG_LEVEL"   source="com.chanhonlun.logging.level"/>
@@ -79,6 +80,25 @@
                 </encoder>
             </appender>
 
+        </then>
+    </if>
+
+    <if condition='isDefined("LOG_FULL_REQUEST_TO_FILE") &amp;&amp; property("LOG_FULL_REQUEST_TO_FILE").equals("true")'>
+        <then>
+            <!-- Full Request LOG -->
+            <appender name="FULL_REQUEST" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${LOG_FOLDER}/log.full-request.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>[%d{HH:mm:ss.SSS}] THREAD=[%6.-6X{threadID}] %-5level [%30.-30logger{0}] - %msg%n</pattern>
+                </encoder>
+            </appender>
+
+            <logger name="FULL_REQUEST_LOGGER">
+                <appender-ref ref="FULL_REQUEST" />
+            </logger>
         </then>
     </if>
 
