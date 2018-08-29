@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SystemParameterDataTablesService implements
+public class SystemParameterDataTablesService extends BaseDataTablesService implements
         DataTablesServiceTrait<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> {
 
     @Autowired
@@ -38,19 +38,19 @@ public class SystemParameterDataTablesService implements
                         .type(ActionButtonType.REDIRECT)
                         .displayName("Detail")
                         .bootstrapColor("primary")
-                        .href("/hlchanad/api/v1/system-parameter/" + systemParameter.getId() + "/detail")
+                        .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/detail")
                         .build(),
                 ActionButton.builder()
                         .type(ActionButtonType.REDIRECT)
                         .displayName("Edit")
                         .bootstrapColor("success")
-                        .href("/hlchanad/api/v1/system-parameter/" + systemParameter.getId() + "/edit")
+                        .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/edit")
                         .build(),
                 ActionButton.builder()
                         .type(ActionButtonType.DELETE)
                         .displayName("Delete")
                         .bootstrapColor("danger")
-                        .href("/hlchanad/api/v1/system-parameter/" + systemParameter.getId() + "/delete")
+                        .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/delete")
                         .build()
         );
 
@@ -79,7 +79,7 @@ public class SystemParameterDataTablesService implements
         return SystemParameterDataTablesVO.builder()
                 .title("System Parameter")
                 .dataTablesId("system-parameter")
-                .ajaxUrl("/hlchanad/api/v1/system-parameter")
+                .ajaxUrl(contextPath + "/system-parameter")
                 .dataTablesColumns(dataTablesColumns)
                 .extraConfigs(extraConfigs)
                 .build();
