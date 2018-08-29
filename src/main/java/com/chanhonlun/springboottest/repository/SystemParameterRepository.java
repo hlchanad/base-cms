@@ -1,6 +1,7 @@
 package com.chanhonlun.springboottest.repository;
 
 import com.chanhonlun.springboottest.pojo.SystemParameter;
+import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface SystemParameterRepository extends CrudRepository<SystemParameter, Long> {
+public interface SystemParameterRepository extends DataTablesRepository<SystemParameter, Long> {
 
     List<SystemParameter> findByIsDeleteFalse();
 
