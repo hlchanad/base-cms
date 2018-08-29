@@ -40,6 +40,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 
+	compile('com.github.darrachequesne:spring-data-jpa-datatables:5.0.0')
+
 	// for using if-then in logback.xml
 	compile('org.codehaus.janino:janino:3.0.8')
 
@@ -49,4 +51,8 @@ dependencies {
 	// Web Libraries
 	compile ('org.webjars:jquery:3.3.1-1')
 	compile ('org.webjars:bootstrap:3.3.7')
+	compile ('org.webjars:font-awesome:5.2.0')
+	compile ('org.webjars:datatables:1.10.19')
+	compile ('org.webjars:sweetalert:2.1.0')
+
 }

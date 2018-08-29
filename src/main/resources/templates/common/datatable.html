@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.css}"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Spring Boot</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" th:object="${CMS_RSP.datatable}">
+
+    <!-- Title -->
+    <div class="row">
+        <h1 th:text="*{title}">Title</h1>
+        <hr/>
+    </div>
+
+    <!-- Datatable -->
+    <div class="row">
+        <div class="container">
+
+            <div class="dataTables_filter">
+                <label class="input-group">
+                    <input th:id="${dataTablesId + '-search-box'}" type="text" class="form-control"/>
+                    <span class="input-group-addon"><i class="fas fa-search"></i></span>
+                </label>
+            </div>
+
+            <table th:id="*{dataTablesId}" class="table">
+                <thead>
+                <tr>
+                    <th th:each="column : *{dataTablesColumns}" th:text="${column.title}"></th>
+                </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<!-- JS Libraries -->
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/font-awesome/5.2.0/js/all.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/sweetalert/2.1.0/sweetalert.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.js}"></script>
+<script type="text/javascript" th:src="@{/lib/jquery.spring-friendly/js/jquery.spring-friendly.js}"></script>
+
+<!-- Custom JS Libraries -->
+<script type="text/javascript" th:src="@{/js/my-datatable.js}"></script>
+<script type="text/javascript" th:src="@{/js/my-datatable-service.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    const datatableConfig = [[${CMS_RSP.datatable}]];
+
+    const dataTableService = new MyDatatableService();
+
+    const columns = [];
+
+    for (let i = 0; i < datatableConfig.dataTablesColumns.length; i++) {
+
+        const datatableColumn = datatableConfig.dataTablesColumns[i];
+
+        let column = {
+            data: datatableColumn.data,
+            orderable: datatableColumn.orderable,
+            searchable: datatableColumn.searchable
+        };
+
+        if (datatableColumn.data === "action") {
+            column.className = "action-buttons";
+            column.render = dataTableService.getDefaultActionButtonRender();
+        }
+
+        columns.push(column);
+    }
+
+    const dataTable = new MyDatatable(dataTableService, datatableConfig.dataTablesId, datatableConfig.title,
+        datatableConfig.ajaxUrl, columns, datatableConfig.extraConfigs);
+    dataTable.init();
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
+
+
