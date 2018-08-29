@@ -1,4 +1,4 @@
-package com.chanhonlun.springboottest.vo;
+package com.chanhonlun.springboottest.model;
 
 import lombok.Builder;
 import lombok.Data;

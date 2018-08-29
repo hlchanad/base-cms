@@ -6,7 +6,7 @@ import com.chanhonlun.springboottest.pojo.SystemParameter;
 import com.chanhonlun.springboottest.repository.SystemParameterRepository;
 import com.chanhonlun.springboottest.req.datatables.SystemParameterListDataTablesInput;
 import com.chanhonlun.springboottest.service.DataTablesServiceTrait;
-import com.chanhonlun.springboottest.vo.DataTablesColumn;
+import com.chanhonlun.springboottest.model.DataTablesColumn;
 import com.chanhonlun.springboottest.vo.SystemParameterDataTablesVO;
 import com.chanhonlun.springboottest.vo.SystemParameterTableVO;
 import com.google.gson.Gson;

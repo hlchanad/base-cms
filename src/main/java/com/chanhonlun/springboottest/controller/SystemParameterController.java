@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
-
 @Controller
 @RequestMapping("/system-parameter")
 public class SystemParameterController extends BaseController {

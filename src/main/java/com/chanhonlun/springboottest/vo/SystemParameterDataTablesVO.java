@@ -1,8 +1,7 @@
 package com.chanhonlun.springboottest.vo;
 
+import com.chanhonlun.springboottest.model.DataTablesColumn;
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.List;
 import java.util.Map;

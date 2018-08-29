@@ -1,5 +1,6 @@
-package com.chanhonlun.springboottest.vo;
+package com.chanhonlun.springboottest.model;
 
+import com.chanhonlun.springboottest.vo.BaseDataTablesVO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
