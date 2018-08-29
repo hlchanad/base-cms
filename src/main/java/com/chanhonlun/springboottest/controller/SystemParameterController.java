@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Map;
 @Controller
 @RequestMapping("/system-parameter")
@@ -21,7 +20,7 @@ public class SystemParameterController extends BaseController {
 
     @GetMapping("")
     @ResponseBody
-    public DataTablesOutput<SystemParameterTableVO> datatableData(@Valid SystemParameterListDataTablesInput input) {
+    public DataTablesOutput<SystemParameterTableVO> datatableData(SystemParameterListDataTablesInput input) {
         return systemParamterService.systemParameterDataTablesAPI(input);
     }
 
