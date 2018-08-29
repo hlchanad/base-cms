@@ -1,12 +1,10 @@
 package com.chanhonlun.springboottest.controller;
 
-import com.chanhonlun.springboottest.pojo.Test;
 import com.chanhonlun.springboottest.repository.SystemParameterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
 import java.util.Map;
 
 @Controller
@@ -21,6 +19,11 @@ public class ThymeleafController {
         model.put("message", "Hello World");
         model.put("systemParameters", systemParameterRepository.findByIsDeleteFalse());
         return "welcome";
+    }
+
+    @RequestMapping("/layout")
+    public String layout(Map<String, Object> model) {
+        return "content";
     }
 
 }
