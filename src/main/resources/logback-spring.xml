@@ -3,8 +3,8 @@
 
     <springProperty name="LOG_FULL_REQUEST_TO_FILE" source="com.chanhonlun.logging.logFullRequestToFile"/>
     <springProperty name="LOG_TO_FILE" source="com.chanhonlun.logging.logToFile"/>
-    <springProperty name="LOG_FOLDER"  source="com.chanhonlun.logging.folder"/>
-    <springProperty name="LOG_LEVEL"   source="com.chanhonlun.logging.level"/>
+    <springProperty name="LOG_FOLDER" source="com.chanhonlun.logging.folder"/>
+    <springProperty name="LOG_LEVEL" source="com.chanhonlun.logging.level"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -97,7 +97,7 @@
             </appender>
 
             <logger name="FULL_REQUEST_LOGGER">
-                <appender-ref ref="FULL_REQUEST" />
+                <appender-ref ref="FULL_REQUEST"/>
             </logger>
         </then>
     </if>

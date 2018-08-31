@@ -1,14 +1,15 @@
 // From https://github.com/jquery/jquery/blob/master/src/serialize.js
 // Overrides data serialization to allow Spring MVC to correctly map input parameters : column[0][data] now becomes column[0].data
-(function($) {
-    var r20 = /%20/g, rbracket = /\[\]$/, rCRLF = /\r?\n/g, rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i, rsubmittable = /^(?:input|select|textarea|keygen)/i;
+(function ($) {
+    var r20 = /%20/g, rbracket = /\[\]$/, rCRLF = /\r?\n/g, rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+        rsubmittable = /^(?:input|select|textarea|keygen)/i;
 
     function customBuildParams(prefix, obj, traditional, add) {
         var name;
 
         if (jQuery.isArray(obj)) {
             // Serialize array item.
-            jQuery.each(obj, function(i, v) {
+            jQuery.each(obj, function (i, v) {
                 if (traditional || rbracket.test(prefix)) {
                     // Treat each array item as a scalar.
                     add(prefix, v);
@@ -36,8 +37,8 @@
         }
     }
 
-    $.param = function(a, traditional) {
-        var prefix, s = [], add = function(key, value) {
+    $.param = function (a, traditional) {
+        var prefix, s = [], add = function (key, value) {
             // If value is a function, invoke it and return its value
             value = jQuery.isFunction(value) ? value() : (value == null ? ""
                 : value);
@@ -55,7 +56,7 @@
         // elements.
         if (jQuery.isArray(a) || (a.jquery && !jQuery.isPlainObject(a))) {
             // Serialize the form elements
-            jQuery.each(a, function() {
+            jQuery.each(a, function () {
                 add(this.name, this.value);
             });
 

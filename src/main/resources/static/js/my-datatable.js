@@ -1,4 +1,4 @@
-const MyDatatable = function(dataTableService, tableId, tableName, ajaxUrl, columns, extraConfigs) {
+const MyDatatable = function (dataTableService, tableId, tableName, ajaxUrl, columns, extraConfigs) {
 
     this.dataTableService = dataTableService;
 
@@ -10,23 +10,23 @@ const MyDatatable = function(dataTableService, tableId, tableName, ajaxUrl, colu
 
     this.dataTable = null;
 
-    this.init = function() {
+    this.init = function () {
         this.initDataTable();
         this.setupDataTableActionButton();
         this.setupDataTableFilter();
     };
 
-    this.setupDataTableFilter = function() {
+    this.setupDataTableFilter = function () {
         let _this = this;
-        $("#" + this.tableId + "_search_box").keyup(function() {
+        $("#" + this.tableId + "_search_box").keyup(function () {
             _this.dataTable.search($(this).val()).draw();
         })
     };
 
-    this.setupDataTableActionButton = function() {
+    this.setupDataTableActionButton = function () {
         let _this = this;
 
-        $("table#" + this.tableId).on("click", "a.action-delete", function(event) {
+        $("table#" + this.tableId).on("click", "a.action-delete", function (event) {
             event.preventDefault();
 
             let href = $(this).attr("data-href");
@@ -34,13 +34,13 @@ const MyDatatable = function(dataTableService, tableId, tableName, ajaxUrl, colu
         });
     };
 
-    this.initDataTable = function() {
+    this.initDataTable = function () {
         let _this = this;
 
         this.dataTable = $("table#" + this.tableId).DataTable({
             ajax: {
                 url: _this.ajaxUrl,
-                data: function(data) {
+                data: function (data) {
                     Object.assign(data, _this.extraConfigs);
                     return data;
                 }
@@ -53,15 +53,17 @@ const MyDatatable = function(dataTableService, tableId, tableName, ajaxUrl, colu
         });
     };
 
-    this.refresh =  function() {
+    this.refresh = function () {
         this.dataTable.ajax.reload();
     };
 
-    this.updateExtraConfigs = function(props) {
+    this.updateExtraConfigs = function (props) {
         this.extraConfigs = {
             ...this.extraConfigs,
-            ...props
-        };
+    ...
+        props
+    }
+        ;
         this.refresh();
     }
 };
