@@ -1,0 +1,25 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     th:fragment="header"
+     class="header">
+    <!-- START MOBILE SIDEBAR TOGGLE -->
+    <a href="#" class="btn-link toggle-sidebar d-lg-none pg pg-menu" data-toggle="sidebar"></a>
+    <!-- END MOBILE SIDEBAR TOGGLE -->
+
+    <div class="">
+        <div class="brand inline m-l-10 ">
+            <img src="assets/img/logo.png" width="78" height="22" alt="logo"
+                 data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" />
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center">
+        <!-- START NOTIFICATION LIST -->
+        <ul th:replace="/fragments/layout/notifications :: notifications"></ul>
+        <!-- END NOTIFICATIONS LIST -->
+
+        <!-- START User Info-->
+        <div th:replace="/fragments/layout/user-info :: user-info-name"></div>
+        <div th:replace="/fragments/layout/user-info :: user-info-icon"></div>
+        <!-- END User Info-->
+    </div>
+</div>
