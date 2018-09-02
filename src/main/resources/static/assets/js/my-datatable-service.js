@@ -5,11 +5,17 @@ const MyDatatableService = function () {
             url: url,
             method: method,
             success: function (response) {
-                swal("Success!", {icon: "success"});
+                swal({
+                    type: "success",
+                    title: "Success!"
+                });
                 if (refreshDataTable) dataTable.refresh();
             },
             error: function () {
-                swal("Failed, please try again later", {icon: "error"});
+                swal({
+                    type: "error",
+                    title: "Failed, please try again later"
+                });
             }
         });
     };
@@ -20,12 +26,11 @@ const MyDatatableService = function () {
 
         swal({
             title: "Are you sure to " + action + " the " + dataTableTitle + " ?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
+            type: "warning",
+            showCancelButton: true
         })
-            .then((willDelete) => {
-                if (!willDelete) return;
+            .then((result) => {
+                if (!result.value) return;
                 this.ajaxCall(dataTable, refreshDataTable, url, method);
             })
             .catch(function () {
