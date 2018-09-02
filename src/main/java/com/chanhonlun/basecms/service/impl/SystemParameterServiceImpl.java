@@ -1,19 +1,20 @@
 package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.MyConstants;
+import com.chanhonlun.basecms.model.Breadcrumb;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
 import com.chanhonlun.basecms.service.SystemParamterService;
 import com.chanhonlun.basecms.model.BaseListConfig;
 import com.chanhonlun.basecms.model.DefaultListConfig;
+import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 @Service
 public class SystemParameterServiceImpl extends BaseServiceImpl implements SystemParamterService {
@@ -24,6 +25,9 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
+    @Autowired
+    private BreadcrumbUtil breadcrumbUtil;
+
     @Override
     public DataTablesOutput<SystemParameterTableVO> systemParameterDataTablesAPI(SystemParameterListDataTablesInput input) {
         return systemParameterDataTablesService.getDataTablesData(input);
@@ -31,7 +35,15 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
 
     @Override
     public BaseListConfig getListConfig() {
+
+        List<Breadcrumb> breadcrumbs = breadcrumbUtil.getBreadcrumbs(Collections.singletonList(
+                Breadcrumb.builder()
+                        .title("System Parameter")
+                        .build()
+        ));
+
         return DefaultListConfig.builder()
+                .breadcrumbs(breadcrumbs)
                 .datatable(systemParameterDataTablesService.getDataTablesConfig(new HashMap<>()))
                 .build();
     }
