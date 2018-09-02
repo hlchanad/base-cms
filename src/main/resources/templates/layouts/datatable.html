@@ -1,0 +1,101 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="/layouts/blank">
+
+    <div layout:fragment="custom-css">
+        <style>
+            .dataTables_filter {
+            }
+        </style>
+        <link th:href="@{/assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css}" rel="stylesheet"
+              type="text/css"/>
+        <link th:href="@{/assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css}"
+              rel="stylesheet" type="text/css"/>
+        <link th:href="@{/assets/plugins/datatables-responsive/css/datatables.responsive.css}" rel="stylesheet"
+              type="text/css" media="screen"/>
+    </div>
+
+    <div layout:fragment="content" th:object="${CMS_RSP.datatable}">
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-12">
+                <h1 th:text="*{title}">Title</h1>
+            </div>
+        </div>
+
+        <!-- Datatable -->
+        <div class="row">
+            <div class="dataTables_filter col-sm-12 offset-md-6 col-md-6 offset-lg-8 col-lg-4">
+                <label class="input-group">
+                    <input th:id="*{dataTablesId + '-search-box'}" type="text" class="form-control"/>
+                    <span class="input-group-append">
+                        <i class="fa fa-search input-group-text"></i>
+                    </span>
+                </label>
+            </div>
+
+            <div class="col-12">
+                <table th:id="*{dataTablesId}" class="table table-hover table-responsive-block">
+                    <thead>
+                    <tr>
+                        <th th:each="column : *{dataTablesColumns}" th:text="${column.title}"></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div layout:fragment="custom-js">
+        <script th:src="@{/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/datatables-responsive/js/datatables.responsive.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/datatables-responsive/js/lodash.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/jquery-spring-friendly/jquery-spring-friendly.js}"
+                type="text/javascript"></script>
+
+        <script type="text/javascript" th:src="@{/assets/js/my-datatable.js}"></script>
+        <script type="text/javascript" th:src="@{/assets/js/my-datatable-service.js}"></script>
+
+        <script th:inline="javascript">
+            const datatableConfig = [[${CMS_RSP.datatable}]];
+
+            const dataTableService = new MyDatatableService();
+
+            const columns = [];
+
+            for (let i = 0; i < datatableConfig.dataTablesColumns.length; i++) {
+
+                const datatableColumn = datatableConfig.dataTablesColumns[i];
+
+                let column = {
+                    data: datatableColumn.data,
+                    orderable: datatableColumn.orderable,
+                    searchable: datatableColumn.searchable,
+                    className: "v-align-middle"
+                };
+
+                if (datatableColumn.data === "action") {
+                    if (column.className == null || column.className === "")
+                        column.className = "";
+                    column.className += " action-buttons";
+                    column.render = dataTableService.getDefaultActionButtonRender();
+                }
+
+                columns.push(column);
+            }
+
+            const dataTable = new MyDatatable(dataTableService, datatableConfig.dataTablesId, datatableConfig.title,
+                datatableConfig.ajaxUrl, columns, datatableConfig.extraConfigs);
+            dataTable.init();
+        </script>
+    </div>
+</div>

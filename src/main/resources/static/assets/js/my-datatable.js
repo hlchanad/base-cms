@@ -18,7 +18,7 @@ const MyDatatable = function (dataTableService, tableId, tableName, ajaxUrl, col
 
     this.setupDataTableFilter = function () {
         let _this = this;
-        $("#" + this.tableId + "_search_box").keyup(function () {
+        $("#" + this.tableId + "-search-box").keyup(function () {
             _this.dataTable.search($(this).val()).draw();
         })
     };
@@ -46,8 +46,8 @@ const MyDatatable = function (dataTableService, tableId, tableName, ajaxUrl, col
                 }
             },
             type: "POST",
-            processing: true,
             serverSide: true,
+            responsive: true,
             columns: _this.columns,
             dom: 'rtip'
         });
@@ -60,10 +60,8 @@ const MyDatatable = function (dataTableService, tableId, tableName, ajaxUrl, col
     this.updateExtraConfigs = function (props) {
         this.extraConfigs = {
             ...this.extraConfigs,
-    ...
-        props
-    }
-        ;
+            ...props
+        };
         this.refresh();
     }
 };

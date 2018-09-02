@@ -24,17 +24,12 @@ const MyDatatableService = function () {
             buttons: true,
             dangerMode: true,
         })
-            .then((willDelete) = > {
-            if(
-        !willDelete
-    )
-        return;
-
-        this.ajaxCall(dataTable, refreshDataTable, url, method);
-    })
-    .
-        catch(function () {
-        });
+            .then((willDelete) => {
+                if (!willDelete) return;
+                this.ajaxCall(dataTable, refreshDataTable, url, method);
+            })
+            .catch(function () {
+            });
     };
 
     this.redirect = function (url) {

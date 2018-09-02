@@ -44,7 +44,7 @@
     <!-- END SIDEBAR MENU HEADER-->
 
     <!-- START SIDEBAR MENU -->
-    <div th:replace="/fragments/layout/sidebar-menu :: sidebar-menu"></div>
+    <div th:replace="/fragments/blank/sidebar-menu :: sidebar-menu"></div>
     <!-- END SIDEBAR MENU -->
 </nav>
 <!-- END SIDEBPANEL-->
@@ -52,7 +52,7 @@
 <!-- START PAGE-CONTAINER -->
 <div class="page-container ">
     <!-- START HEADER -->
-    <div th:replace="/fragments/layout/header :: header"></div>
+    <div th:replace="/fragments/blank/header :: header"></div>
     <!-- END HEADER -->
 
     <!-- START PAGE CONTENT WRAPPER -->
@@ -64,7 +64,7 @@
                 <div class="container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
                     <div class="inner">
                         <!-- START BREADCRUMB -->
-                        <ol th:replace="/fragments/layout/breadcrumb :: breadcrumb"></ol>
+                        <ol th:replace="/fragments/blank/breadcrumb :: breadcrumb"></ol>
                         <!-- END BREADCRUMB -->
                     </div>
                 </div>
@@ -72,7 +72,7 @@
             <!-- END JUMBOTRON -->
 
             <!-- START CONTAINER FLUID -->
-            <div class="container-fluid container-fixed-lg">
+            <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
                 <!-- BEGIN PlACE PAGE CONTENT HERE -->
                 <div layout:fragment="content"></div>
                 <!-- END PLACE PAGE CONTENT HERE -->
@@ -82,7 +82,7 @@
         <!-- END PAGE CONTENT -->
 
         <!-- START FOOTER -->
-        <div th:replace="/fragments/layout/footer :: footer"></div>
+        <div th:replace="/fragments/blank/footer :: footer"></div>
         <!-- END FOOTER -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->

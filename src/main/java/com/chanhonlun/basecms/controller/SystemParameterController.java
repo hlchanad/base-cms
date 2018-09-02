@@ -28,7 +28,7 @@ public class SystemParameterController extends BaseController {
     @GetMapping("/list")
     public String list(Map<String, Object> model) {
         model.put("CMS_RSP", systemParamterService.getListConfig());
-        return "common/datatable";
+        return "system-parameter/datatable";
     }
 
     @DeleteMapping("/{id}/delete")
