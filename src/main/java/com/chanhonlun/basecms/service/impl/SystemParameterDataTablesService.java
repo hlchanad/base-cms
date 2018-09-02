@@ -37,13 +37,13 @@ public class SystemParameterDataTablesService extends BaseDataTablesService impl
                 ActionButton.builder()
                         .type(ActionButtonType.REDIRECT)
                         .displayName("Detail")
-                        .bootstrapColor("primary")
+                        .bootstrapColor("success")
                         .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/detail")
                         .build(),
                 ActionButton.builder()
                         .type(ActionButtonType.REDIRECT)
                         .displayName("Edit")
-                        .bootstrapColor("success")
+                        .bootstrapColor("primary")
                         .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/edit")
                         .build(),
                 ActionButton.builder()

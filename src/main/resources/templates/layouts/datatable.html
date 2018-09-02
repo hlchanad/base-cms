@@ -50,8 +50,11 @@
         </div>
 
         <!-- Datatable -->
-        <div class="row">
-            <div class="dataTables_filter col-sm-12 offset-md-6 col-md-6 offset-lg-8 col-lg-4">
+        <div class="row m-t-15">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <a class="btn btn-primary m-b-10" href="create"><i class="fa fa-plus"></i> Add</a>
+            </div>
+            <div class="dataTables_filter col-sm-12 col-md-6 offset-lg-4 col-lg-4">
                 <label class="input-group">
                     <input th:id="*{dataTablesId + '-search-box'}" type="text" class="form-control"/>
                     <span class="input-group-append">
