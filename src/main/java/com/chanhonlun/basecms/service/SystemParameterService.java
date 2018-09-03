@@ -6,7 +6,7 @@ import com.chanhonlun.basecms.model.BaseListConfig;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
-public interface SystemParamterService extends BaseService {
+public interface SystemParameterService extends BaseService {
 
     DataTablesOutput<SystemParameterTableVO> systemParameterDataTablesAPI(SystemParameterListDataTablesInput input);
 

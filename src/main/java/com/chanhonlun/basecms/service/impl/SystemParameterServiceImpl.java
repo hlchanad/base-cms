@@ -5,7 +5,7 @@ import com.chanhonlun.basecms.model.Breadcrumb;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
-import com.chanhonlun.basecms.service.SystemParamterService;
+import com.chanhonlun.basecms.service.SystemParameterService;
 import com.chanhonlun.basecms.model.BaseListConfig;
 import com.chanhonlun.basecms.model.DefaultListConfig;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class SystemParameterServiceImpl extends BaseServiceImpl implements SystemParamterService {
+public class SystemParameterServiceImpl extends BaseServiceImpl implements SystemParameterService {
 
     @Autowired
     private SystemParameterDataTablesService systemParameterDataTablesService;

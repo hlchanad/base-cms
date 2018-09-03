@@ -2,7 +2,7 @@ package com.chanhonlun.basecms.controller;
 
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
-import com.chanhonlun.basecms.service.SystemParamterService;
+import com.chanhonlun.basecms.service.SystemParameterService;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
@@ -17,17 +17,17 @@ import java.util.Map;
 public class SystemParameterController extends BaseController {
 
     @Autowired
-    private SystemParamterService systemParamterService;
+    private SystemParameterService systemParameterService;
 
     @GetMapping("")
     @ResponseBody
     public DataTablesOutput<SystemParameterTableVO> datatableData(SystemParameterListDataTablesInput input) {
-        return systemParamterService.systemParameterDataTablesAPI(input);
+        return systemParameterService.systemParameterDataTablesAPI(input);
     }
 
     @GetMapping("/list")
     public String list(Map<String, Object> model) {
-        model.put("CMS_RSP", systemParamterService.getListConfig());
+        model.put("CMS_RSP", systemParameterService.getListConfig());
         return "system-parameter/datatable";
     }
 
@@ -35,13 +35,13 @@ public class SystemParameterController extends BaseController {
     @ResponseBody
     public ResponseEntity delete(@PathVariable(name = "id") Long id) {
 
-        SystemParameter systemParameter = systemParamterService.findByIdAndIsDeleteFalse(id);
+        SystemParameter systemParameter = systemParameterService.findByIdAndIsDeleteFalse(id);
 
         if (systemParameter == null) {
             return ResponseEntity.notFound().build();
         }
 
-        systemParamterService.softDelete(systemParameter);
+        systemParameterService.softDelete(systemParameter);
 
         return ResponseEntity.ok().build();
     }
