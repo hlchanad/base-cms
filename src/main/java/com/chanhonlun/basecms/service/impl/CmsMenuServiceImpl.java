@@ -1,22 +1,22 @@
 package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.MyConstants;
-import com.chanhonlun.basecms.model.BaseListConfig;
-import com.chanhonlun.basecms.model.Breadcrumb;
-import com.chanhonlun.basecms.model.DefaultListConfig;
+import com.chanhonlun.basecms.model.*;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.repository.CmsMenuRepository;
 import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.vo.CmsMenuTableVO;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuService {
@@ -29,6 +29,9 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
 
     @Autowired
     private CmsMenuRepository cmsMenuRepository;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
     @Override
     public DataTablesOutput<CmsMenuTableVO> cmsMenuDataTablesAPI(CmsMenuListDataTablesInput input) {
@@ -45,6 +48,7 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
                                 .build()
                 )))
                 .datatable(cmsMenuDataTablesService.getDataTablesConfig(new HashMap<>()))
+                .menu(getMenusConfig())
                 .build();
     }
 
@@ -60,4 +64,25 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
         cmsMenu.setIsDelete(true);
         return cmsMenuRepository.save(cmsMenu);
     }
+
+    @Override
+    public List<MenuItem> getMenusConfig() {
+
+        List<MenuItem> menuItems = cmsMenuRepository.findByParentIdNullAndIsDeleteFalse(new Sort(Sort.Direction.ASC, "sequence"))
+                .stream()
+                .map(cmsMenu -> new MenuItem(cmsMenu, contextPath))
+                .collect(Collectors.toList());
+
+        cmsMenuRepository.findByParentIdNotNullAndIsDeleteFalse(new Sort(Sort.Direction.ASC, "parentId", "sequence"))
+                .forEach(cmsMenu -> {
+                    Optional<MenuItem> search = menuItems.stream().filter(menuItem -> menuItem.getId().equals(cmsMenu.getParentId())).findAny();
+
+                    if (!search.isPresent()) return ;
+
+                    search.get().getChildren().add(new MenuItem(cmsMenu, contextPath));
+                });
+
+        return menuItems;
+    }
+
 }

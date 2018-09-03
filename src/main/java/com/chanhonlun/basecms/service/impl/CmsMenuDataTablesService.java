@@ -9,15 +9,11 @@ import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.DataTablesServiceTrait;
 import com.chanhonlun.basecms.vo.CmsMenuDataTablesVO;
 import com.chanhonlun.basecms.vo.CmsMenuTableVO;
-import com.chanhonlun.basecms.vo.SystemParameterDataTablesVO;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

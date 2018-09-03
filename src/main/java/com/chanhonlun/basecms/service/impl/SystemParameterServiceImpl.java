@@ -5,6 +5,7 @@ import com.chanhonlun.basecms.model.Breadcrumb;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
+import com.chanhonlun.basecms.service.CmsMenuService;
 import com.chanhonlun.basecms.service.SystemParameterService;
 import com.chanhonlun.basecms.model.BaseListConfig;
 import com.chanhonlun.basecms.model.DefaultListConfig;
@@ -28,6 +29,9 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Autowired
     private BreadcrumbUtil breadcrumbUtil;
 
+    @Autowired
+    private CmsMenuService cmsMenuService;
+
     @Override
     public DataTablesOutput<SystemParameterTableVO> systemParameterDataTablesAPI(SystemParameterListDataTablesInput input) {
         return systemParameterDataTablesService.getDataTablesData(input);
@@ -45,6 +49,7 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
         return DefaultListConfig.builder()
                 .breadcrumbs(breadcrumbs)
                 .datatable(systemParameterDataTablesService.getDataTablesConfig(new HashMap<>()))
+                .menu(cmsMenuService.getMenusConfig())
                 .build();
     }
 

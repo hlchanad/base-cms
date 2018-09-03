@@ -14,4 +14,5 @@ public class DefaultListConfig extends BaseListConfig {
 
     private List<Breadcrumb> breadcrumbs;
     private BaseDataTablesVO datatable;
+    private List<MenuItem> menu;
 }
