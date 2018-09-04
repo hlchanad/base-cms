@@ -33,7 +33,7 @@
     <link th:href="@{/pages/css/pages-icons.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/pages/css/themes/corporate.css}" class="main-stylesheet" rel="stylesheet" type="text/css" />
 
-    <div layout:fragment="custom-css"></div>
+    <th:block layout:fragment="custom-css" />
 </head>
 
 <body class="fixed-header menu-pin menu-behind">
@@ -116,7 +116,7 @@
 <!-- END CORE TEMPLATE JS -->
 
 <!-- BEGIN PAGE LEVEL JS -->
-<div layout:fragment="custom-js"></div>
+<th:block layout:fragment="custom-js" />
 <!-- END PAGE LEVEL JS -->
 </body>
 </html>

@@ -2,7 +2,7 @@
      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
      layout:decorate="/layouts/blank">
 
-    <div layout:fragment="custom-css">
+    <th:block layout:fragment="custom-css">
         <style>
             li.breadcrumb-item span {
                 margin-left: 5px;
@@ -46,7 +46,7 @@
               rel="stylesheet" type="text/css"/>
         <link th:href="@{/assets/plugins/datatables-responsive/css/datatables.responsive.css}" rel="stylesheet"
               type="text/css" media="screen"/>
-    </div>
+    </th:block>
 
     <div layout:fragment="content" th:object="${CMS_RSP.datatable}">
 
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div layout:fragment="custom-js">
+    <th:block layout:fragment="custom-js">
         <script th:src="@{/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js}"
                 type="text/javascript"></script>
         <script th:src="@{/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js}"
@@ -98,8 +98,8 @@
         <script th:src="@{/assets/plugins/jquery-spring-friendly/jquery-spring-friendly.js}"
                 type="text/javascript"></script>
 
-        <script type="text/javascript" th:src="@{/assets/js/my-datatable.js}"></script>
-        <script type="text/javascript" th:src="@{/assets/js/my-datatable-service.js}"></script>
+        <script th:src="@{/assets/js/my-datatable.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/js/my-datatable-service.js}" type="text/javascript"></script>
 
         <script th:inline="javascript">
             const datatableConfig = [[${CMS_RSP.datatable}]];
@@ -133,5 +133,5 @@
                 datatableConfig.ajaxUrl, columns, datatableConfig.extraConfigs);
             dataTable.init();
         </script>
-    </div>
+    </th:block>
 </div>
