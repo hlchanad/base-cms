@@ -2,6 +2,7 @@ package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.model.BaseListConfig;
+import com.chanhonlun.basecms.model.Breadcrumb;
 import com.chanhonlun.basecms.model.DefaultListConfig;
 import com.chanhonlun.basecms.model.MenuItem;
 import com.chanhonlun.basecms.pojo.CmsMenu;
@@ -39,6 +40,7 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
     public BaseListConfig getListConfig() {
         return DefaultListConfig.builder()
                 .breadcrumbs(BreadcrumbUtil.getInstance(contextPath)
+                        .prepend(Breadcrumb.builder().title("Settings").clickable(false).build())
                         .setPath(httpServletRequest.getRequestURI())
                         .getBreadcrumbs())
                 .datatable(cmsMenuDataTablesService.getDataTablesConfig(new HashMap<>()))

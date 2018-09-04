@@ -2,17 +2,11 @@
     th:fragment="breadcrumb"
     class="breadcrumb">
 
-    <div th:each="breadcrumb, it : ${CMS_RSP.breadcrumbs}" th:remove="tag">
-
-        <li th:if="${not it.last}"
-            class="breadcrumb-item">
-            <a th:text="${breadcrumb.title}" th:href="${breadcrumb.url}"></a>
+    <th:block th:each="breadcrumb, it : ${CMS_RSP.breadcrumbs}">
+        <li class="breadcrumb-item" th:classappend="${it.last} ? 'active'">
+            <a th:if="${not it.last && breadcrumb.clickable}" th:text="${breadcrumb.title}" th:href="${breadcrumb.url}"></a>
+            <span th:if="${not it.last && not breadcrumb.clickable}" th:text="${breadcrumb.title}"></span>
+            <th:block th:if="${it.last}" th:text="${breadcrumb.title}"/>
         </li>
-
-        <li th:if="${it.last}"
-            th:text="${breadcrumb.title}"
-            class="breadcrumb-item"
-            th:classappend="${it.last} ? 'active'"></li>
-
-    </div>
+    </th:block>
 </ol>
