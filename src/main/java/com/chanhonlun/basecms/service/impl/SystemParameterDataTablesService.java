@@ -79,7 +79,7 @@ public class SystemParameterDataTablesService extends BaseDataTablesService impl
         return SystemParameterDataTablesVO.builder()
                 .title("System Parameter")
                 .dataTablesId("system-parameter")
-                .ajaxUrl(contextPath + "/system-parameter")
+                .ajaxUrl(contextPath + "/system-parameter/data")
                 .dataTablesColumns(dataTablesColumns)
                 .extraConfigs(extraConfigs)
                 .build();

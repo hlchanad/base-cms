@@ -1,21 +1,24 @@
 package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.MyConstants;
-import com.chanhonlun.basecms.model.*;
+import com.chanhonlun.basecms.model.BaseListConfig;
+import com.chanhonlun.basecms.model.DefaultListConfig;
+import com.chanhonlun.basecms.model.MenuItem;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.repository.CmsMenuRepository;
 import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.vo.CmsMenuTableVO;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,13 +28,7 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
     private CmsMenuDataTablesService cmsMenuDataTablesService;
 
     @Autowired
-    private BreadcrumbUtil breadcrumbUtil;
-
-    @Autowired
     private CmsMenuRepository cmsMenuRepository;
-
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
 
     @Override
     public DataTablesOutput<CmsMenuTableVO> cmsMenuDataTablesAPI(CmsMenuListDataTablesInput input) {
@@ -41,12 +38,9 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
     @Override
     public BaseListConfig getListConfig() {
         return DefaultListConfig.builder()
-                .breadcrumbs(breadcrumbUtil.getBreadcrumbs(Arrays.asList(
-                        Breadcrumb.builder()
-                                .title("CMS Menu")
-                                .url("/cms-menu")
-                                .build()
-                )))
+                .breadcrumbs(BreadcrumbUtil.getInstance(contextPath)
+                        .setPath(httpServletRequest.getRequestURI())
+                        .getBreadcrumbs())
                 .datatable(cmsMenuDataTablesService.getDataTablesConfig(new HashMap<>()))
                 .menu(getMenusConfig())
                 .build();

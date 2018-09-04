@@ -83,7 +83,7 @@ public class CmsMenuDataTablesService extends BaseDataTablesService implements
         return CmsMenuDataTablesVO.builder()
                 .title("CMS Menu")
                 .dataTablesId("cms-menu")
-                .ajaxUrl(contextPath + "/cms-menu")
+                .ajaxUrl(contextPath + "/cms-menu/data")
                 .dataTablesColumns(dataTablesColumns)
                 .extraConfigs(extraConfigs)
                 .build();

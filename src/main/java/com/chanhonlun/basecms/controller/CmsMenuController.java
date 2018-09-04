@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -21,12 +22,17 @@ public class CmsMenuController extends BaseController {
     @Autowired
     private CmsMenuService cmsMenuService;
 
-    @GetMapping("")
+    @GetMapping("/data")
     @ResponseBody
     public DataTablesOutput<CmsMenuTableVO> datatableData(CmsMenuListDataTablesInput input) {
         DataTablesOutput<CmsMenuTableVO> output = cmsMenuService.cmsMenuDataTablesAPI(input);
         logger.info("output: {}", new Gson().toJson(output));
         return output;
+    }
+
+    @GetMapping("")
+    public String redirectList(Model model) {
+        return "redirect:/cms-menu/list";
     }
 
     @GetMapping("/list")

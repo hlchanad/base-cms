@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,10 +20,15 @@ public class SystemParameterController extends BaseController {
     @Autowired
     private SystemParameterService systemParameterService;
 
-    @GetMapping("")
+    @GetMapping("/data")
     @ResponseBody
     public DataTablesOutput<SystemParameterTableVO> datatableData(SystemParameterListDataTablesInput input) {
         return systemParameterService.systemParameterDataTablesAPI(input);
+    }
+
+    @GetMapping("")
+    public String redirectList(Model model) {
+        return "redirect:/system-parameter/list";
     }
 
     @GetMapping("/list")

@@ -9,4 +9,5 @@ public class Breadcrumb {
 
     private String title;
     private String url;
+    @Builder.Default private boolean clickable = true;
 }
