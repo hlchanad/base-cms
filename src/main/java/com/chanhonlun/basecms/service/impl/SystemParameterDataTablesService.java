@@ -26,7 +26,7 @@ public class SystemParameterDataTablesService extends BaseDataTablesService impl
 
     @PostConstruct
     public void init() {
-        actionButtonUtil.init(contextPath, "system-parameter");
+        actionButtonUtil.init("system-parameter");
     }
 
     @Override

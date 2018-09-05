@@ -26,7 +26,7 @@ public class CmsMenuDataTablesService extends BaseDataTablesService implements
 
     @PostConstruct
     public void init() {
-        actionButtonUtil.init(contextPath, "cms-menu");
+        actionButtonUtil.init("cms-menu");
     }
 
     @Override

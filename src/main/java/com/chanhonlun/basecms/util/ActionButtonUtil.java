@@ -4,6 +4,7 @@ import com.chanhonlun.basecms.constant.Action;
 import com.chanhonlun.basecms.model.ActionButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,17 @@ public class ActionButtonUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(ActionButtonUtil.class);
 
+    @Value("${server.servlet.context-path}")
     private String       contextPath;
     private String       section;
     private List<Action> actions;
 
-    public void init(String contextPath, String section) {
-        this.contextPath = contextPath;
+    public void init(String section) {
         this.section = section;
         this.actions = Arrays.asList(Action.DETAIL, Action.EDIT, Action.DELETE);
     }
 
-    public void init(String contextPath, String section, List<Action> actions) {
-        this.contextPath = contextPath;
+    public void init(String section, List<Action> actions) {
         this.section = section;
         this.actions = actions;
     }
