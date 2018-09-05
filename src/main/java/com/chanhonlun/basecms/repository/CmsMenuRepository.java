@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CmsMenuRepository extends DataTablesRepository<CmsMenu, Long> {
+public interface CmsMenuRepository extends
+        DataTablesRepository<CmsMenu, Long> {
 
     CmsMenu findByIdAndIsDeleteFalse(Long id);
 

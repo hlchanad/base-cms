@@ -25,9 +25,7 @@ public class CmsMenuController extends BaseController {
     @GetMapping("/data")
     @ResponseBody
     public DataTablesOutput<CmsMenuTableVO> datatableData(CmsMenuListDataTablesInput input) {
-        DataTablesOutput<CmsMenuTableVO> output = cmsMenuService.cmsMenuDataTablesAPI(input);
-        logger.info("output: {}", new Gson().toJson(output));
-        return output;
+        return cmsMenuService.dataTableAPI(input);
     }
 
     @GetMapping("")
