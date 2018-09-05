@@ -5,7 +5,7 @@
     <!-- BEGIN SIDEBAR MENU ITEMS-->
     <ul class="menu-items">
         <li th:each="menuItem, it : ${CMS_RSP.menu}"
-            th:classappend="${it.first} ? 'm-t-30'">
+            th:classappend="|${it.first ? 'm-t-30' : ''} ${menuItem.active ? 'open active' : ''}|">
 
             <!--/* if the menuItem does not contain children */-->
             <a th:if="${#lists.isEmpty(menuItem.children)}" th:href="${menuItem.url}">

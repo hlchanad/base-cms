@@ -2,6 +2,8 @@ package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.model.MenuItem;
 import com.chanhonlun.basecms.service.CmsMenuService;
+import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +24,53 @@ public class SidebarMenuUtil {
     private static final Logger logger = LoggerFactory.getLogger(SidebarMenuUtil.class);
 
     @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    @Autowired
     private CmsMenuService cmsMenuService;
 
     @Value("${server.servlet.context-path}")
     protected String contextPath;
 
+    private List<MenuItem> menuItems = null;
+
     public List<MenuItem> getSidebarMenuList() {
+
+        if (menuItems == null) {
+            this.menuItems = getMenuItemsFromDatabase();
+        }
+
+        logger.info("uri: {}", httpServletRequest.getRequestURI());
+
+        this.menuItems.forEach(menuItem -> menuItem.setActive(false));
+
+        this.menuItems.forEach(menuItem -> {
+            if (checkIfActiveRoute(menuItem, httpServletRequest.getRequestURI())) {
+                menuItem.setActive(true);
+            }
+        });
+
+        logger.info("menuItems123: {}", new Gson().toJson(menuItems));
+
+        return menuItems;
+    }
+
+    private boolean checkIfActiveRoute(MenuItem menuItem, String uri) {
+
+        if (StringUtils.isNotBlank(menuItem.getUrl()) && uri.startsWith(menuItem.getUrl())) {
+            return true;
+        }
+
+        for (MenuItem child : menuItem.getChildren()) {
+            if (checkIfActiveRoute(child, uri)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private List<MenuItem> getMenuItemsFromDatabase() {
 
         return cmsMenuService.findByParentIdNullAndIsDeleteFalse()
                 .stream()
