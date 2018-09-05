@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.service.impl;
 
-import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.pojo.CmsMenu;
+import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.CmsMenuRepository;
 import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +24,11 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
 
     @Autowired
     private CmsMenuRepository cmsMenuRepository;
+
+    @Override
+    public BaseRepository<CmsMenu, Long> getRepository() {
+        return cmsMenuRepository;
+    }
 
     @Override
     public DataTablesServiceTrait<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO> getDataTablesService() {
@@ -39,19 +43,6 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
     @Override
     public SidebarMenuUtil getSidebarMenuUtil() {
         return sidebarMenuUtil;
-    }
-
-    @Override
-    public CmsMenu findByIdAndIsDeleteFalse(Long id) {
-        return cmsMenuRepository.findByIdAndIsDeleteFalse(id);
-    }
-
-    @Override
-    public CmsMenu softDelete(CmsMenu cmsMenu) {
-        cmsMenu.setIsDelete(true);
-        cmsMenu.setUpdatedAt(new Date());
-        cmsMenu.setUpdatedBy(MyConstants.USER_SYSTEM);
-        return cmsMenuRepository.save(cmsMenu);
     }
 
     @Override

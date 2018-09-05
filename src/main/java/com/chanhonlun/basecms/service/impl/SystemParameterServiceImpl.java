@@ -1,19 +1,17 @@
 package com.chanhonlun.basecms.service.impl;
 
-import com.chanhonlun.basecms.constant.MyConstants;
-import com.chanhonlun.basecms.model.BaseListConfig;
-import com.chanhonlun.basecms.model.DefaultListConfig;
 import com.chanhonlun.basecms.pojo.SystemParameter;
+import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
+import com.chanhonlun.basecms.service.DataTablesServiceTrait;
 import com.chanhonlun.basecms.service.SystemParameterService;
+import com.chanhonlun.basecms.util.BreadcrumbUtil;
+import com.chanhonlun.basecms.util.SidebarMenuUtil;
+import com.chanhonlun.basecms.vo.SystemParameterDataTablesVO;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.HashMap;
 
 @Service
 public class SystemParameterServiceImpl extends BaseServiceImpl implements SystemParameterService {
@@ -24,30 +22,24 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
+
     @Override
-    public DataTablesOutput<SystemParameterTableVO> systemParameterDataTablesAPI(SystemParameterListDataTablesInput input) {
-        return systemParameterDataTablesService.getDataTablesData(input);
+    public BaseRepository<SystemParameter, Long> getRepository() {
+        return systemParameterRepository;
     }
 
     @Override
-    public BaseListConfig getListConfig() {
-        return DefaultListConfig.builder()
-                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
-                .datatable(systemParameterDataTablesService.getDataTablesConfig(new HashMap<>()))
-                .menu(sidebarMenuUtil.getSidebarMenuList())
-                .build();
+    public DataTablesServiceTrait<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> getDataTablesService() {
+        return systemParameterDataTablesService;
     }
 
     @Override
-    public SystemParameter findByIdAndIsDeleteFalse(Long id) {
-        return systemParameterRepository.findByIdAndIsDeleteFalse(id);
+    public BreadcrumbUtil getBreadcrumbUtil() {
+        return breadcrumbUtil;
     }
 
     @Override
-    public SystemParameter softDelete(SystemParameter systemParameter) {
-        systemParameter.setUpdatedAt(new Date());
-        systemParameter.setUpdatedBy(MyConstants.USER_SYSTEM);
-        systemParameter.setIsDelete(true);
-        return systemParameterRepository.save(systemParameter);
+    public SidebarMenuUtil getSidebarMenuUtil() {
+        return sidebarMenuUtil;
     }
 }

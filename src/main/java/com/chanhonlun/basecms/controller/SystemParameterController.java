@@ -23,7 +23,7 @@ public class SystemParameterController extends BaseController {
     @GetMapping("/data")
     @ResponseBody
     public DataTablesOutput<SystemParameterTableVO> datatableData(SystemParameterListDataTablesInput input) {
-        return systemParameterService.systemParameterDataTablesAPI(input);
+        return systemParameterService.dataTableAPI(input);
     }
 
     @GetMapping("")

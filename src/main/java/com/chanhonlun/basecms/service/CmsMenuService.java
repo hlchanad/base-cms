@@ -9,12 +9,8 @@ import java.util.List;
 
 public interface CmsMenuService extends
         BaseService,
-//        DefaultPageHasCRUD<CmsMenu, Long>,
+        DefaultPageHasCRUD<CmsMenu, Long>,
         DefaultPageHasDataTable<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO> {
-
-    CmsMenu findByIdAndIsDeleteFalse(Long id);
-
-    CmsMenu softDelete(CmsMenu cmsMenu);
 
     List<CmsMenu> findByParentIdNullAndIsDeleteFalse();
 

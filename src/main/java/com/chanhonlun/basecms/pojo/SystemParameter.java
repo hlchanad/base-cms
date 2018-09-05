@@ -1,21 +1,17 @@
 package com.chanhonlun.basecms.pojo;
 
-import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.constant.SystemParameterDataType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "SYSTEM_PARAMETER")
-public class SystemParameter {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SYS_PARAM_ID_GENERATOR")
-    @SequenceGenerator(name = "SYS_PARAM_ID_GENERATOR", sequenceName = "SYS_PARAM_ID_SEQ", allocationSize = 1)
-    @Column(name = "ID")
-    private Long id;
+@SequenceGenerator(name = "SEQUENCE_GENERATOR", sequenceName = "SYS_PARAM_ID_SEQ", allocationSize = 1)
+public class SystemParameter extends BasePojo<Long> {
 
     @Column(name = "CATEGORY")
     private String category;
@@ -33,22 +29,4 @@ public class SystemParameter {
     @Column(name = "DATA_TYPE")
     private SystemParameterDataType dataType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS")
-    private Status status;
-
-    @Column(name = "IS_DELETE")
-    private Boolean isDelete;
-
-    @Column(name = "CREATED_BY")
-    private Long createdBy;
-
-    @Column(name = "CREATED_AT")
-    private Date createdAt;
-
-    @Column(name = "UPDATED_BY")
-    private Long updatedBy;
-
-    @Column(name = "UPDATED_AT")
-    private Date updatedAt;
 }

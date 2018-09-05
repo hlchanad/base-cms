@@ -9,9 +9,8 @@ import java.util.List;
 
 @Repository
 public interface CmsMenuRepository extends
-        DataTablesRepository<CmsMenu, Long> {
-
-    CmsMenu findByIdAndIsDeleteFalse(Long id);
+        DataTablesRepository<CmsMenu, Long>,
+        BaseRepository<CmsMenu, Long> {
 
     List<CmsMenu> findByParentIdNullAndIsDeleteFalse(Sort sort);
 
