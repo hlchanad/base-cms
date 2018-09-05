@@ -2,6 +2,7 @@ package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.service.BaseService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
+import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,7 @@ public class BaseServiceImpl implements BaseService {
 
     @Autowired
     protected BreadcrumbUtil breadcrumbUtil;
+
+    @Autowired
+    protected SidebarMenuUtil sidebarMenuUtil;
 }

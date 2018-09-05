@@ -6,7 +6,6 @@ import com.chanhonlun.basecms.model.DefaultListConfig;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
-import com.chanhonlun.basecms.service.CmsMenuService;
 import com.chanhonlun.basecms.service.SystemParameterService;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
-    @Autowired
-    private CmsMenuService cmsMenuService;
-
     @Override
     public DataTablesOutput<SystemParameterTableVO> systemParameterDataTablesAPI(SystemParameterListDataTablesInput input) {
         return systemParameterDataTablesService.getDataTablesData(input);
@@ -38,7 +34,7 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
         return DefaultListConfig.builder()
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .datatable(systemParameterDataTablesService.getDataTablesConfig(new HashMap<>()))
-                .menu(cmsMenuService.getMenusConfig())
+                .menu(sidebarMenuUtil.getSidebarMenuList())
                 .build();
     }
 
