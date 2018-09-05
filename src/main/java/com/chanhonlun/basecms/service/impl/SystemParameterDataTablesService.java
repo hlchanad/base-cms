@@ -1,12 +1,10 @@
 package com.chanhonlun.basecms.service.impl;
 
-import com.chanhonlun.basecms.constant.ActionButtonType;
-import com.chanhonlun.basecms.model.ActionButton;
+import com.chanhonlun.basecms.model.DataTablesColumn;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
 import com.chanhonlun.basecms.service.DataTablesServiceTrait;
-import com.chanhonlun.basecms.model.DataTablesColumn;
 import com.chanhonlun.basecms.vo.SystemParameterDataTablesVO;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import com.google.gson.Gson;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,11 @@ public class SystemParameterDataTablesService extends BaseDataTablesService impl
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
+    @PostConstruct
+    public void init() {
+        actionButtonUtil.init(contextPath, "system-parameter");
+    }
+
     @Override
     public DataTablesRepository<SystemParameter, Long> getDataTablesRepository() {
         return systemParameterRepository;
@@ -33,34 +37,13 @@ public class SystemParameterDataTablesService extends BaseDataTablesService impl
     @Override
     public SystemParameterTableVO getTableVOFromPOJO(SystemParameter systemParameter) {
 
-        List<ActionButton> actionButtons = Arrays.asList(
-                ActionButton.builder()
-                        .type(ActionButtonType.REDIRECT)
-                        .displayName("Detail")
-                        .bootstrapColor("success")
-                        .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/detail")
-                        .build(),
-                ActionButton.builder()
-                        .type(ActionButtonType.REDIRECT)
-                        .displayName("Edit")
-                        .bootstrapColor("primary")
-                        .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/edit")
-                        .build(),
-                ActionButton.builder()
-                        .type(ActionButtonType.DELETE)
-                        .displayName("Delete")
-                        .bootstrapColor("danger")
-                        .href(contextPath + "/system-parameter/" + systemParameter.getId() + "/delete")
-                        .build()
-        );
-
         return SystemParameterTableVO.builder()
                 .id(systemParameter.getId())
                 .category(systemParameter.getCategory())
                 .key(systemParameter.getKey())
                 .value(systemParameter.getValue())
                 .description(systemParameter.getDescription())
-                .action(new Gson().toJson(actionButtons))
+                .action(new Gson().toJson(actionButtonUtil.get(systemParameter.getId())))
                 .build();
     }
 
