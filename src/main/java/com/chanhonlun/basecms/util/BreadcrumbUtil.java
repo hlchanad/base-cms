@@ -1,22 +1,35 @@
 package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.model.Breadcrumb;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
+@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class BreadcrumbUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(BreadcrumbUtil.class);
 
-    private static BreadcrumbUtil instance = null;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
+    @Value("${server.servlet.context-path}")
     private String contextPath;
 
     private List<Breadcrumb> base;
@@ -24,25 +37,21 @@ public class BreadcrumbUtil {
     private List<Breadcrumb> main;
     private List<Breadcrumb> next;
 
-    {
+    @PostConstruct
+    public void init() {
         this.base = Collections.singletonList(Breadcrumb.builder()
                 .title("Dashboard")
                 .url("/dashboard")
                 .build());
+
+        String uri = httpServletRequest.getRequestURI().substring(contextPath.length() + 1);
+        this.main = Stream.of(uri.split("/"))
+                .map(section -> Breadcrumb.builder()
+                        .title(StringUtils.capitalize(section.replaceAll("-", " ")))
+                        .url("/" + section)
+                        .build()).collect(Collectors.toList());
         this.previous = Collections.emptyList();
-        this.main = Collections.emptyList();
         this.next = Collections.emptyList();
-    }
-
-    public static BreadcrumbUtil getInstance(String contextPath) {
-        if (instance == null) {
-            instance = new BreadcrumbUtil(contextPath);
-        }
-        return instance;
-    }
-
-    private BreadcrumbUtil(String contextPath) {
-        this.contextPath = contextPath;
     }
 
     public BreadcrumbUtil prepend(Breadcrumb breadcrumb) {
@@ -60,16 +69,6 @@ public class BreadcrumbUtil {
 
     public BreadcrumbUtil append(List<Breadcrumb> breadcrumbs) {
         this.next = breadcrumbs;
-        return this;
-    }
-
-    public BreadcrumbUtil setPath(String uri) {
-        uri = uri.substring(contextPath.length() + 1);
-        this.main = Stream.of(uri.split("/"))
-                .map(section -> Breadcrumb.builder()
-                        .title(StringUtils.capitalize(section.replaceAll("-", " ")))
-                        .url("/" + section)
-                        .build()).collect(Collectors.toList());
         return this;
     }
 

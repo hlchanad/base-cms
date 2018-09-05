@@ -2,14 +2,12 @@ package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.model.BaseListConfig;
-import com.chanhonlun.basecms.model.Breadcrumb;
 import com.chanhonlun.basecms.model.DefaultListConfig;
 import com.chanhonlun.basecms.model.MenuItem;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.repository.CmsMenuRepository;
 import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
-import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.vo.CmsMenuTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -39,10 +37,7 @@ public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuServic
     @Override
     public BaseListConfig getListConfig() {
         return DefaultListConfig.builder()
-                .breadcrumbs(BreadcrumbUtil.getInstance(contextPath)
-                        .prepend(Breadcrumb.builder().title("Settings").clickable(false).build())
-                        .setPath(httpServletRequest.getRequestURI())
-                        .getBreadcrumbs())
+                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .datatable(cmsMenuDataTablesService.getDataTablesConfig(new HashMap<>()))
                 .menu(getMenusConfig())
                 .build();

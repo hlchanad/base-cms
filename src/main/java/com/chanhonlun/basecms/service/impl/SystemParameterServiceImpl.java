@@ -8,7 +8,6 @@ import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
 import com.chanhonlun.basecms.service.SystemParameterService;
-import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
@@ -37,9 +36,7 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Override
     public BaseListConfig getListConfig() {
         return DefaultListConfig.builder()
-                .breadcrumbs(BreadcrumbUtil.getInstance(contextPath)
-                        .setPath(httpServletRequest.getRequestURI())
-                        .getBreadcrumbs())
+                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .datatable(systemParameterDataTablesService.getDataTablesConfig(new HashMap<>()))
                 .menu(cmsMenuService.getMenusConfig())
                 .build();
