@@ -1,0 +1,34 @@
+<li xmlns:th="http://www.thymeleaf.org"
+    th:fragment="sidebar-menu-item"
+    th:with="appendMarginTop = ${depth == 1} and ${it.first}"
+    th:classappend="|${appendMarginTop ? 'm-t-30' : ''} ${menuItem.active ? 'open active' : ''}|">
+
+    <!--/* if the menuItem does not contain children */-->
+    <a th:if="${#lists.isEmpty(menuItem.children)}" th:href="${menuItem.url}">
+        <span class="title" th:text="${menuItem.title}">Menu Item</span>
+    </a>
+
+    <!--/* if the menuItem contains children */-->
+    <a th:if="${not #lists.isEmpty(menuItem.children)}" href="javascript:;">
+        <span class="title" th:text="${menuItem.title}">Menu Item</span>
+        <span class=" arrow"></span>
+    </a>
+
+    <!--/* Menu Item Icon */-->
+    <span th:switch="${#strings.toString(menuItem.iconType)}"
+          class="icon-thumbnail"
+          th:classappend="${menuItem.title.equalsIgnoreCase('dashboard')} ? 'bg-success'">
+        <i th:case="'PAGES'" th:class="${menuItem.icon}"></i>
+        <i th:case="'FONT_AWESOME'" class="fa" th:classappend="${menuItem.icon}"></i>
+        <i th:case="'TEXT'" th:remove="tag" th:text="${menuItem.icon}"></i>
+        <i th:case="*" th:remove="tag" th:text="${menuItem.icon}"></i>
+    </span>
+
+    <!--/* if the menuItem contains children, show the submenu **RECURSIVELY** */-->
+    <ul th:if="${not #lists.isEmpty(menuItem.children)}" class="sub-menu">
+        <th:block th:each="child, it2 : ${menuItem.children}">
+            <li th:replace="/fragments/blank/sidebar-menu-item :: sidebar-menu-item(menuItem=${child}, it=${it2}, depth=${depth+1})"></li>
+        </th:block>
+    </ul>
+
+</li>

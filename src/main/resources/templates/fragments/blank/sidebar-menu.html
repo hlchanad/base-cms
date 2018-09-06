@@ -3,85 +3,10 @@
      class="sidebar-menu">
 
     <!-- BEGIN SIDEBAR MENU ITEMS-->
-    <ul class="menu-items">
-        <li th:each="menuItem, it : ${CMS_RSP.menu}"
-            th:classappend="|${it.first ? 'm-t-30' : ''} ${menuItem.active ? 'open active' : ''}|">
-
-            <!--/* if the menuItem does not contain children */-->
-            <a th:if="${#lists.isEmpty(menuItem.children)}" th:href="${menuItem.url}">
-                <span class="title" th:text="${menuItem.title}">Menu Item</span>
-            </a>
-
-            <!--/* if the menuItem contains children */-->
-            <a th:if="${not #lists.isEmpty(menuItem.children)}" href="javascript:;">
-                <span class="title" th:text="${menuItem.title}">Menu Item</span>
-                <span class=" arrow"></span>
-            </a>
-
-            <!--/* Menu Item Icon */-->
-            <span th:switch="${#strings.toString(menuItem.iconType)}"
-                  class="icon-thumbnail"
-                  th:classappend="${menuItem.title.equalsIgnoreCase('dashboard')} ? 'bg-success'">
-                <i th:case="'PAGES'" th:class="${menuItem.icon}"></i>
-                <i th:case="'FONT_AWESOME'" class="fa" th:classappend="${menuItem.icon}"></i>
-                <i th:case="'TEXT'" th:remove="tag" th:text="${menuItem.icon}"></i>
-                <i th:case="*" th:remove="tag" th:text="${menuItem.icon}"></i>
-            </span>
-
-
-            <!--/* if the menuItem contains children */-->
-            <ul th:if="${not #lists.isEmpty(menuItem.children)}" class="sub-menu">
-                <li th:each="firstLevelMenuItem : ${menuItem.children}">
-
-                    <!--/* if the menuItem does not contain children */-->
-                    <a th:if="${#lists.isEmpty(firstLevelMenuItem.children)}" th:href="${firstLevelMenuItem.url}">
-                        <span class="title" th:text="${firstLevelMenuItem.title}">Menu Item</span>
-                    </a>
-
-                    <!--/* if the menuItem contains children */-->
-                    <a th:if="${not #lists.isEmpty(firstLevelMenuItem.children)}" href="javascript:;">
-                        <span class="title" th:text="${firstLevelMenuItem.title}">Menu Item</span>
-                        <span class=" arrow"></span>
-                    </a>
-
-                    <!--/* Menu Item Icon */-->
-                    <span class="icon-thumbnail" th:switch="${#strings.toString(firstLevelMenuItem.iconType)}">
-                        <i th:case="'PAGES'" th:class="${firstLevelMenuItem.icon}"></i>
-                        <i th:case="'FONT_AWESOME'" class="fa" th:classappend="${firstLevelMenuItem.icon}"></i>
-                        <i th:case="'TEXT'" th:remove="tag" th:text="${firstLevelMenuItem.icon}"></i>
-                        <i th:case="*" th:remove="tag" th:text="${firstLevelMenuItem.icon}"></i>
-                    </span>
-
-
-                    <!--/* if the menuItem contains children */-->
-                    <ul th:if="${not #lists.isEmpty(firstLevelMenuItem.children)}" class="sub-menu">
-                        <li th:each="secondLevelMenuItem : ${firstLevelMenuItem.children}">
-
-                            <!--/* if the menuItem does not contain children */-->
-                            <a th:if="${#lists.isEmpty(secondLevelMenuItem.children)}" th:href="${secondLevelMenuItem.url}">
-                                <span class="title" th:text="${secondLevelMenuItem.title}">Menu Item</span>
-                            </a>
-
-                            <!--/* if the menuItem contains children */-->
-                            <a th:if="${not #lists.isEmpty(secondLevelMenuItem.children)}" href="javascript:;">
-                                <span class="title" th:text="${secondLevelMenuItem.title}">Menu Item</span>
-                                <span class=" arrow"></span>
-                            </a>
-
-                            <!--/* Menu Item Icon */-->
-                            <span class="icon-thumbnail" th:switch="${#strings.toString(secondLevelMenuItem.iconType)}">
-                                <i th:case="'PAGES'" th:class="${secondLevelMenuItem.icon}"></i>
-                                <i th:case="'FONT_AWESOME'" class="fa" th:classappend="${secondLevelMenuItem.icon}"></i>
-                                <i th:case="'TEXT'" th:remove="tag" th:text="${secondLevelMenuItem.icon}"></i>
-                                <i th:case="*" th:remove="tag" th:text="${secondLevelMenuItem.icon}"></i>
-                            </span>
-                        </li>
-                    </ul>
-
-                </li>
-            </ul>
-
-        </li>
+    <ul class="menu-items" th:with="depth=${0}">
+        <th:block th:each="menuItem, it : ${CMS_RSP.menu}">
+            <li th:replace="/fragments/blank/sidebar-menu-item :: sidebar-menu-item(menuItem=${menuItem}, it=${it}, depth=${depth+1})"></li>
+        </th:block>
     </ul>
     <!-- EMD SIDEBAR MENU ITEMS-->
 </div>
