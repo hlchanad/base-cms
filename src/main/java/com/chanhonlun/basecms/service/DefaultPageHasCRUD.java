@@ -15,10 +15,10 @@ public interface DefaultPageHasCRUD<Pojo extends BasePojo<PK>, PK extends Serial
         return getRepository().findByIdAndIsDeleteFalse(id);
     }
 
-     default Pojo softDelete(Pojo pojo) {
+    default Pojo softDelete(Pojo pojo) {
         pojo.setIsDelete(true);
         pojo.setUpdatedAt(new Date());
         pojo.setUpdatedBy(MyConstants.USER_SYSTEM);
         return getRepository().save(pojo);
-     }
+    }
 }
