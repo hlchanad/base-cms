@@ -42,7 +42,7 @@ public class SidebarMenuUtil {
 
         logger.info("uri: {}", httpServletRequest.getRequestURI());
 
-        this.menuItems.forEach(menuItem -> menuItem.setActive(false));
+        this.menuItems.forEach(this::setActiveFalse);
 
         this.menuItems.forEach(menuItem -> {
             if (checkIfActiveRoute(menuItem, httpServletRequest.getRequestURI())) {
@@ -50,9 +50,14 @@ public class SidebarMenuUtil {
             }
         });
 
-        logger.info("menuItems123: {}", new Gson().toJson(menuItems));
+        logger.info("menuItems: {}", new Gson().toJson(menuItems));
 
         return menuItems;
+    }
+
+    private void setActiveFalse(MenuItem menuItem) {
+        menuItem.setActive(false);
+        menuItem.getChildren().forEach(this::setActiveFalse);
     }
 
     private boolean checkIfActiveRoute(MenuItem menuItem, String uri) {
@@ -63,6 +68,7 @@ public class SidebarMenuUtil {
 
         for (MenuItem child : menuItem.getChildren()) {
             if (checkIfActiveRoute(child, uri)) {
+                child.setActive(true);
                 return true;
             }
         }

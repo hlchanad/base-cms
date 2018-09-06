@@ -1,7 +1,7 @@
 <li xmlns:th="http://www.thymeleaf.org"
     th:fragment="sidebar-menu-item"
-    th:with="appendMarginTop = ${depth == 1} and ${it.first}"
-    th:classappend="|${appendMarginTop ? 'm-t-30' : ''} ${menuItem.active ? 'open active' : ''}|">
+    th:with="appendMarginTop = ${depth == 1} and ${it.first}, active = ${menuItem.active} and not ${#lists.isEmpty(menuItem.children)}"
+    th:classappend="|${appendMarginTop ? 'm-t-30' : ''} ${active ? 'open active' : ''}|">
 
     <!--/* if the menuItem does not contain children */-->
     <a th:if="${#lists.isEmpty(menuItem.children)}" th:href="${menuItem.url}">
@@ -11,7 +11,7 @@
     <!--/* if the menuItem contains children */-->
     <a th:if="${not #lists.isEmpty(menuItem.children)}" href="javascript:;">
         <span class="title" th:text="${menuItem.title}">Menu Item</span>
-        <span class=" arrow"></span>
+        <span class="arrow" th:classappend="|${active ? 'open active' : ''}|"></span>
     </a>
 
     <!--/* Menu Item Icon */-->

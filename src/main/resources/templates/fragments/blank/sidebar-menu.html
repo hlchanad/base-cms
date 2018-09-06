@@ -2,6 +2,12 @@
      th:fragment="sidebar-menu"
      class="sidebar-menu">
 
+    <style>
+        .page-sidebar .sidebar-menu .menu-items > li.active > ul.sub-menu > li.active > ul.sub-menu {
+            display: block;
+        }
+    </style>
+
     <!-- BEGIN SIDEBAR MENU ITEMS-->
     <ul class="menu-items" th:with="depth=${0}">
         <th:block th:each="menuItem, it : ${CMS_RSP.menu}">
