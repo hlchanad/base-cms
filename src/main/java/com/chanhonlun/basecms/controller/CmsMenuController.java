@@ -21,11 +21,6 @@ public class CmsMenuController extends BaseController implements
     private CmsMenuService cmsMenuService;
 
     @Override
-    public String getSection() {
-        return "cms-menu";
-    }
-
-    @Override
     public DefaultPageHasDataTable<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO> getDefaultPageHasDataTable() {
         return cmsMenuService;
     }

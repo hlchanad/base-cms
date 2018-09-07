@@ -21,11 +21,6 @@ public class SystemParameterController extends BaseController implements
     private SystemParameterService systemParameterService;
 
     @Override
-    public String getSection() {
-        return "system-parameter";
-    }
-
-    @Override
     public DefaultPageHasDataTable<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> getDefaultPageHasDataTable() {
         return systemParameterService;
     }
