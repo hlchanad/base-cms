@@ -1,57 +1,38 @@
 package com.chanhonlun.basecms.controller;
 
 import com.chanhonlun.basecms.pojo.CmsMenu;
-import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
+import com.chanhonlun.basecms.service.DefaultPageHasCRUD;
+import com.chanhonlun.basecms.service.DefaultPageHasDataTable;
+import com.chanhonlun.basecms.vo.CmsMenuDataTablesVO;
 import com.chanhonlun.basecms.vo.CmsMenuTableVO;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/cms-menu")
-public class CmsMenuController extends BaseController {
+public class CmsMenuController extends BaseController implements
+        DefaultControllerHasDataTable<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO>,
+        DefaultControllerHasDeleteActionButton<CmsMenu, Long> {
 
     @Autowired
     private CmsMenuService cmsMenuService;
 
-    @GetMapping("/data")
-    @ResponseBody
-    public DataTablesOutput<CmsMenuTableVO> datatableData(CmsMenuListDataTablesInput input) {
-        return cmsMenuService.dataTableAPI(input);
+    @Override
+    public String getSection() {
+        return "cms-menu";
     }
 
-    @GetMapping("")
-    public String redirectList(Model model) {
-        return "redirect:/cms-menu/list";
+    @Override
+    public DefaultPageHasDataTable<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO> getDefaultPageHasDataTable() {
+        return cmsMenuService;
     }
 
-    @GetMapping("/list")
-    public String list(Map<String, Object> model) {
-        model.put("CMS_RSP", cmsMenuService.getListConfig());
-        return "cms-menu/datatable";
-    }
-
-    @DeleteMapping("/{id}/delete")
-    @ResponseBody
-    public ResponseEntity delete(@PathVariable(name = "id") Long id) {
-
-        CmsMenu cmsMenu = cmsMenuService.findByIdAndIsDeleteFalse(id);
-
-        if (cmsMenu == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        cmsMenuService.softDelete(cmsMenu);
-
-        return ResponseEntity.ok().build();
+    @Override
+    public DefaultPageHasCRUD<CmsMenu, Long> getDefaultPageHasCRUD() {
+        return cmsMenuService;
     }
 
 }
