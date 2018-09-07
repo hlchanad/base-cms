@@ -2,8 +2,8 @@ package com.chanhonlun.basecms.controller;
 
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.req.datatables.SystemParameterListDataTablesInput;
-import com.chanhonlun.basecms.service.DefaultPageHasCRUD;
-import com.chanhonlun.basecms.service.DefaultPageHasDataTable;
+import com.chanhonlun.basecms.service.DefaultServiceHasCRUD;
+import com.chanhonlun.basecms.service.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.service.SystemParameterService;
 import com.chanhonlun.basecms.vo.SystemParameterDataTablesVO;
 import com.chanhonlun.basecms.vo.SystemParameterTableVO;
@@ -21,12 +21,12 @@ public class SystemParameterController extends BaseController implements
     private SystemParameterService systemParameterService;
 
     @Override
-    public DefaultPageHasDataTable<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> getDefaultPageHasDataTable() {
+    public DefaultServiceHasDataTable<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> getDefaultPageHasDataTable() {
         return systemParameterService;
     }
 
     @Override
-    public DefaultPageHasCRUD<SystemParameter, Long> getDefaultPageHasCRUD() {
+    public DefaultServiceHasCRUD<SystemParameter, Long> getDefaultPageHasCRUD() {
         return systemParameterService;
     }
 }

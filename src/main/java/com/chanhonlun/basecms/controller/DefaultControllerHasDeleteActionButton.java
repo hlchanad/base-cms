@@ -1,8 +1,7 @@
 package com.chanhonlun.basecms.controller;
 
 import com.chanhonlun.basecms.pojo.BasePojo;
-import com.chanhonlun.basecms.service.DefaultPageHasCRUD;
-import org.slf4j.Logger;
+import com.chanhonlun.basecms.service.DefaultServiceHasCRUD;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +11,7 @@ import java.io.Serializable;
 
 public interface DefaultControllerHasDeleteActionButton<Pojo extends BasePojo<PK>, PK extends Serializable> {
 
-    DefaultPageHasCRUD<Pojo, PK> getDefaultPageHasCRUD();
+    DefaultServiceHasCRUD<Pojo, PK> getDefaultPageHasCRUD();
 
     @DeleteMapping("/{id}/delete")
     @ResponseBody

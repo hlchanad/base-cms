@@ -7,7 +7,7 @@ import com.chanhonlun.basecms.vo.SystemParameterTableVO;
 
 public interface SystemParameterService extends
         BaseService,
-        DefaultPageHasCRUD<SystemParameter, Long>,
-        DefaultPageHasDataTable<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> {
+        DefaultServiceHasCRUD<SystemParameter, Long>,
+        DefaultServiceHasDataTable<SystemParameter, Long, SystemParameterTableVO, SystemParameterListDataTablesInput, SystemParameterDataTablesVO> {
 
 }

@@ -7,7 +7,7 @@ import com.chanhonlun.basecms.repository.BaseRepository;
 import java.io.Serializable;
 import java.util.Date;
 
-public interface DefaultPageHasCRUD<Pojo extends BasePojo<PK>, PK extends Serializable> {
+public interface DefaultServiceHasCRUD<Pojo extends BasePojo<PK>, PK extends Serializable> {
 
     BaseRepository<Pojo, PK> getRepository();
 

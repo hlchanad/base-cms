@@ -3,8 +3,8 @@ package com.chanhonlun.basecms.controller;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.req.datatables.CmsMenuListDataTablesInput;
 import com.chanhonlun.basecms.service.CmsMenuService;
-import com.chanhonlun.basecms.service.DefaultPageHasCRUD;
-import com.chanhonlun.basecms.service.DefaultPageHasDataTable;
+import com.chanhonlun.basecms.service.DefaultServiceHasCRUD;
+import com.chanhonlun.basecms.service.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.vo.CmsMenuDataTablesVO;
 import com.chanhonlun.basecms.vo.CmsMenuTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ public class CmsMenuController extends BaseController implements
     private CmsMenuService cmsMenuService;
 
     @Override
-    public DefaultPageHasDataTable<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO> getDefaultPageHasDataTable() {
+    public DefaultServiceHasDataTable<CmsMenu, Long, CmsMenuTableVO, CmsMenuListDataTablesInput, CmsMenuDataTablesVO> getDefaultPageHasDataTable() {
         return cmsMenuService;
     }
 
     @Override
-    public DefaultPageHasCRUD<CmsMenu, Long> getDefaultPageHasCRUD() {
+    public DefaultServiceHasCRUD<CmsMenu, Long> getDefaultPageHasCRUD() {
         return cmsMenuService;
     }
 

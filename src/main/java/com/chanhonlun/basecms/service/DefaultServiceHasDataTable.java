@@ -12,7 +12,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public interface DefaultPageHasDataTable<
+public interface DefaultServiceHasDataTable<
         Pojo,
         PK extends Serializable,
         PojoVO extends BaseTableVO,

@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.controller;
 
-import com.chanhonlun.basecms.service.DefaultPageHasDataTable;
+import com.chanhonlun.basecms.service.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.vo.BaseDataTablesVO;
 import com.chanhonlun.basecms.vo.BaseTableVO;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -18,7 +18,7 @@ public interface DefaultControllerHasDataTable<
         Req extends DataTablesInput,
         RspVO extends BaseDataTablesVO> {
 
-    DefaultPageHasDataTable<Pojo, PK, PojoVO, Req, RspVO> getDefaultPageHasDataTable();
+    DefaultServiceHasDataTable<Pojo, PK, PojoVO, Req, RspVO> getDefaultPageHasDataTable();
 
     String getSection();
 
