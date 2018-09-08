@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.controller.trait;
 
+import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.request.datatable.DefaultDataTableInput;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.response.vo.row.BaseRowVO;
@@ -32,7 +33,7 @@ public interface DefaultControllerHasDataTable<
 
     @GetMapping("/list")
     default String list(Model model) {
-        model.addAttribute("CMS_RSP", getDefaultPageHasDataTable().getListPageConfig());
+        model.addAttribute(MyConstants.PAGE_RESPONSE, getDefaultPageHasDataTable().getListPageConfig());
         return getSection() + "/datatable";
     }
 
