@@ -1,13 +1,13 @@
 package com.chanhonlun.basecms.service.datatable.impl;
 
-import com.chanhonlun.basecms.model.DataTableColumn;
-import com.chanhonlun.basecms.model.component.BaseDataTableConfig;
-import com.chanhonlun.basecms.model.component.DefaultDataTableConfig;
+import com.chanhonlun.basecms.response.DataTableColumn;
+import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
+import com.chanhonlun.basecms.response.component.DefaultDataTableConfig;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
-import com.chanhonlun.basecms.vo.row.CmsUserRowVO;
+import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;

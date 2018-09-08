@@ -1,9 +1,8 @@
 package com.chanhonlun.basecms.service.datatable;
 
-import com.chanhonlun.basecms.model.component.BaseDataTableConfig;
+import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.vo.row.BaseRowVO;
-import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import com.chanhonlun.basecms.response.vo.row.BaseRowVO;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.domain.Specification;

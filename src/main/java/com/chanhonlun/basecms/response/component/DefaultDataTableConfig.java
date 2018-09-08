@@ -1,6 +1,6 @@
-package com.chanhonlun.basecms.model.component;
+package com.chanhonlun.basecms.response.component;
 
-import com.chanhonlun.basecms.model.DataTableColumn;
+import com.chanhonlun.basecms.response.DataTableColumn;
 import lombok.Builder;
 
 import java.util.List;

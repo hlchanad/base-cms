@@ -6,7 +6,7 @@ import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.service.page.CmsMenuService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
-import com.chanhonlun.basecms.vo.row.CmsMenuRowVO;
+import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

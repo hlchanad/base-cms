@@ -1,4 +1,4 @@
-package com.chanhonlun.basecms.vo.row;
+package com.chanhonlun.basecms.response.vo.row;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.chanhonlun.basecms.model;
+package com.chanhonlun.basecms.response;
 
 import com.chanhonlun.basecms.constant.ActionButtonType;
 import lombok.Builder;

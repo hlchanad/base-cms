@@ -1,4 +1,4 @@
-package com.chanhonlun.basecms.model;
+package com.chanhonlun.basecms.response;
 
 import lombok.Builder;
 import lombok.Data;

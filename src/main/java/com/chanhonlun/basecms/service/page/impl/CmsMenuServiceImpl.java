@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.service.page.impl;
 
-import com.chanhonlun.basecms.model.component.BaseDataTableConfig;
+import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.CmsMenuRepository;
@@ -10,7 +10,7 @@ import com.chanhonlun.basecms.service.page.CmsMenuService;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.chanhonlun.basecms.vo.row.CmsMenuRowVO;
+import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

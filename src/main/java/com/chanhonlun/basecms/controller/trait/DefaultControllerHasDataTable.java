@@ -2,7 +2,7 @@ package com.chanhonlun.basecms.controller.trait;
 
 import com.chanhonlun.basecms.request.datatable.DefaultDataTableInput;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
-import com.chanhonlun.basecms.vo.row.BaseRowVO;
+import com.chanhonlun.basecms.response.vo.row.BaseRowVO;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

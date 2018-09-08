@@ -1,7 +1,7 @@
-package com.chanhonlun.basecms.model.page;
+package com.chanhonlun.basecms.response.page;
 
-import com.chanhonlun.basecms.model.Breadcrumb;
-import com.chanhonlun.basecms.model.MenuItem;
+import com.chanhonlun.basecms.response.Breadcrumb;
+import com.chanhonlun.basecms.response.MenuItem;
 
 import java.util.List;
 

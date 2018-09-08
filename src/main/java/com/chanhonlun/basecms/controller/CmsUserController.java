@@ -6,7 +6,7 @@ import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.service.page.CmsUserService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
-import com.chanhonlun.basecms.vo.row.CmsUserRowVO;
+import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
