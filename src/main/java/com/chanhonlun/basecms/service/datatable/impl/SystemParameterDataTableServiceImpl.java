@@ -48,7 +48,7 @@ public class SystemParameterDataTableServiceImpl extends BaseDataTableServiceImp
     }
 
     @Override
-    public BaseDataTableConfig getDataTablesConfig(Map<String, String> extraConfigs) {
+    public BaseDataTableConfig getDataTableConfig(Map<String, String> extraConfigs) {
 
         List<DataTableColumn> dataTableColumns = Arrays.asList(
                 DataTableColumn.builder().data("id").title("ID").build(),

@@ -10,8 +10,8 @@ public abstract class BaseDataTablePageConfig extends BaseBlankPageConfig {
 
     public BaseDataTableConfig datatable;
 
-    public BaseDataTablePageConfig(List<Breadcrumb> breadcrumbs, List<MenuItem> menu, com.chanhonlun.basecms.response.component.BaseDataTableConfig datatable) {
-        super(breadcrumbs, menu);
+    public BaseDataTablePageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, BaseDataTableConfig datatable) {
+        super(pageTitle, breadcrumbs, menu);
         this.datatable = datatable;
     }
 }

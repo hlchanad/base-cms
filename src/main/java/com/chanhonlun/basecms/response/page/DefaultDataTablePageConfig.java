@@ -10,7 +10,7 @@ import java.util.List;
 public class DefaultDataTablePageConfig extends BaseDataTablePageConfig {
 
     @Builder
-    public DefaultDataTablePageConfig(List<Breadcrumb> breadcrumbs, List<MenuItem> menu, BaseDataTableConfig datatable) {
-        super(breadcrumbs, menu, datatable);
+    public DefaultDataTablePageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, BaseDataTableConfig datatable) {
+        super(pageTitle, breadcrumbs, menu, datatable);
     }
 }

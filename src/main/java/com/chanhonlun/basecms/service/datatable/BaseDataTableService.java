@@ -71,5 +71,5 @@ public interface BaseDataTableService<
      * @param extraConfigs key-value pairs
      * @return Config for datatables
      */
-    RspVO getDataTablesConfig(Map<String, String> extraConfigs);
+    RspVO getDataTableConfig(Map<String, String> extraConfigs);
 }

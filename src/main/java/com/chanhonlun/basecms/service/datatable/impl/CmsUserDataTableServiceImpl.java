@@ -46,7 +46,7 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
     }
 
     @Override
-    public BaseDataTableConfig getDataTablesConfig(Map<String, String> extraConfigs) {
+    public BaseDataTableConfig getDataTableConfig(Map<String, String> extraConfigs) {
 
         List<DataTableColumn> dataTableColumns = Arrays.asList(
                 DataTableColumn.builder().data("id").title("ID").build(),

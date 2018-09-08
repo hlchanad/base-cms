@@ -29,9 +29,12 @@ public interface DefaultServiceHasDataTable<
     }
 
     default BaseDataTablePageConfig getListConfig() {
+        BaseDataTableConfig dataTableConfig = getDataTablesService().getDataTableConfig(new HashMap<>());
+
         return DefaultDataTablePageConfig.builder()
+                .pageTitle(dataTableConfig.title)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
-                .datatable(getDataTablesService().getDataTablesConfig(new HashMap<>()))
+                .datatable(dataTableConfig)
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .build();
     }

@@ -11,6 +11,7 @@ public class DashboardServiceImpl extends BaseServiceImpl implements DashboardSe
     @Override
     public BaseBlankPageConfig getPageConfig() {
         return DefaultBlankPageConfig.builder()
+                .pageTitle("Dashboard")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
                 .build();

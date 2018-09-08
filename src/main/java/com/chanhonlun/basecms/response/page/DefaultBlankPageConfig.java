@@ -9,7 +9,7 @@ import java.util.List;
 public class DefaultBlankPageConfig extends BaseBlankPageConfig {
 
     @Builder
-    public DefaultBlankPageConfig(List<Breadcrumb> breadcrumbs, List<MenuItem> menu) {
-        super(breadcrumbs, menu);
+    public DefaultBlankPageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu) {
+        super(pageTitle, breadcrumbs, menu);
     }
 }

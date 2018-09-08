@@ -11,7 +11,8 @@ public abstract class BaseBlankPageConfig extends BaseConfig {
 
     public List<MenuItem> menu;
 
-    public BaseBlankPageConfig(List<Breadcrumb> breadcrumbs, List<MenuItem> menu) {
+    public BaseBlankPageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu) {
+        super(pageTitle);
         this.breadcrumbs = breadcrumbs;
         this.menu = menu;
     }
