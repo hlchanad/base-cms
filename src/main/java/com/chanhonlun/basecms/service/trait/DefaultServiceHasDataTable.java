@@ -28,7 +28,7 @@ public interface DefaultServiceHasDataTable<
         return getDataTablesService().getDataTablesData(input);
     }
 
-    default BaseDataTablePageConfig getListConfig() {
+    default BaseDataTablePageConfig getListPageConfig() {
         BaseDataTableConfig dataTableConfig = getDataTablesService().getDataTableConfig(new HashMap<>());
 
         return DefaultDataTablePageConfig.builder()

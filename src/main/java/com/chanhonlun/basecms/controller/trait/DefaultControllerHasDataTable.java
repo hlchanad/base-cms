@@ -32,7 +32,7 @@ public interface DefaultControllerHasDataTable<
 
     @GetMapping("/list")
     default String list(Model model) {
-        model.addAttribute("CMS_RSP", getDefaultPageHasDataTable().getListConfig());
+        model.addAttribute("CMS_RSP", getDefaultPageHasDataTable().getListPageConfig());
         return getSection() + "/datatable";
     }
 
