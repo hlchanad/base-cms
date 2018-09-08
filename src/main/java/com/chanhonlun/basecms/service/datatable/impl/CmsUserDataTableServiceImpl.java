@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +29,9 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
         return cmsUserRepository;
     }
 
-    @PostConstruct
-    public void init() {
-        actionButtonUtil.init("cms-user");
+    @Override
+    protected String getSection() {
+        return "cms-user";
     }
 
     @Override

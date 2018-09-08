@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +24,9 @@ public class CmsMenuDataTableServiceImpl extends BaseDataTableServiceImpl implem
     @Autowired
     private CmsMenuRepository cmsMenuRepository;
 
-    @PostConstruct
-    public void init() {
-        actionButtonUtil.init("cms-menu");
+    @Override
+    protected String getSection() {
+        return "cms-menu";
     }
 
     @Override

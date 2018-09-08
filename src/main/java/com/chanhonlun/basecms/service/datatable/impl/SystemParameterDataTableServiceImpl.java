@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +24,9 @@ public class SystemParameterDataTableServiceImpl extends BaseDataTableServiceImp
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
-    @PostConstruct
-    public void init() {
-        actionButtonUtil.init("system-parameter");
+    @Override
+    protected String getSection() {
+        return "system-parameter";
     }
 
     @Override
