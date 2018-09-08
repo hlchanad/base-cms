@@ -15,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,8 @@ import java.util.stream.Stream;
 public class BreadcrumbUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(BreadcrumbUtil.class);
+
+    private static final List<String> excludeUris = Arrays.asList("dashboard");
 
     @Autowired
     private HttpServletRequest httpServletRequest;
@@ -46,6 +49,7 @@ public class BreadcrumbUtil {
 
         String uri = httpServletRequest.getRequestURI().substring(contextPath.length() + 1);
         this.main = Stream.of(uri.split("/"))
+                .filter(section -> !excludeUris.contains(section))
                 .map(section -> Breadcrumb.builder()
                         .title(StringUtils.capitalize(section.replaceAll("-", " ")))
                         .url("/" + section)
