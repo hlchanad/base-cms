@@ -1,12 +1,12 @@
 package com.chanhonlun.basecms.controller;
 
+import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDataTable;
+import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionButton;
 import com.chanhonlun.basecms.pojo.CmsUser;
-import com.chanhonlun.basecms.req.datatables.CmsUserListDataTablesInput;
-import com.chanhonlun.basecms.service.CmsUserService;
-import com.chanhonlun.basecms.service.DefaultServiceHasCRUD;
-import com.chanhonlun.basecms.service.DefaultServiceHasDataTable;
-import com.chanhonlun.basecms.vo.CmsUserDataTablesVO;
-import com.chanhonlun.basecms.vo.CmsUserTableVO;
+import com.chanhonlun.basecms.service.page.CmsUserService;
+import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
+import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
+import com.chanhonlun.basecms.vo.row.CmsUserRowVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/cms-user")
 public class CmsUserController extends BaseController implements
-        DefaultControllerHasDataTable<CmsUser, Long, CmsUserTableVO, CmsUserListDataTablesInput, CmsUserDataTablesVO>,
+        DefaultControllerHasDataTable<CmsUser, Long, CmsUserRowVO>,
         DefaultControllerHasDeleteActionButton<CmsUser, Long> {
 
     @Autowired
     private CmsUserService cmsUserService;
 
     @Override
-    public DefaultServiceHasDataTable<CmsUser, Long, CmsUserTableVO, CmsUserListDataTablesInput, CmsUserDataTablesVO> getDefaultPageHasDataTable() {
+    public DefaultServiceHasDataTable<CmsUser, Long, CmsUserRowVO> getDefaultPageHasDataTable() {
         return cmsUserService;
     }
 

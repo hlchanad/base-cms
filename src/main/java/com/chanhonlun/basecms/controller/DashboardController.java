@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.controller;
 
-import com.chanhonlun.basecms.service.DashboardService;
+import com.chanhonlun.basecms.service.page.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

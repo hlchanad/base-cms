@@ -64,7 +64,7 @@
             </div>
             <div class="dataTables_filter col-sm-12 col-md-6 offset-lg-4 col-lg-4">
                 <label class="input-group">
-                    <input th:id="*{dataTablesId + '-search-box'}" type="text" class="form-control"/>
+                    <input th:id="*{dataTableId + '-search-box'}" type="text" class="form-control"/>
                     <span class="input-group-append">
                         <i class="fa fa-search input-group-text"></i>
                     </span>
@@ -72,10 +72,10 @@
             </div>
 
             <div class="col-12">
-                <table th:id="*{dataTablesId}" class="table table-hover table-responsive-block">
+                <table th:id="*{dataTableId}" class="table table-hover table-responsive-block">
                     <thead>
                     <tr>
-                        <th th:each="column : *{dataTablesColumns}" th:text="${column.title}"></th>
+                        <th th:each="column : *{dataTableColumns}" th:text="${column.title}"></th>
                     </tr>
                     </thead>
                 </table>
@@ -104,13 +104,15 @@
         <script th:inline="javascript">
             const datatableConfig = [[${CMS_RSP.datatable}]];
 
+            console.log("datatableConfig", datatableConfig);
+
             const dataTableService = new MyDatatableService();
 
             const columns = [];
 
-            for (let i = 0; i < datatableConfig.dataTablesColumns.length; i++) {
+            for (let i = 0; i < datatableConfig.dataTableColumns.length; i++) {
 
-                const datatableColumn = datatableConfig.dataTablesColumns[i];
+                const datatableColumn = datatableConfig.dataTableColumns[i];
 
                 let column = {
                     data: datatableColumn.data,
@@ -129,7 +131,7 @@
                 columns.push(column);
             }
 
-            const dataTable = new MyDatatable(dataTableService, datatableConfig.dataTablesId, datatableConfig.title,
+            const dataTable = new MyDatatable(dataTableService, datatableConfig.dataTableId, datatableConfig.title,
                 datatableConfig.ajaxUrl, columns, datatableConfig.extraConfigs);
             dataTable.init();
         </script>

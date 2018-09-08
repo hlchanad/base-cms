@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.model.MenuItem;
-import com.chanhonlun.basecms.service.CmsMenuService;
+import com.chanhonlun.basecms.service.page.CmsMenuService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

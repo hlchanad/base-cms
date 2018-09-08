@@ -42,15 +42,15 @@
 
             <div class="dataTables_filter">
                 <label class="input-group">
-                    <input th:id="${dataTablesId + '-search-box'}" type="text" class="form-control"/>
+                    <input th:id="${dataTableId + '-search-box'}" type="text" class="form-control"/>
                     <span class="input-group-addon"><i class="fas fa-search"></i></span>
                 </label>
             </div>
 
-            <table th:id="*{dataTablesId}" class="table">
+            <table th:id="*{dataTableId}" class="table">
                 <thead>
                 <tr>
-                    <th th:each="column : *{dataTablesColumns}" th:text="${column.title}"></th>
+                    <th th:each="column : *{dataTableColumns}" th:text="${column.title}"></th>
                 </tr>
                 </thead>
             </table>
@@ -82,9 +82,9 @@
 
     const columns = [];
 
-    for (let i = 0; i < datatableConfig.dataTablesColumns.length; i++) {
+    for (let i = 0; i < datatableConfig.dataTableColumns.length; i++) {
 
-        const datatableColumn = datatableConfig.dataTablesColumns[i];
+        const datatableColumn = datatableConfig.dataTableColumns[i];
 
         let column = {
             data: datatableColumn.data,
