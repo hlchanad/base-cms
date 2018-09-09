@@ -1,0 +1,10 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+          th:fragment="input-html">
+
+    <div class="summernote-wrapper">
+        <div th:id="${field.id}"
+             th:text="${not #strings.isEmpty(field.value)} ? ${field.value} : ''"
+             class="my-html-editor">HTML Editor</div>
+    </div>
+
+</th:block>

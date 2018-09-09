@@ -1,0 +1,11 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+          th:fragment="input-time">
+
+    <th:block th:replace="/fragments/form/input-text :: input-text(field = ${field})">
+    </th:block>
+
+    <script th:inline="javascript">
+        $("#" + [[${field.id}]]).timepicker();
+    </script>
+
+</th:block>

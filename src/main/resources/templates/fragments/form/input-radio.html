@@ -1,0 +1,17 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+          th:fragment="input-radio">
+
+    <div class="radio radio-success">
+        <th:block th:each="option : ${field.options}">
+            <input th:id="${option.id}"
+                   th:value="${option.value}"
+                   th:name="${field.id}"
+                   th:checked="${field.value == option.value}"
+                   th:required="${field.required}"
+                   type="radio" />
+            <label th:for="${option.id}"
+                   th:text="${option.title}">Option Title</label>
+        </th:block>
+    </div>
+
+</th:block>

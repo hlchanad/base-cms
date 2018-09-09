@@ -1,0 +1,14 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+          th:fragment="input-long-text">
+
+    <textarea th:id="${field.id}"
+              th:name="${field.id}"
+              th:value="${not #strings.isEmpty(field.value)} ? ${field.value} : ''"
+              type="text"
+              class="form-control"
+              rows="8"
+              th:placeholder="${not #strings.isEmpty(field.placeholder)} ? ${field.placeholder} : ''"
+              th:required="${field.required}"
+              th:disabled="${field.disabled}"></textarea>
+
+</th:block>
