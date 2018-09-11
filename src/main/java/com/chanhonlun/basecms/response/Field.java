@@ -2,9 +2,11 @@ package com.chanhonlun.basecms.response;
 
 import com.chanhonlun.basecms.constant.FieldType;
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Builder
 public class Field {
 
@@ -12,6 +14,7 @@ public class Field {
     public String title;
     public FieldType type;
     public String value;
+    public Float numberStep;
     public String placeholder;
     public String hintTitle;
     public String hintDetail;

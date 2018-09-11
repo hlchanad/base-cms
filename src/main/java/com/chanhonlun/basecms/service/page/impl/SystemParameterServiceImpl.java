@@ -1,25 +1,29 @@
 package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.constant.FieldType;
-import com.chanhonlun.basecms.response.Field;
-import com.chanhonlun.basecms.response.FieldOption;
-import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
+import com.chanhonlun.basecms.response.Field;
+import com.chanhonlun.basecms.response.FieldOption;
+import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
+import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.SystemParameterDataTableServiceImpl;
 import com.chanhonlun.basecms.service.page.SystemParameterService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
+import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
+import com.google.common.base.CaseFormat;
+import com.mysema.codegen.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SystemParameterServiceImpl extends BaseServiceImpl implements SystemParameterService {
@@ -30,6 +34,60 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Autowired
     private SystemParameterRepository systemParameterRepository;
 
+    private Map<String, Field> fieldMap = new LinkedHashMap<>();
+
+    @PostConstruct
+    public void init() {
+        ReflectionUtil.getPojoFields(SystemParameter.class)
+                .stream()
+                .map(property -> {
+                    Field.FieldBuilder fieldBuilder = Field.builder();
+
+                    // --- id --------------
+                    fieldBuilder.id(property.getName());
+
+                    // --- title ------------
+                    String lowerUnderscored = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, property.getName());
+                    String lowerSpaced      = lowerUnderscored.replaceAll("_", " ");
+                    fieldBuilder.title(StringUtils.capitalize(lowerSpaced));
+
+
+                    // --- type -------------
+                    Class<?> clazz = property.getType();
+                    if (Date.class.equals(clazz)) {
+                        fieldBuilder.type(FieldType.DATE);
+                    }
+                    else if (Short.class.equals(clazz) || Integer.class.equals(clazz) || Long.class.equals(clazz)) {
+                        fieldBuilder.type(FieldType.NUMBER);
+                    }
+                    else if (Float.class.equals(clazz) || Double.class.equals(clazz)) {
+                        fieldBuilder.type(FieldType.NUMBER);
+                        fieldBuilder.numberStep(0.1f);
+                    }
+                    else if (clazz.isEnum()) {
+                        @SuppressWarnings("unchecked")
+                        List<? extends Enum> enums = (List<? extends Enum>) Arrays.asList(clazz.getEnumConstants());
+
+                        fieldBuilder.type(enums.size() > 5 ? FieldType.DROPDOWN : FieldType.RADIO);
+
+                        List<FieldOption> fieldOptions = enums.stream().map((Enum anEnum) ->
+                                FieldOption.builder()
+                                        .id(property.getName() + "_" + anEnum.name().toLowerCase())
+                                        .title(StringUtils.capitalize(anEnum.name().replaceAll("_", " ").toLowerCase()))
+                                        .value(anEnum.name())
+                                        .build())
+                                .collect(Collectors.toList());
+
+                        fieldBuilder.options(fieldOptions);
+                    }
+                    else {
+                        fieldBuilder.type(FieldType.TEXT);
+                    }
+
+                    return fieldBuilder.build();
+                })
+                .forEach(field -> fieldMap.put(field.getId(), field));
+    }
 
     @Override
     public BaseRepository<SystemParameter, Long> getRepository() {
@@ -54,112 +112,11 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Override
     public BaseCreatePageConfig getCreatePageConfig() {
 
-        List<Field> fields = Arrays.asList(
-                Field.builder()
-                        .id("category")
-                        .title("Category")
-                        .type(FieldType.TEXT)
-                        .value("GENERAL")
-                        .build(),
-                Field.builder()
-                        .id("key")
-                        .title("Key")
-                        .type(FieldType.TEXT)
-                        .placeholder("key")
-                        .build(),
-                Field.builder()
-                        .id("value")
-                        .title("Value")
-                        .type(FieldType.TEXT)
-                        .build(),
-
-                // --- Test -------------------------------
-
-                Field.builder()
-                        .id("password")
-                        .title("Password")
-                        .type(FieldType.PASSWORD)
-                        .hintTitle("Please fulfill the following password complexity criteria")
-                        .hintDetail("At least 8 characters with one alphabet, one numeric and one symbol")
-                        .build(),
-                Field.builder()
-                        .id("number")
-                        .title("Number")
-                        .type(FieldType.NUMBER)
-                        .build(),
-                Field.builder()
-                        .id("date")
-                        .title("Date")
-                        .type(FieldType.DATE)
-                        .build(),
-                Field.builder()
-                        .id("dateTime")
-                        .title("DateTime")
-                        .type(FieldType.DATE_TIME)
-                        .build(),
-                Field.builder()
-                        .id("time")
-                        .title("TIME")
-                        .type(FieldType.TIME)
-                        .build(),
-                Field.builder()
-                        .id("longText")
-                        .title("LONG_TEXT")
-                        .type(FieldType.LONG_TEXT)
-                        .placeholder("textarea placeholder")
-                        .value("textarea value")
-                        .build(),
-                Field.builder()
-                        .id("html")
-                        .title("HTML")
-                        .type(FieldType.HTML)
-                        .build(),
-                Field.builder()
-                        .id("radio")
-                        .title("RADIO")
-                        .type(FieldType.RADIO)
-                        .value("female")
-                        .options(Arrays.asList(
-                                FieldOption.builder()
-                                        .id("male")
-                                        .title("Male")
-                                        .value("male")
-                                        .build(),
-                                FieldOption.builder()
-                                        .id("female")
-                                        .title("Female")
-                                        .value("female")
-                                        .build()
-                        ))
-                        .build(),
-                Field.builder()
-                        .id("dropdown")
-                        .title("DROPDOWN")
-                        .type(FieldType.DROPDOWN)
-                        .value("female")
-                        .options(Arrays.asList(
-                                FieldOption.builder()
-                                        .title("Male")
-                                        .value("male")
-                                        .build(),
-                                FieldOption.builder()
-                                        .title("Female")
-                                        .value("female")
-                                        .build()
-                        ))
-                        .build(),
-                Field.builder()
-                        .id("image")
-                        .title("Image")
-                        .type(FieldType.IMAGE)
-                        .build()
-        );
-
         return BaseCreatePageConfig.builder()
                 .pageTitle("System Parameter")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
-                .fields(fields)
+                .fields(new ArrayList<>(fieldMap.values()))
                 .build();
     }
 }
