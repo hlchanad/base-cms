@@ -18,7 +18,7 @@ public class Post extends BasePojo<Long> {
     private Date publishDate;
 
     @ManyToOne
-    @JoinFormula("(SELECT D.ID FROM POST_DETAIL D WHERE D.REF_ID = ID AND D.LANG = 'EN')")
+    @JoinFormula("(SELECT D.ID FROM BASE_SERVER.POST_DETAIL D WHERE D.REF_ID = ID AND D.LANG = 'EN')")
     private PostDetail detailEn;
 
 }
