@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.JoinFormula;
@@ -17,6 +18,7 @@ public class Post extends BasePojo<Long> {
     @Column(name = "PUBLISH_DATE")
     private Date publishDate;
 
+    @IgnoreAutoReflection
     @ManyToOne
     @JoinFormula("(SELECT D.ID FROM BASE_SERVER.POST_DETAIL D WHERE D.REF_ID = ID AND D.LANG = 'EN')")
     private PostDetail detailEn;

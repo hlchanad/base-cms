@@ -1,0 +1,129 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="/layouts/blank">
+
+    <th:block layout:fragment="custom-css">
+        <link th:href="@{/assets/plugins/bootstrap-datepicker/css/datepicker3.css}" rel="stylesheet" type="text/css"
+              media="screen">
+        <link th:href="@{/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css}" rel="stylesheet"
+              type="text/css" media="screen">
+        <link th:href="@{/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}" rel="stylesheet"
+              type="text/css" media="screen">
+        <link th:href="@{/assets/plugins/summernote/css/summernote.css}" rel="stylesheet" type="text/css"
+              media="screen">
+
+        <style>
+            .bootstrap-timepicker-widget i {
+                color: #6d5eac;
+                font-weight: 600;
+            }
+
+            .tab-content.tab-content-transparent {
+                background-color: transparent;
+            }
+        </style>
+    </th:block>
+
+    <div layout:fragment="content">
+
+        <!-- START card -->
+        <div class="card card-transparent">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 th:text="${CMS_RSP.pageTitle}"></h3>
+
+                        <form id="form-work" class="form-horizontal" role="form" autocomplete="off">
+
+                            <div th:each="field, it : ${CMS_RSP.fields}"
+                                 class="form-group row"
+                                 th:classappend="${it.last and not #lists.isEmpty(CMS_RSP.detailFields)} ? 'border-bottom-0 mb-4'"
+                                 th:if="${field.show}">
+
+                                <label th:for="${field.id}"
+                                       class="col-md-3 control-label"
+                                       th:text="${field.title}">Field Title</label>
+
+                                <div class="col-md-9">
+                                    <th:block th:replace="/fragments/form/field :: field(field = ${field})"/>
+                                </div>
+                            </div>
+
+                            <div th:if="${not #lists.isEmpty(CMS_RSP.detailFields)}"
+                                 class="card card-transparent">
+
+                                <!-- Language Navigation -->
+                                <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                                    <li th:each="detailField, it2 : ${CMS_RSP.detailFields}"
+                                        class="nav-item">
+                                        <a href="#"
+                                           th:class="${it2.first} ? 'active'"
+                                           data-toggle="tab"
+                                           th:attr="data-target='#' + ${detailField.language.name()}"
+                                           th:text="${detailField.language.getDisplayName()}"></a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content tab-content-transparent">
+                                    <div th:each="detailField, it2 : ${CMS_RSP.detailFields}"
+                                         class="tab-pane slide-left"
+                                         th:id="${detailField.language.name()}"
+                                         th:classappend="${it2.first} ? 'active'">
+
+                                        <div th:each="field : ${detailField.fields}"
+                                             class="form-group row"
+                                             th:if="${field.show}">
+
+                                            <label th:for="${field.id}"
+                                                   class="col-md-3 control-label"
+                                                   th:text="${field.title}">Field Title</label>
+
+                                            <div class="col-md-9">
+                                                <th:block
+                                                        th:replace="/fragments/form/field :: field(field = ${field})"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-9">
+                                    <button class="btn btn-success" type="submit">Submit</button>
+                                    <button class="btn btn-default" type="reset"><i class="pg-close"></i> Clear</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END card -->
+
+    </div>
+
+    <th:block layout:fragment="custom-js" th:inline="javascript">
+        <script th:src="@{/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"
+                type="text/javascript"></script>
+        <script th:src="@{/assets/plugins/summernote/js/summernote.min.js}" type="text/javascript"></script>
+
+        <script th:src="@{/assets/js/my-form-element.js}" type="text/javascript"></script>
+
+        <script>
+            const myFormElement = new MyFormElement();
+            myFormElement.initFormElements();
+        </script>
+    </th:block>
+
+</div>

@@ -1,0 +1,56 @@
+<div xmlns:th="http://www.thymeleaf.org">
+
+    <th:block th:fragment="field">
+
+        <p th:if="${not #strings.isEmpty(field.hintTitle)}"
+           th:text="${field.hintTitle}"></p>
+        <p th:if="${not #strings.isEmpty(field.hintDetail)}" th:text="${field.hintDetail}"
+           class="hint-text small"></p>
+
+
+        <th:block th:if="${field.type == field.type.TEXT}">
+            <th:block th:replace="/fragments/form/input-text :: input-text(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.PASSWORD}">
+            <th:block th:replace="/fragments/form/input-password:: input-password(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.NUMBER}">
+            <th:block th:replace="/fragments/form/input-number :: input-number(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.DATE}">
+            <th:block th:replace="/fragments/form/input-date :: input-date(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.DATE_TIME}">
+            <th:block th:replace="/fragments/form/input-date-time :: input-date-time(field = ${field})"> </th:block>
+        </th:block>
+        <th:block th:if="${field.type == field.type.TIME}">
+            <th:block th:replace="/fragments/form/input-time :: input-time(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.LONG_TEXT}">
+            <th:block th:replace="/fragments/form/input-long-text :: input-long-text(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.HTML}">
+            <th:block th:replace="/fragments/form/input-html :: input-html(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.RADIO}">
+            <th:block th:replace="/fragments/form/input-radio :: input-radio(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.DROPDOWN}">
+            <th:block th:replace="/fragments/form/input-dropdown :: input-dropdown(field = ${field})"> </th:block>
+        </th:block>
+
+        <th:block th:if="${field.type == field.type.IMAGE}">
+            <th:block th:replace="/fragments/form/input-image :: input-image(field = ${field})"> </th:block>
+        </th:block>
+
+    </th:block>
+
+</div>
