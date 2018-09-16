@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.service.page;
 
+import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
@@ -12,4 +13,10 @@ public interface PostService extends
         DefaultServiceHasCRUD<Post, Long> {
 
     BaseCreatePageConfig getCreatePageConfig();
+
+    Post create(PostForm form);
+
+    BaseCreatePageConfig getDetailPageConfig(Post post);
+
+    BaseCreatePageConfig getDetailPageConfig(Long id);
 }

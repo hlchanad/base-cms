@@ -49,7 +49,16 @@ public class PostController extends BaseController implements
         logger.info("form data: {}", new Gson().toJson(httpServletRequest.getParameterMap()));
         logger.info("form: {}", new Gson().toJson(form));
         logger.info("bindingResult: {}", new Gson().toJson(bindingResult));
-        model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getCreatePageConfig());
+
+        Post post = postService.create(form);
+
+        model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(post));
+        return "post/create";
+    }
+
+    @GetMapping("/{id}/detail")
+    public String detail(Model model, @PathVariable(value = "id") Long id) {
+        model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(id));
         return "post/create";
     }
 }
