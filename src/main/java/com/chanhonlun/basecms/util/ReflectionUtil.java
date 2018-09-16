@@ -31,15 +31,16 @@ public class ReflectionUtil {
 
         com.chanhonlun.basecms.response.Field.FieldBuilder fieldBuilder = com.chanhonlun.basecms.response.Field.builder();
 
-        String languageSuffix = language != null ? "_" + language.name() : "";
+        String languageSuffix = language == null ? "" : CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, language.name());
+        String languagePrefix = language == null ? "" : "detail" + languageSuffix + ".";
 
         // --- id --------------
-        fieldBuilder.id(property.getName() + languageSuffix);
+        fieldBuilder.id(languagePrefix + property.getName());
 
         // --- title ------------
         String lowerUnderscored = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, property.getName());
         String lowerSpaced      = lowerUnderscored.replaceAll("_", " ");
-        fieldBuilder.title(StringUtils.capitalize(lowerSpaced) + languageSuffix);
+        fieldBuilder.title(StringUtils.capitalize(lowerSpaced));
 
 
         // --- type -------------

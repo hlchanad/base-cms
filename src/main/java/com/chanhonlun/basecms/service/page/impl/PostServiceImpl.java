@@ -1,17 +1,14 @@
 package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
-import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
-import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.PostRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.DetailField;
 import com.chanhonlun.basecms.response.Field;
-import com.chanhonlun.basecms.response.FieldOption;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
@@ -21,17 +18,16 @@ import com.chanhonlun.basecms.service.page.PostService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.google.common.base.CaseFormat;
 import com.google.gson.Gson;
-import com.mysema.codegen.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl extends BaseServiceImpl implements PostService {

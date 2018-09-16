@@ -33,7 +33,7 @@
                     <div class="col-md-10">
                         <h3 th:text="${CMS_RSP.pageTitle}"></h3>
 
-                        <form id="form-work" class="form-horizontal" role="form" autocomplete="off">
+                        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" th:action="@{/post/create}" method="post">
 
                             <div th:each="field, it : ${CMS_RSP.fields}"
                                  class="form-group row"
