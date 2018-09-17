@@ -24,4 +24,8 @@ public class BaseServiceImpl {
 
     @Autowired
     protected SidebarMenuUtil sidebarMenuUtil;
+
+    public Logger getLogger() {
+        return logger;
+    }
 }

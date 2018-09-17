@@ -5,8 +5,11 @@ import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.PostForm;
+import com.chanhonlun.basecms.pojo.BaseDetailPojo;
+import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
+import com.chanhonlun.basecms.repository.BaseDetailRepository;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.PostDetailRepository;
 import com.chanhonlun.basecms.repository.PostRepository;
@@ -15,6 +18,7 @@ import com.chanhonlun.basecms.response.DetailField;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
+import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.PostDataTableService;
@@ -24,12 +28,16 @@ import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class PostServiceImpl extends BaseServiceImpl implements PostService {
@@ -71,14 +79,16 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
                 })
                 .forEach(pair -> fieldDetailMap.put(pair.getKey(), pair.getValue()));
 
-        logger.info("fieldMap: {}", new Gson().toJson(fieldMap));
-        logger.info("fieldDetailMap: {}", new Gson().toJson(fieldDetailMap));
-
     }
 
     @Override
     public BaseRepository<Post, Long> getRepository() {
         return postRepository;
+    }
+
+    @Override
+    public BaseDetailRepository<PostDetail, Long, Long> getDetailRepository() {
+        return postDetailRepository;
     }
 
     @Override
@@ -97,9 +107,19 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
+    public Map<String, Field> getFieldMap() {
+        return fieldMap;
+    }
+
+    @Override
+    public Map<String, Map<Language, Field>> getFieldDetailMap() {
+        return fieldDetailMap;
+    }
+
+    @Override
     public BaseCreatePageConfig getCreatePageConfig() {
 
-        return BaseCreatePageConfig.builder()
+        return DefaultCreatePageConfig.builder()
                 .pageTitle("Post")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
@@ -140,39 +160,4 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         return post;
     }
 
-    @Override
-    public BaseCreatePageConfig getDetailPageConfig(Post post) {
-
-        PostDetail postDetailEn   = postDetailRepository.findByRefIdAndLang(post.getId(), Language.EN);
-        PostDetail postDetailZhHk = postDetailRepository.findByRefIdAndLang(post.getId(), Language.ZH_HK);
-
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMap =
-                gson.fromJson(gson.toJson(this.fieldMap), new TypeToken<Map<String, Field>>(){}.getType());
-
-        Map<String, Map<Language, Field>> fieldDetailMap =
-                gson.fromJson(gson.toJson(this.fieldDetailMap), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
-
-        fieldMap.get("publishDate").setValue(post.getPublishDate().toString());
-        fieldDetailMap.get("title").get(Language.EN).setValue(postDetailEn.getTitle());
-        fieldDetailMap.get("title").get(Language.ZH_HK).setValue(postDetailZhHk.getTitle());
-        fieldDetailMap.get("brief").get(Language.EN).setValue(postDetailEn.getBrief());
-        fieldDetailMap.get("brief").get(Language.ZH_HK).setValue(postDetailZhHk.getBrief());
-        fieldDetailMap.get("content").get(Language.EN).setValue(postDetailEn.getContent().replaceAll("\\n", "<br/>"));
-        fieldDetailMap.get("content").get(Language.ZH_HK).setValue(postDetailZhHk.getContent().replaceAll("\\n", "<br/>"));
-
-        return BaseCreatePageConfig.builder()
-                .pageTitle("Post")
-                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
-                .menu(sidebarMenuUtil.getSidebarMenuList())
-                .fields(new ArrayList<>(fieldMap.values()))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
-                .build();
-    }
-
-    @Override
-    public BaseCreatePageConfig getDetailPageConfig(Long id) {
-        return getDetailPageConfig(postRepository.findByIdAndIsDeleteFalse(id));
-    }
 }

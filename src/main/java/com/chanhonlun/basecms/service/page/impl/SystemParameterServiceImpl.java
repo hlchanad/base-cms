@@ -9,6 +9,7 @@ import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.FieldOption;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
+import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.SystemParameterDataTableServiceImpl;
@@ -68,7 +69,7 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     @Override
     public BaseCreatePageConfig getCreatePageConfig() {
 
-        return BaseCreatePageConfig.builder()
+        return DefaultCreatePageConfig.builder()
                 .pageTitle("System Parameter")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
