@@ -59,6 +59,6 @@ public class PostController extends BaseController implements
     @GetMapping("/{id}/detail")
     public String detail(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(id));
-        return "post/create";
+        return "post/detail";
     }
 }

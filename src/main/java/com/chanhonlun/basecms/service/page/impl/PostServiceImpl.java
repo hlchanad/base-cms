@@ -183,8 +183,8 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         fieldDetailMap.get("title").get(Language.ZH_HK).setValue(postDetailZhHk.getTitle());
         fieldDetailMap.get("brief").get(Language.EN).setValue(postDetailEn.getBrief());
         fieldDetailMap.get("brief").get(Language.ZH_HK).setValue(postDetailZhHk.getBrief());
-        fieldDetailMap.get("content").get(Language.EN).setValue(postDetailEn.getContent());
-        fieldDetailMap.get("content").get(Language.ZH_HK).setValue(postDetailZhHk.getContent());
+        fieldDetailMap.get("content").get(Language.EN).setValue(postDetailEn.getContent().replaceAll("\\n", "<br/>"));
+        fieldDetailMap.get("content").get(Language.ZH_HK).setValue(postDetailZhHk.getContent().replaceAll("\\n", "<br/>"));
 
         List<DetailField> detailFields = new ArrayList<>();
 
