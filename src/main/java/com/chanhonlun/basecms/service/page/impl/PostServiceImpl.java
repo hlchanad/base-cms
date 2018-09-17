@@ -99,36 +99,12 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     @Override
     public BaseCreatePageConfig getCreatePageConfig() {
 
-        List<DetailField> detailFields = new ArrayList<>();
-
-        fieldDetailMap.values().stream()
-                .flatMap(languageFieldMap -> languageFieldMap.entrySet().stream())
-                .forEach(languageFieldEntry -> {
-
-                    DetailField search = detailFields.stream()
-                            .filter(detailField -> detailField.getLanguage().equals(languageFieldEntry.getKey()))
-                            .findAny()
-                            .orElse(null);
-
-                    if (search == null) {
-                        search = DetailField.builder()
-                                .language(languageFieldEntry.getKey())
-                                .fields(new ArrayList<>())
-                                .build();
-                        detailFields.add(search);
-                    }
-
-                    search.getFields().add(languageFieldEntry.getValue());
-                });
-
-        logger.info("detailFields: {}", new Gson().toJson(detailFields));
-
         return BaseCreatePageConfig.builder()
                 .pageTitle("Post")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
                 .fields(new ArrayList<>(fieldMap.values()))
-                .detailFields(detailFields)
+                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
                 .build();
     }
 
@@ -186,36 +162,12 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         fieldDetailMap.get("content").get(Language.EN).setValue(postDetailEn.getContent().replaceAll("\\n", "<br/>"));
         fieldDetailMap.get("content").get(Language.ZH_HK).setValue(postDetailZhHk.getContent().replaceAll("\\n", "<br/>"));
 
-        List<DetailField> detailFields = new ArrayList<>();
-
-        fieldDetailMap.values().stream()
-                .flatMap(languageFieldMap -> languageFieldMap.entrySet().stream())
-                .forEach(languageFieldEntry -> {
-
-                    DetailField search = detailFields.stream()
-                            .filter(detailField -> detailField.getLanguage().equals(languageFieldEntry.getKey()))
-                            .findAny()
-                            .orElse(null);
-
-                    if (search == null) {
-                        search = DetailField.builder()
-                                .language(languageFieldEntry.getKey())
-                                .fields(new ArrayList<>())
-                                .build();
-                        detailFields.add(search);
-                    }
-
-                    search.getFields().add(languageFieldEntry.getValue());
-                });
-
-        logger.info("detailFields: {}", new Gson().toJson(detailFields));
-
         return BaseCreatePageConfig.builder()
                 .pageTitle("Post")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
                 .fields(new ArrayList<>(fieldMap.values()))
-                .detailFields(detailFields)
+                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
                 .build();
     }
 

@@ -2,34 +2,33 @@ package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.constant.Language;
+import com.chanhonlun.basecms.response.DetailField;
+import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.FieldOption;
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReflectionUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
-    public static List<Field> getPojoFields(Class<?> pojoClass) {
+    public static List<java.lang.reflect.Field> getPojoFields(Class<?> pojoClass) {
         return Arrays.asList(pojoClass.getDeclaredFields());
     }
 
-    public static com.chanhonlun.basecms.response.Field getFieldFromProperty(Field property) {
+    public static Field getFieldFromProperty(java.lang.reflect.Field property) {
 
         return getFieldFromProperty(property, null);
     }
 
-    public static com.chanhonlun.basecms.response.Field getFieldFromProperty(Field property, Language language) {
+    public static Field getFieldFromProperty(java.lang.reflect.Field property, Language language) {
 
-        com.chanhonlun.basecms.response.Field.FieldBuilder fieldBuilder = com.chanhonlun.basecms.response.Field.builder();
+       Field.FieldBuilder fieldBuilder = Field.builder();
 
         String languageSuffix = language == null ? "" : CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, language.name());
         String languagePrefix = language == null ? "" : "detail" + languageSuffix + ".";
@@ -76,5 +75,31 @@ public class ReflectionUtil {
         }
 
         return fieldBuilder.build();
+    }
+
+    public static List<DetailField> getDetailFields(Map<String, Map<Language, Field>> fieldDetailMap) {
+        List<DetailField> detailFields = new ArrayList<>();
+
+        fieldDetailMap.values().stream()
+                .flatMap(languageFieldMap -> languageFieldMap.entrySet().stream())
+                .forEach(languageFieldEntry -> {
+
+                    DetailField search = detailFields.stream()
+                            .filter(detailField -> detailField.getLanguage().equals(languageFieldEntry.getKey()))
+                            .findAny()
+                            .orElse(null);
+
+                    if (search == null) {
+                        search = DetailField.builder()
+                                .language(languageFieldEntry.getKey())
+                                .fields(new ArrayList<>())
+                                .build();
+                        detailFields.add(search);
+                    }
+
+                    search.getFields().add(languageFieldEntry.getValue());
+                });
+
+        return detailFields;
     }
 }
