@@ -47,12 +47,22 @@ public class BreadcrumbUtil {
                 .build());
 
         String uri = httpServletRequest.getRequestURI().substring(contextPath.length() + 1);
-        this.main = Stream.of(uri.split("/"))
+
+        List<String> pathFragments = Stream.of(uri.split("/"))
                 .filter(section -> !excludeUris.contains(section))
-                .map(section -> Breadcrumb.builder()
-                        .title(StringUtils.capitalize(section.replaceAll("-", " ")))
-                        .url("/" + section)
-                        .build()).collect(Collectors.toList());
+                .collect(Collectors.toList());
+
+        this.main = new ArrayList<>();
+        for (int i = 0; i < pathFragments.size(); i ++) {
+            String section = pathFragments.get(i);
+            String url = pathFragments.subList(0, i + 1).stream().collect(Collectors.joining("/"));
+
+            this.main.add(Breadcrumb.builder()
+                    .title(StringUtils.capitalize(section.replaceAll("-", " ")))
+                    .url("/" + url)
+                    .build());
+        }
+
         this.previous = Collections.emptyList();
         this.next = Collections.emptyList();
     }
