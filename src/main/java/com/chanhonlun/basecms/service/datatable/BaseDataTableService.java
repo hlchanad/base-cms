@@ -20,6 +20,8 @@ public interface BaseDataTableService<
         Req extends BaseDataTableInput,
         RspVO extends BaseDataTableConfig> {
 
+    void setSection(String section);
+
     /**
      * Get the instance of DataTablesRepository for handling datatables.js request
      *

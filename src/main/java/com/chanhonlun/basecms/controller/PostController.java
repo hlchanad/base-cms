@@ -6,6 +6,7 @@ import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionB
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
+import com.chanhonlun.basecms.service.page.BaseService;
 import com.chanhonlun.basecms.service.page.PostService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
@@ -41,7 +42,7 @@ public class PostController extends BaseController implements
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getCreatePageConfig());
-        return "post/create";
+        return section + "/create";
     }
 
     @PostMapping("/create")
@@ -53,17 +54,22 @@ public class PostController extends BaseController implements
         Post post = postService.create(form);
 
         model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(post));
-        return "post/create";
+        return section + "/create";
     }
 
     @GetMapping("/{id}")
     public String redirectDetail(@PathVariable(value = "id") Long id) {
-        return "redirect:/post/" + id + "/detail";
+        return "redirect:/" + section + "/" + id + "/detail";
     }
 
     @GetMapping("/{id}/detail")
     public String detail(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(id));
-        return "post/detail";
+        return section + "/detail";
+    }
+
+    @Override
+    protected BaseService getService() {
+        return postService;
     }
 }

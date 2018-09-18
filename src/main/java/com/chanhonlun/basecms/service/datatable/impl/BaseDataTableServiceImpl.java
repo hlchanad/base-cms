@@ -12,16 +12,17 @@ public abstract class BaseDataTableServiceImpl {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    protected String section;
+
     @Value("${server.servlet.context-path}")
     protected String contextPath;
 
     @Autowired
     protected ActionButtonUtil actionButtonUtil;
 
-    @PostConstruct
-    public void init() {
-        actionButtonUtil.init(getSection());
+    public void setSection(String section) {
+        this.section = section;
+        actionButtonUtil.init(this.section);
     }
 
-    protected abstract String getSection();
 }

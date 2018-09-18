@@ -28,6 +28,8 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
         PojoDetailPK extends Serializable>
         extends DefaultServiceHasDetailPage<Pojo, PojoPK> {
 
+    String getSection();
+
     BaseDetailRepository<PojoDetail, PojoDetailPK, PojoPK> getDetailRepository();
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
@@ -59,8 +61,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
 
     default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
 
-        String pageTitle = StringUtils.capitalize(CaseFormat.UPPER_CAMEL.to(
-                CaseFormat.LOWER_UNDERSCORE, pojo.getClass().getSimpleName()).replaceAll("_", " "));
+        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
         Map<String, Field> fieldMap = updateFieldMapWithValues(getFieldMap(), pojo);
         Map<String, Map<Language, Field>> fieldDetailMap = updateFieldDetailMapWithValues(getFieldDetailMap(), pojo);

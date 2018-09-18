@@ -3,6 +3,7 @@ package com.chanhonlun.basecms.controller;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDataTable;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionButton;
 import com.chanhonlun.basecms.pojo.CmsMenu;
+import com.chanhonlun.basecms.service.page.BaseService;
 import com.chanhonlun.basecms.service.page.CmsMenuService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
@@ -30,4 +31,8 @@ public class CmsMenuController extends BaseController implements
         return cmsMenuService;
     }
 
+    @Override
+    protected BaseService getService() {
+        return cmsMenuService;
+    }
 }

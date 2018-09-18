@@ -3,6 +3,7 @@ package com.chanhonlun.basecms.controller;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDataTable;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionButton;
 import com.chanhonlun.basecms.pojo.CmsUser;
+import com.chanhonlun.basecms.service.page.BaseService;
 import com.chanhonlun.basecms.service.page.CmsUserService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
@@ -27,6 +28,11 @@ public class CmsUserController extends BaseController implements
 
     @Override
     public DefaultServiceHasCRUD<CmsUser, Long> getDefaultPageHasCRUD() {
+        return cmsUserService;
+    }
+
+    @Override
+    protected BaseService getService() {
         return cmsUserService;
     }
 }

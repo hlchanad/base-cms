@@ -10,6 +10,7 @@ import com.chanhonlun.basecms.response.vo.row.PostDetailRowVO;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.google.gson.Gson;
+import com.mysema.codegen.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class PostDataTableService extends BaseDataTableServiceImpl implements
+public class PostDataTableServiceImpl extends BaseDataTableServiceImpl implements
         BaseDataTableService<Post, Long, PostRowVO, BaseDataTableInput, BaseDataTableConfig> {
 
     @Autowired
@@ -55,16 +56,12 @@ public class PostDataTableService extends BaseDataTableServiceImpl implements
         );
 
         return DefaultDataTableConfig.builder()
-                .title("Post")
-                .dataTableId("post")
-                .ajaxUrl(contextPath + "/post/data")
+                .title(StringUtils.capitalize(section.replace("-", " ")))
+                .dataTableId(section)
+                .ajaxUrl(contextPath + "/" + section + "/data")
                 .dataTableColumns(dataTableColumns)
                 .extraConfigs(extraConfigs)
                 .build();
     }
 
-    @Override
-    protected String getSection() {
-        return "post";
-    }
 }

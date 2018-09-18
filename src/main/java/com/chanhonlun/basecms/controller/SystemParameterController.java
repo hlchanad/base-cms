@@ -4,6 +4,7 @@ import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDataTable;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionButton;
 import com.chanhonlun.basecms.pojo.SystemParameter;
+import com.chanhonlun.basecms.service.page.BaseService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.service.page.SystemParameterService;
@@ -37,5 +38,10 @@ public class SystemParameterController extends BaseController implements
     public String create(Model model) {
         model.addAttribute(MyConstants.PAGE_RESPONSE, systemParameterService.getCreatePageConfig());
         return "system-parameter/create";
+    }
+
+    @Override
+    protected BaseService getService() {
+        return systemParameterService;
     }
 }

@@ -31,6 +31,8 @@ public interface DefaultServiceHasDetailPage<
 
     Logger getLogger();
 
+    String getSection();
+
     Map<String, Field> getFieldMap();
 
     BreadcrumbUtil getBreadcrumbUtil();
@@ -67,8 +69,7 @@ public interface DefaultServiceHasDetailPage<
 
     default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
 
-        String pageTitle = StringUtils.capitalize(CaseFormat.UPPER_CAMEL.to(
-                CaseFormat.LOWER_UNDERSCORE, pojo.getClass().getSimpleName()).replaceAll("_", " "));
+        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
         Map<String, Field> fieldMap = updateFieldMapWithValues(getFieldMap(), pojo);
 

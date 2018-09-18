@@ -9,6 +9,7 @@ import com.chanhonlun.basecms.response.component.DefaultDataTableConfig;
 import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.google.gson.Gson;
+import com.mysema.codegen.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,11 +31,6 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
     @Override
     public DataTablesRepository<CmsUser, Long> getDataTablesRepository() {
         return cmsUserRepository;
-    }
-
-    @Override
-    protected String getSection() {
-        return "cms-user";
     }
 
     @Override
@@ -73,9 +69,9 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
         );
 
         return DefaultDataTableConfig.builder()
-                .title("CMS User")
-                .dataTableId("cms-user")
-                .ajaxUrl(contextPath + "/cms-user/data")
+                .title(StringUtils.capitalize(section.replace("-", " ")))
+                .dataTableId(section)
+                .ajaxUrl(contextPath + "/" + section + "/data")
                 .dataTableColumns(dataTableColumns)
                 .extraConfigs(extraConfigs)
                 .build();

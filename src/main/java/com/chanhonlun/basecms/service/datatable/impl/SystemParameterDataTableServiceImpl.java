@@ -1,14 +1,15 @@
 package com.chanhonlun.basecms.service.datatable.impl;
 
+import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.DataTableColumn;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.component.DefaultDataTableConfig;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
-import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
+import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.google.gson.Gson;
+import com.mysema.codegen.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,6 @@ public class SystemParameterDataTableServiceImpl extends BaseDataTableServiceImp
 
     @Autowired
     private SystemParameterRepository systemParameterRepository;
-
-    @Override
-    protected String getSection() {
-        return "system-parameter";
-    }
 
     @Override
     public DataTablesRepository<SystemParameter, Long> getDataTablesRepository() {
@@ -60,9 +56,9 @@ public class SystemParameterDataTableServiceImpl extends BaseDataTableServiceImp
         );
 
         return DefaultDataTableConfig.builder()
-                .title("System Parameter")
-                .dataTableId("system-parameter")
-                .ajaxUrl(contextPath + "/system-parameter/data")
+                .title(StringUtils.capitalize(section.replace("-", " ")))
+                .dataTableId(section)
+                .ajaxUrl(contextPath + "/" + section + "/data")
                 .dataTableColumns(dataTableColumns)
                 .extraConfigs(extraConfigs)
                 .build();

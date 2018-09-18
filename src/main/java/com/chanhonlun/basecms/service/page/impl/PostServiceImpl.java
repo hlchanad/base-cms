@@ -5,8 +5,6 @@ import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.PostForm;
-import com.chanhonlun.basecms.pojo.BaseDetailPojo;
-import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
 import com.chanhonlun.basecms.repository.BaseDetailRepository;
@@ -14,30 +12,23 @@ import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.PostDetailRepository;
 import com.chanhonlun.basecms.repository.PostRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.response.DetailField;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
-import com.chanhonlun.basecms.service.datatable.impl.PostDataTableService;
+import com.chanhonlun.basecms.service.datatable.impl.PostDataTableServiceImpl;
 import com.chanhonlun.basecms.service.page.PostService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Stream;
 
 @Service
 public class PostServiceImpl extends BaseServiceImpl implements PostService {
@@ -49,7 +40,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     private PostDetailRepository postDetailRepository;
 
     @Autowired
-    private PostDataTableService postDataTableService;
+    private PostDataTableServiceImpl postDataTableService;
 
     // field name -> field
     private Map<String, Field> fieldMap = new LinkedHashMap<>();

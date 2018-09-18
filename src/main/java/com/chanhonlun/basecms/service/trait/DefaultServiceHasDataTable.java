@@ -8,6 +8,7 @@ import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import com.chanhonlun.basecms.response.vo.row.BaseRowVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import java.io.Serializable;
@@ -20,6 +21,8 @@ public interface DefaultServiceHasDataTable<
 
     BaseDataTableService<Pojo, PK, PojoVO, BaseDataTableInput, BaseDataTableConfig> getDataTablesService();
 
+    String getSection();
+
     BreadcrumbUtil getBreadcrumbUtil();
 
     SidebarMenuUtil getSidebarMenuUtil();
@@ -29,10 +32,13 @@ public interface DefaultServiceHasDataTable<
     }
 
     default BaseDataTablePageConfig getListPageConfig() {
+
+        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
+
         BaseDataTableConfig dataTableConfig = getDataTablesService().getDataTableConfig(new HashMap<>());
 
         return DefaultDataTablePageConfig.builder()
-                .pageTitle(dataTableConfig.title)
+                .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .datatable(dataTableConfig)
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
