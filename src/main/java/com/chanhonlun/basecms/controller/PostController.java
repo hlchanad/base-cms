@@ -56,6 +56,11 @@ public class PostController extends BaseController implements
         return "post/create";
     }
 
+    @GetMapping("/{id}")
+    public String redirectDetail(@PathVariable(value = "id") Long id) {
+        return "redirect:/post/" + id + "/detail";
+    }
+
     @GetMapping("/{id}/detail")
     public String detail(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(id));
