@@ -28,7 +28,7 @@ public class ReflectionUtil {
 
     public static Field getFieldFromProperty(java.lang.reflect.Field property, Language language) {
 
-       Field.FieldBuilder fieldBuilder = Field.builder();
+        Field.FieldBuilder fieldBuilder = Field.builder();
 
         String languageSuffix = language == null ? "" : CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, language.name());
         String languagePrefix = language == null ? "" : "detail" + languageSuffix + ".";
