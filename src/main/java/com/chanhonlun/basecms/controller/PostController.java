@@ -3,7 +3,7 @@ package com.chanhonlun.basecms.controller;
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDataTable;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionButton;
-import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDetailWithPojoDetail;
+import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDetailPageWithPojoDetail;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
@@ -30,7 +30,7 @@ import javax.validation.Valid;
 public class PostController extends BaseController implements
         DefaultControllerHasDeleteActionButton<Post, Long>,
         DefaultControllerHasDataTable<Post, Long, PostRowVO>,
-        DefaultControllerHasDetailWithPojoDetail<Post, Long, PostDetail, Long> {
+        DefaultControllerHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
 
     @Autowired
     private PostService postService;
