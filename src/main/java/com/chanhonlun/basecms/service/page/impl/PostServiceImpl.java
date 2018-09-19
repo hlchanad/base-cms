@@ -50,13 +50,13 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
 
     @PostConstruct
     public void init() {
-        ReflectionUtil.getPojoFields(Post.class)
+        ReflectionUtil.getClassFields(Post.class)
                 .stream()
                 .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
                 .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
                 .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
 
-        ReflectionUtil.getPojoFields(PostDetail.class)
+        ReflectionUtil.getClassFields(PostDetail.class)
                 .stream()
                 .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
                 .map(property -> {

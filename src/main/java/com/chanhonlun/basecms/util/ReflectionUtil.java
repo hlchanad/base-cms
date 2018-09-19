@@ -27,8 +27,8 @@ public class ReflectionUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
-    public static List<java.lang.reflect.Field> getPojoFields(Class<?> pojoClass) {
-        return Arrays.asList(pojoClass.getDeclaredFields());
+    public static List<java.lang.reflect.Field> getClassFields(Class<?> clazz) {
+        return Arrays.asList(clazz.getDeclaredFields());
     }
 
     public static Field getFieldFromProperty(java.lang.reflect.Field property) {
@@ -124,7 +124,7 @@ public class ReflectionUtil {
 
         Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(fieldMap), new TypeToken<Map<String, Field>>(){}.getType());
 
-        ReflectionUtil.getPojoFields(pojo.getClass())
+        ReflectionUtil.getClassFields(pojo.getClass())
                 .stream()
                 .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
                 .forEach(property -> {
@@ -155,7 +155,7 @@ public class ReflectionUtil {
 
         Stream.of(Language.values())
                 .map(language -> findByRefIdAndLang.apply(pojo.getId(), language))
-                .forEach((PojoDetail pojoDetail) -> ReflectionUtil.getPojoFields(pojoDetail.getClass())
+                .forEach((PojoDetail pojoDetail) -> ReflectionUtil.getClassFields(pojoDetail.getClass())
                         .stream()
                         .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
                         .forEach(property -> {
