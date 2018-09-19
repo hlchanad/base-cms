@@ -11,7 +11,6 @@ import com.chanhonlun.basecms.util.ReflectionUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Map;
 
 public interface DefaultServiceHasDetailPageWithPojoDetail<

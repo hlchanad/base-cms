@@ -113,13 +113,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
 
         Post post = new Post();
         post.setPublishDate(form.getPublishDate());
-        post.setIsDelete(false);
-        post.setStatus(Status.NORMAL);
-        post.setCreatedAt(new Date());
-        post.setCreatedBy(MyConstants.USER_SYSTEM);
-        post.setUpdatedAt(new Date());
-        post.setUpdatedBy(MyConstants.USER_SYSTEM);
-        post = postRepository.save(post);
+        post = create(post);
 
         PostDetail postDetailEn = new PostDetail();
         postDetailEn.setRefId(post.getId());
