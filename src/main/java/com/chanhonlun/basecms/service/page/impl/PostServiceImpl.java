@@ -114,7 +114,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
                 .pageTitle("Post")
                 .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
                 .menu(sidebarMenuUtil.getSidebarMenuList())
-                .fields(new ArrayList<>(fieldMap.values()))
+                .fields(ReflectionUtil.getFields(fieldMap))
                 .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
                 .build();
     }

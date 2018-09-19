@@ -39,7 +39,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(new ArrayList<>(fieldMap.values()))
+                .fields(ReflectionUtil.getFields(fieldMap))
                 .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
                 .build();
     }

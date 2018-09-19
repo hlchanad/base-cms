@@ -46,7 +46,7 @@ public interface DefaultServiceHasDetailPage<
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(new ArrayList<>(fieldMap.values()))
+                .fields(ReflectionUtil.getFields(fieldMap))
                 .detailFields(Collections.emptyList())
                 .build();
     }
