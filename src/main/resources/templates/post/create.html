@@ -26,6 +26,18 @@
 
     <div layout:fragment="content">
 
+        <!-- Notification (if any) -->
+        <div class="col-12" th:if="${CMS_RSP.error != null}">
+            <div role="alert"
+                 class="alert alert-danger py-3"
+                 th:object="${CMS_RSP.error}"
+                 th:classappend="*{type.getClazz()}" >
+                <button class="close" data-dismiss="alert"></button>
+                <strong th:text="*{type.getDisplayText() + ': '}"></strong>
+                <span th:text="*{text}"></span>
+            </div>
+        </div>
+
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-body">

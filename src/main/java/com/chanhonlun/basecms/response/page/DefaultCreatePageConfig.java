@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.response.page;
 
+import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.response.Breadcrumb;
 import com.chanhonlun.basecms.response.DetailField;
 import com.chanhonlun.basecms.response.Field;
@@ -11,7 +12,7 @@ import java.util.List;
 public class DefaultCreatePageConfig extends BaseCreatePageConfig {
 
     @Builder
-    public DefaultCreatePageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, List<Field> fields, List<DetailField> detailFields) {
-        super(pageTitle, breadcrumbs, menu, fields, detailFields);
+    public DefaultCreatePageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, List<Field> fields, List<DetailField> detailFields, FormError formError) {
+        super(pageTitle, breadcrumbs, menu, fields, detailFields, formError);
     }
 }

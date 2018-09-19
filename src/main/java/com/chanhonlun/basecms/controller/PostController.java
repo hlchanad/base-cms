@@ -4,6 +4,7 @@ import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDataTable;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDeleteActionButton;
 import com.chanhonlun.basecms.controller.trait.DefaultControllerHasDetailPageWithPojoDetail;
+import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
@@ -63,14 +64,20 @@ public class PostController extends BaseController implements
 
     @PostMapping("/create")
     public String doCreate(Model model, HttpServletRequest httpServletRequest, @Valid PostForm form, BindingResult bindingResult) {
+
         logger.info("form data: {}", new Gson().toJson(httpServletRequest.getParameterMap()));
         logger.info("form: {}", new Gson().toJson(form));
         logger.info("bindingResult: {}", new Gson().toJson(bindingResult));
 
+        FormError formError = postService.ifError(form);
+        if (formError != null) {
+            model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getCreatePageConfig(form, formError));
+            return section + "/create";
+        }
+
         Post post = postService.create(form);
 
-        model.addAttribute(MyConstants.PAGE_RESPONSE, postService.getDetailPageConfig(post));
-        return section + "/create";
+        return "redirect:/" + section + "/" + post.getId() + "/detail";
     }
 
 }

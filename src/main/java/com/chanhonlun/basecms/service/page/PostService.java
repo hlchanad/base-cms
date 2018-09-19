@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.service.page;
 
+import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
@@ -19,4 +20,7 @@ public interface PostService extends
 
     Post create(PostForm form);
 
+    FormError ifError(PostForm form);
+
+    BaseCreatePageConfig getCreatePageConfig(PostForm postForm, FormError formError);
 }
