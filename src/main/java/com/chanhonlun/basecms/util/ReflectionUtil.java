@@ -1,17 +1,27 @@
 package com.chanhonlun.basecms.util;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.constant.Language;
+import com.chanhonlun.basecms.pojo.BaseDetailPojo;
+import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.response.DetailField;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.FieldOption;
 import com.google.common.base.CaseFormat;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ReflectionUtil {
 
@@ -77,6 +87,10 @@ public class ReflectionUtil {
         return fieldBuilder.build();
     }
 
+    public static List<Field> getFields(Map<String, Field> fieldMap) {
+        return new ArrayList<>(fieldMap.values());
+    }
+
     public static List<DetailField> getDetailFields(Map<String, Map<Language, Field>> fieldDetailMap) {
         List<DetailField> detailFields = new ArrayList<>();
 
@@ -101,5 +115,59 @@ public class ReflectionUtil {
                 });
 
         return detailFields;
+    }
+
+    public static <Pojo extends BasePojo<PojoPK>, PojoPK extends Serializable>
+    Map<String, Field> updateFieldMapWithValues(Map<String, Field> fieldMap, Pojo pojo) {
+
+        Gson gson = new Gson();
+
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(fieldMap), new TypeToken<Map<String, Field>>(){}.getType());
+
+        ReflectionUtil.getPojoFields(pojo.getClass())
+                .stream()
+                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
+                .forEach(property -> {
+                    try {
+                        Method getter = pojo.getClass().getMethod("get" + StringUtils.capitalize(property.getName()));
+                        String value = getter.invoke(pojo).toString().replaceAll("\\n", "<br/>");
+                        fieldMapClone.get(property.getName()).setValue(value);
+                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                        logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
+                    }
+                });
+
+        return fieldMapClone;
+    }
+
+    public static <
+            Pojo extends BasePojo<PojoPK>,
+            PojoPK extends Serializable,
+            PojoDetail extends BaseDetailPojo<PojoDetailPK, PojoPK>,
+            PojoDetailPK extends Serializable>
+    Map<String, Map<Language, Field>> updateFieldDetailMapWithValues(Map<String,Map<Language,Field>> fieldDetailMap,
+                                                                     Pojo pojo,
+                                                                     BiFunction<PojoPK, Language, PojoDetail> findByRefIdAndLang) {
+        Gson gson = new Gson();
+
+        Map<String, Map<Language, Field>> fieldDetailMapClone =
+                gson.fromJson(gson.toJson(fieldDetailMap), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
+
+        Stream.of(Language.values())
+                .map(language -> findByRefIdAndLang.apply(pojo.getId(), language))
+                .forEach((PojoDetail pojoDetail) -> ReflectionUtil.getPojoFields(pojoDetail.getClass())
+                        .stream()
+                        .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
+                        .forEach(property -> {
+                            try {
+                                Method getter = pojoDetail.getClass().getMethod("get" + StringUtils.capitalize(property.getName()));
+                                String value  = getter.invoke(pojoDetail).toString().replaceAll("\\n", "<br/>");
+                                fieldDetailMapClone.get(property.getName()).get(pojoDetail.getLang()).setValue(value);
+                            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                                logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
+                            }
+                        }));
+
+        return fieldDetailMapClone;
     }
 }
