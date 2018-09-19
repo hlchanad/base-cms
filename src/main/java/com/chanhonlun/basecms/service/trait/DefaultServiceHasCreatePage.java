@@ -1,8 +1,9 @@
 package com.chanhonlun.basecms.service.trait;
 
-import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
+import com.chanhonlun.basecms.form.PostForm;
+import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
@@ -13,10 +14,14 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
-public interface DefaultServiceHasCreatePage<Form extends BaseForm> {
+public interface DefaultServiceHasCreatePage<
+        Pojo extends BasePojo<PojoPK>,
+        PojoPK extends Serializable,
+        Form extends BaseForm> {
 
     String getSection();
 
@@ -25,6 +30,12 @@ public interface DefaultServiceHasCreatePage<Form extends BaseForm> {
     BreadcrumbUtil getBreadcrumbUtil();
 
     SidebarMenuUtil getSidebarMenuUtil();
+
+    Pojo create(Form form);
+
+    default FormError ifError(Form form) {
+        return null;
+    }
 
     void updateFieldMapValues(Map<String, Field> fieldMap, Form form);
 

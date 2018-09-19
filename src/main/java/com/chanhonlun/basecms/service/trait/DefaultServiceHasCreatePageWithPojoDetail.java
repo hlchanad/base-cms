@@ -3,7 +3,7 @@ package com.chanhonlun.basecms.service.trait;
 import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
-import com.chanhonlun.basecms.form.PostForm;
+import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
@@ -12,10 +12,14 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public interface DefaultServiceHasCreatePageWithPojoDetail<Form extends BaseForm>
-        extends DefaultServiceHasCreatePage<Form> {
+public interface DefaultServiceHasCreatePageWithPojoDetail<
+        Pojo extends BasePojo<PojoPK>,
+        PojoPK extends Serializable,
+        Form extends BaseForm>
+        extends DefaultServiceHasCreatePage<Pojo, PojoPK, Form> {
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
 

@@ -31,6 +31,7 @@ import javax.validation.Valid;
 public class PostController extends BaseController implements
         DefaultControllerHasDeleteActionButton<Post, Long>,
         DefaultControllerHasDataTable<Post, Long, PostRowVO>,
+//        DefaultControllerHasCreatePage,
         DefaultControllerHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
 
     @Autowired
@@ -63,11 +64,7 @@ public class PostController extends BaseController implements
     }
 
     @PostMapping("/create")
-    public String doCreate(Model model, HttpServletRequest httpServletRequest, @Valid PostForm form, BindingResult bindingResult) {
-
-        logger.info("form data: {}", new Gson().toJson(httpServletRequest.getParameterMap()));
-        logger.info("form: {}", new Gson().toJson(form));
-        logger.info("bindingResult: {}", new Gson().toJson(bindingResult));
+    public String doCreate(Model model, PostForm form) {
 
         FormError formError = postService.ifError(form);
         if (formError != null) {
