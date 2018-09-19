@@ -27,6 +27,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
 
+    @Override
     default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));

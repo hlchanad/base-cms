@@ -20,8 +20,6 @@ public interface DefaultServiceHasDetailPage<
         Pojo extends BasePojo<PK>,
         PK extends Serializable> {
 
-    Logger getLogger();
-
     String getSection();
 
     Map<String, Field> getFieldMap();
