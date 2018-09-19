@@ -23,12 +23,16 @@ import com.chanhonlun.basecms.service.page.PostService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl extends BaseServiceImpl implements PostService {
@@ -105,18 +109,6 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     @Override
     public Map<String, Map<Language, Field>> getFieldDetailMap() {
         return fieldDetailMap;
-    }
-
-    @Override
-    public BaseCreatePageConfig getCreatePageConfig() {
-
-        return DefaultCreatePageConfig.builder()
-                .pageTitle("Post")
-                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
-                .menu(sidebarMenuUtil.getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMap))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
-                .build();
     }
 
     @Override
