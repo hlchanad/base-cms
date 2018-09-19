@@ -15,12 +15,10 @@ public interface PostService extends
         BaseService,
         DefaultServiceHasDataTable<Post, Long, PostRowVO>,
         DefaultServiceHasCRUD<Post, Long>,
-        DefaultServiceHasCreatePageWithPojoDetail,
+        DefaultServiceHasCreatePageWithPojoDetail<PostForm>,
         DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
 
     Post create(PostForm form);
 
     FormError ifError(PostForm form);
-
-    BaseCreatePageConfig getCreatePageConfig(PostForm postForm, FormError formError);
 }

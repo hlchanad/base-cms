@@ -4,6 +4,7 @@ import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.constant.Status;
+import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
@@ -145,6 +146,22 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
+    public void updateFieldMapValues(Map<String, Field> fieldMap, PostForm form) {
+        fieldMap.get("publishDate").setValue(form.getPublishDate().toString());
+    }
+
+    @Override
+    public void updateFieldDetailMapValues(Map<String, Map<Language, Field>> fieldDetailMap, PostForm form) {
+        fieldDetailMap.get("title").get(Language.EN).setValue(form.getDetailEn().getTitle());
+        fieldDetailMap.get("brief").get(Language.EN).setValue(form.getDetailEn().getBrief());
+        fieldDetailMap.get("content").get(Language.EN).setValue(form.getDetailEn().getContent());
+
+        fieldDetailMap.get("title").get(Language.ZH_HK).setValue(form.getDetailZhHk().getTitle());
+        fieldDetailMap.get("brief").get(Language.ZH_HK).setValue(form.getDetailZhHk().getBrief());
+        fieldDetailMap.get("content").get(Language.ZH_HK).setValue(form.getDetailZhHk().getContent());
+    }
+
+    @Override
     public FormError ifError(PostForm form) {
 
         if (form.getDetailEn().getTitle().equals("error")) {
@@ -152,35 +169,6 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         }
 
         return null;
-    }
-
-    @Override
-    public BaseCreatePageConfig getCreatePageConfig(PostForm postForm, FormError formError) {
-
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()), new TypeToken<Map<String, Field>>(){}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone =
-                gson.fromJson(gson.toJson(getFieldDetailMap()), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
-
-        fieldMapClone.get("publishDate").setValue(postForm.getPublishDate().toString());
-
-        fieldDetailMapClone.get("title").get(Language.EN).setValue(postForm.getDetailEn().getTitle());
-        fieldDetailMapClone.get("brief").get(Language.EN).setValue(postForm.getDetailEn().getBrief());
-        fieldDetailMapClone.get("content").get(Language.EN).setValue(postForm.getDetailEn().getContent());
-
-        fieldDetailMapClone.get("title").get(Language.ZH_HK).setValue(postForm.getDetailZhHk().getTitle());
-        fieldDetailMapClone.get("brief").get(Language.ZH_HK).setValue(postForm.getDetailZhHk().getBrief());
-        fieldDetailMapClone.get("content").get(Language.ZH_HK).setValue(postForm.getDetailZhHk().getContent());
-
-        return DefaultCreatePageConfig.builder()
-                .pageTitle("Post")
-                .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
-                .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMapClone))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMapClone))
-                .formError(formError)
-                .build();
     }
 
 }
