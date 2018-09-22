@@ -18,7 +18,7 @@ public interface DefaultControllerHasDetailPage<
     DefaultServiceHasDetailPage<Pojo, PojoPK> getDefaultPageHasDetail();
 
     @GetMapping("/{id}")
-    default String redirectDetail(@PathVariable(value = "id") Long id) {
+    default String redirectDetail(@PathVariable(value = "id") PojoPK id) {
         return "redirect:/" + getSection() + "/" + id + "/detail";
     }
 
