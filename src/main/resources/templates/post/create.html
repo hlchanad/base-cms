@@ -45,10 +45,10 @@
                     <div class="col-md-10">
                         <h3 th:text="${CMS_RSP.pageTitle}"></h3>
 
-                        <form id="form-work"
-                              class="form-horizontal"
+                        <form class="form-horizontal"
                               role="form"
                               autocomplete="off"
+                              th:id="${CMS_RSP.formConfig.id}"
                               th:action="${CMS_RSP.formConfig.action}"
                               th:method="${CMS_RSP.formConfig.method}">
 
