@@ -2,7 +2,6 @@ package com.chanhonlun.basecms.service.trait;
 
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
-import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
@@ -33,7 +32,7 @@ public interface DefaultServiceHasCreatePage<
 
     Pojo create(Form form);
 
-    default FormError ifError(Form form) {
+    default FormError ifCreateError(Form form) {
         return null;
     }
 

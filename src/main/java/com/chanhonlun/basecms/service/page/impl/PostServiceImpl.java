@@ -2,8 +2,6 @@ package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.Language;
-import com.chanhonlun.basecms.constant.MyConstants;
-import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
@@ -27,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -151,7 +148,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
-    public FormError ifError(PostForm form) {
+    public FormError ifCreateError(PostForm form) {
 
         if (form.getDetailEn().getTitle().equals("error")) {
             return new FormError("\"error\" is not allowed !");

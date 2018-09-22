@@ -29,7 +29,7 @@ public interface DefaultControllerHasCreatePageWithPojoDetail<
     @PostMapping("/create")
     default String doCreate(Model model, Form form) {
 
-        FormError formError = getDefaultPageHasCreate().ifError(form);
+        FormError formError = getDefaultPageHasCreate().ifCreateError(form);
         if (formError != null) {
             model.addAttribute(MyConstants.PAGE_RESPONSE, getDefaultPageHasCreate().getCreatePageConfig(form, formError));
             return getSection() + "/create";
