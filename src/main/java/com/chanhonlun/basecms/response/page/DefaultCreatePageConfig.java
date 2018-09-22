@@ -12,7 +12,7 @@ import java.util.List;
 public class DefaultCreatePageConfig extends BaseCreatePageConfig {
 
     @Builder
-    public DefaultCreatePageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, List<Field> fields, List<DetailField> detailFields, FormError formError) {
-        super(pageTitle, breadcrumbs, menu, fields, detailFields, formError);
+    public DefaultCreatePageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, List<Field> fields, List<DetailField> detailFields, FormConfig formConfig, FormError formError) {
+        super(pageTitle, breadcrumbs, menu, fields, detailFields, formConfig, formError);
     }
 }

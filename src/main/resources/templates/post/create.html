@@ -27,10 +27,10 @@
     <div layout:fragment="content">
 
         <!-- Notification (if any) -->
-        <div class="col-12" th:if="${CMS_RSP.error != null}">
+        <div class="col-12" th:if="${CMS_RSP.formError != null}">
             <div role="alert"
                  class="alert alert-danger py-3"
-                 th:object="${CMS_RSP.error}"
+                 th:object="${CMS_RSP.formError}"
                  th:classappend="*{type.getClazz()}" >
                 <button class="close" data-dismiss="alert"></button>
                 <strong th:text="*{type.getDisplayText() + ': '}"></strong>
@@ -45,7 +45,12 @@
                     <div class="col-md-10">
                         <h3 th:text="${CMS_RSP.pageTitle}"></h3>
 
-                        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" th:action="@{/post/create}" method="post">
+                        <form id="form-work"
+                              class="form-horizontal"
+                              role="form"
+                              autocomplete="off"
+                              th:action="${CMS_RSP.formConfig.action}"
+                              th:method="${CMS_RSP.formConfig.method}">
 
                             <div th:each="field, it : ${CMS_RSP.fields}"
                                  class="form-group row"

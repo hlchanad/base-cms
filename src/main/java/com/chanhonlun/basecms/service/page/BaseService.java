@@ -5,4 +5,6 @@ public interface BaseService {
     void setSection(String section);
 
     String getSection();
+
+    String getContextPath();
 }

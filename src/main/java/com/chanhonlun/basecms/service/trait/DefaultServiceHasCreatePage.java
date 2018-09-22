@@ -6,12 +6,14 @@ import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
+import com.chanhonlun.basecms.response.page.FormConfig;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -23,6 +25,8 @@ public interface DefaultServiceHasCreatePage<
         Form extends BaseForm> {
 
     String getSection();
+
+    String getContextPath();
 
     Map<String, Field> getFieldMap();
 
@@ -54,6 +58,10 @@ public interface DefaultServiceHasCreatePage<
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMapClone))
                 .detailFields(Collections.emptyList())
+                .formConfig(FormConfig.builder()
+                        .action(getContextPath() + "/" + getSection() + "/create")
+                        .method(HttpMethod.POST.name())
+                        .build())
                 .formError(formError)
                 .build();
     }
@@ -68,6 +76,10 @@ public interface DefaultServiceHasCreatePage<
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(getFieldMap()))
                 .detailFields(Collections.emptyList())
+                .formConfig(FormConfig.builder()
+                        .action(getContextPath() + "/" + getSection() + "/create")
+                        .method(HttpMethod.POST.name())
+                        .build())
                 .build();
     }
 

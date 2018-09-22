@@ -7,10 +7,12 @@ import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
+import com.chanhonlun.basecms.response.page.FormConfig;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -45,6 +47,10 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMapClone))
                 .detailFields(ReflectionUtil.getDetailFields(fieldDetailMapClone))
+                .formConfig(FormConfig.builder()
+                        .action(getContextPath() + "/" + getSection() + "/create")
+                        .method(HttpMethod.POST.name())
+                        .build())
                 .formError(formError)
                 .build();
     }
@@ -60,6 +66,10 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(getFieldMap()))
                 .detailFields(ReflectionUtil.getDetailFields(getFieldDetailMap()))
+                .formConfig(FormConfig.builder()
+                        .action(getContextPath() + "/" + getSection() + "/create")
+                        .method(HttpMethod.POST.name())
+                        .build())
                 .build();
     }
 }

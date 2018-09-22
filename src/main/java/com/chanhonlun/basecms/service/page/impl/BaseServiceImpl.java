@@ -47,4 +47,9 @@ public class BaseServiceImpl implements BaseService {
         return this.section;
     }
 
+    @Override
+    public String getContextPath() {
+        return this.contextPath;
+    }
+
 }
