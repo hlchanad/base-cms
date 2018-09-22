@@ -2,6 +2,7 @@ package com.chanhonlun.basecms.controller.trait;
 
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.pojo.BasePojo;
+import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDetailPage;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ public interface DefaultControllerHasDetailPage<
 
     String getSection();
 
+    DefaultServiceHasCRUD<Pojo, PojoPK> getDefaultPageHasCRUD();
+
     DefaultServiceHasDetailPage<Pojo, PojoPK> getDefaultPageHasDetail();
 
     @GetMapping("/{id}")
@@ -24,6 +27,13 @@ public interface DefaultControllerHasDetailPage<
 
     @GetMapping("/{id}/detail")
     default String detail(Model model, @PathVariable(value = "id") PojoPK id) {
+
+        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
+
+        if (pojo == null) {
+            return "redirect:/" + getSection();
+        }
+
         model.addAttribute(MyConstants.PAGE_RESPONSE, getDefaultPageHasDetail().getDetailPageConfig(id));
         return getSection() + "/detail";
     }
