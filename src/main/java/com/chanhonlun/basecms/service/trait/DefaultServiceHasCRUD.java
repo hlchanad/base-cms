@@ -32,4 +32,10 @@ public interface DefaultServiceHasCRUD<Pojo extends BasePojo<PK>, PK extends Ser
         pojo.setUpdatedAt(new Date());
         return getRepository().save(pojo);
     }
+
+    default Pojo update(Pojo pojo) {
+        pojo.setUpdatedBy(MyConstants.USER_SYSTEM);
+        pojo.setUpdatedAt(new Date());
+        return getRepository().save(pojo);
+    }
 }

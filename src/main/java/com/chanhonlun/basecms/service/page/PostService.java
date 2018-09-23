@@ -1,8 +1,10 @@
 package com.chanhonlun.basecms.service.page;
 
+import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
+import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCreatePageWithPojoDetail;
@@ -15,4 +17,12 @@ public interface PostService extends
         DefaultServiceHasCRUD<Post, Long>,
         DefaultServiceHasCreatePageWithPojoDetail<Post, Long, PostForm>,
         DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
+
+    Post edit(Post post, PostForm form);
+
+    FormError ifEditError(Post post, PostForm form);
+
+    BaseCreatePageConfig getEditPageConfig(Post post);
+
+    BaseCreatePageConfig getEditPageConfig(Post post, PostForm form, FormError formError);
 }
