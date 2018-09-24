@@ -14,8 +14,8 @@ import com.chanhonlun.basecms.repository.PostRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
-import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
-import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
+import com.chanhonlun.basecms.response.page.BaseEditPageConfig;
+import com.chanhonlun.basecms.response.page.DefaultEditPageConfig;
 import com.chanhonlun.basecms.response.page.FormConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
@@ -200,7 +200,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
-    public BaseCreatePageConfig getEditPageConfig(Post post) {
+    public BaseEditPageConfig getEditPageConfig(Post post) {
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
@@ -208,7 +208,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
                 getFieldDetailMap(), post, getDetailRepository()::findByRefIdAndLang);
 
-        return DefaultCreatePageConfig.builder()
+        return DefaultEditPageConfig.builder()
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
@@ -223,7 +223,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
-    public BaseCreatePageConfig getEditPageConfig(Post post, PostForm form, FormError formError) {
+    public BaseEditPageConfig getEditPageConfig(Post post, PostForm form, FormError formError) {
 
         Gson gson = new Gson();
 
@@ -236,7 +236,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
-        return DefaultCreatePageConfig.builder()
+        return DefaultEditPageConfig.builder()
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())

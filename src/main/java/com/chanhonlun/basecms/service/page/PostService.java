@@ -4,7 +4,7 @@ import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
-import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
+import com.chanhonlun.basecms.response.page.BaseEditPageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCreatePageWithPojoDetail;
@@ -22,7 +22,7 @@ public interface PostService extends
 
     FormError ifEditError(Post post, PostForm form);
 
-    BaseCreatePageConfig getEditPageConfig(Post post);
+    BaseEditPageConfig getEditPageConfig(Post post);
 
-    BaseCreatePageConfig getEditPageConfig(Post post, PostForm form, FormError formError);
+    BaseEditPageConfig getEditPageConfig(Post post, PostForm form, FormError formError);
 }
