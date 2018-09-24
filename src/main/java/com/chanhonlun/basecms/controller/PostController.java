@@ -30,17 +30,12 @@ public class PostController extends BaseController implements
     }
 
     @Override
-    public DefaultServiceHasDataTable<Post, Long, PostRowVO> getDefaultPageHasDataTable() {
-        return postService;
-    }
-
-    @Override
     public DefaultServiceHasCRUD<Post, Long> getDefaultPageHasCRUD() {
         return postService;
     }
 
     @Override
-    public DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> getDefaultPageHasDetail() {
+    public DefaultServiceHasDataTable<Post, Long, PostRowVO> getDefaultPageHasDataTable() {
         return postService;
     }
 
@@ -51,6 +46,11 @@ public class PostController extends BaseController implements
 
     @Override
     public DefaultServiceHasEditPageWithPojoDetail<Post, Long, PostDetail, Long, PostForm> getDefaultPageHasEdit() {
+        return postService;
+    }
+
+    @Override
+    public DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> getDefaultPageHasDetail() {
         return postService;
     }
 

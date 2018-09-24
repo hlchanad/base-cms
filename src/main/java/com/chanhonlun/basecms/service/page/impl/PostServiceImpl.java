@@ -110,32 +110,6 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
-    public Post create(PostForm form) {
-
-        Post post = new Post();
-        post.setPublishDate(form.getPublishDate());
-        post = create(post);
-
-        PostDetail postDetailEn = new PostDetail();
-        postDetailEn.setRefId(post.getId());
-        postDetailEn.setLang(Language.EN);
-        postDetailEn.setTitle(form.getDetailEn().getTitle());
-        postDetailEn.setBrief(form.getDetailEn().getBrief());
-        postDetailEn.setContent(form.getDetailEn().getContent());
-        postDetailRepository.save(postDetailEn);
-
-        PostDetail postDetailZhHk = new PostDetail();
-        postDetailZhHk.setRefId(post.getId());
-        postDetailZhHk.setLang(Language.ZH_HK);
-        postDetailZhHk.setTitle(form.getDetailZhHk().getTitle());
-        postDetailZhHk.setBrief(form.getDetailZhHk().getBrief());
-        postDetailZhHk.setContent(form.getDetailZhHk().getContent());
-        postDetailRepository.save(postDetailZhHk);
-
-        return post;
-    }
-
-    @Override
     public void updateFieldMapValues(Map<String, Field> fieldMap, PostForm form) {
         fieldMap.get("publishDate").setValue(form.getPublishDate().toString());
     }
@@ -162,6 +136,42 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
     }
 
     @Override
+    public Post create(PostForm form) {
+
+        Post post = new Post();
+        post.setPublishDate(form.getPublishDate());
+        post = create(post);
+
+        PostDetail postDetailEn = new PostDetail();
+        postDetailEn.setRefId(post.getId());
+        postDetailEn.setLang(Language.EN);
+        postDetailEn.setTitle(form.getDetailEn().getTitle());
+        postDetailEn.setBrief(form.getDetailEn().getBrief());
+        postDetailEn.setContent(form.getDetailEn().getContent());
+        postDetailRepository.save(postDetailEn);
+
+        PostDetail postDetailZhHk = new PostDetail();
+        postDetailZhHk.setRefId(post.getId());
+        postDetailZhHk.setLang(Language.ZH_HK);
+        postDetailZhHk.setTitle(form.getDetailZhHk().getTitle());
+        postDetailZhHk.setBrief(form.getDetailZhHk().getBrief());
+        postDetailZhHk.setContent(form.getDetailZhHk().getContent());
+        postDetailRepository.save(postDetailZhHk);
+
+        return post;
+    }
+
+    @Override
+    public FormError ifEditError(Post post, PostForm form) {
+
+        if (form.getDetailEn().getTitle().equals("error")) {
+            return new FormError("\"error\" is not allowed for Title (En)");
+        }
+
+        return null;
+    }
+
+    @Override
     public Post edit(Post post, PostForm form) {
 
         post.setPublishDate(form.getPublishDate());
@@ -180,16 +190,6 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         getDetailRepository().save(postDetailZhHk);
 
         return post;
-    }
-
-    @Override
-    public FormError ifEditError(Post post, PostForm form) {
-
-        if (form.getDetailEn().getTitle().equals("error")) {
-            return new FormError("\"error\" is not allowed for Title (En)");
-        }
-
-        return null;
     }
 
 }

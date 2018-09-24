@@ -8,8 +8,8 @@ import com.chanhonlun.basecms.service.trait.*;
 
 public interface PostService extends
         BaseService,
-        DefaultServiceHasDataTable<Post, Long, PostRowVO>,
         DefaultServiceHasCRUD<Post, Long>,
+        DefaultServiceHasDataTable<Post, Long, PostRowVO>,
         DefaultServiceHasCreatePageWithPojoDetail<Post, Long, PostForm>,
         DefaultServiceHasEditPageWithPojoDetail<Post, Long, PostDetail, Long, PostForm>,
         DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
