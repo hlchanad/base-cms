@@ -1,28 +1,17 @@
 package com.chanhonlun.basecms.service.page;
 
-import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
-import com.chanhonlun.basecms.response.page.BaseEditPageConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasCreatePageWithPojoDetail;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasDetailPageWithPojoDetail;
+import com.chanhonlun.basecms.service.trait.*;
 
 public interface PostService extends
         BaseService,
         DefaultServiceHasDataTable<Post, Long, PostRowVO>,
         DefaultServiceHasCRUD<Post, Long>,
         DefaultServiceHasCreatePageWithPojoDetail<Post, Long, PostForm>,
+        DefaultServiceHasEditPageWithPojoDetail<Post, Long, PostDetail, Long, PostForm>,
         DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
 
-    Post edit(Post post, PostForm form);
-
-    FormError ifEditError(Post post, PostForm form);
-
-    BaseEditPageConfig getEditPageConfig(Post post);
-
-    BaseEditPageConfig getEditPageConfig(Post post, PostForm form, FormError formError);
 }

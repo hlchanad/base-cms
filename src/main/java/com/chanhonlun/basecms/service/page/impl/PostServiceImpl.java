@@ -14,9 +14,6 @@ import com.chanhonlun.basecms.repository.PostRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
-import com.chanhonlun.basecms.response.page.BaseEditPageConfig;
-import com.chanhonlun.basecms.response.page.DefaultEditPageConfig;
-import com.chanhonlun.basecms.response.page.FormConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.PostDataTableServiceImpl;
@@ -24,12 +21,8 @@ import com.chanhonlun.basecms.service.page.PostService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -199,55 +192,4 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
         return null;
     }
 
-    @Override
-    public BaseEditPageConfig getEditPageConfig(Post post) {
-
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
-
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), post);
-        Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
-                getFieldDetailMap(), post, getDetailRepository()::findByRefIdAndLang);
-
-        return DefaultEditPageConfig.builder()
-                .pageTitle(pageTitle)
-                .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
-                .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMap))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
-                .formConfig(FormConfig.builder()
-                        .id(getSection() + "-form")
-                        .action(getContextPath() + "/" + getSection() + "/" + post.getId() + "/edit")
-                        .method(HttpMethod.PUT.name())
-                        .build())
-                .build();
-    }
-
-    @Override
-    public BaseEditPageConfig getEditPageConfig(Post post, PostForm form, FormError formError) {
-
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()), new TypeToken<Map<String, Field>>(){}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone =
-                gson.fromJson(gson.toJson(getFieldDetailMap()), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
-
-        updateFieldMapValues(fieldMapClone, form);
-        updateFieldDetailMapValues(fieldDetailMapClone, form);
-
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
-
-        return DefaultEditPageConfig.builder()
-                .pageTitle(pageTitle)
-                .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
-                .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMapClone))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMapClone))
-                .formConfig(FormConfig.builder()
-                        .id(getSection() + "-form")
-                        .action(getContextPath() + "/" + getSection() + "/" + post.getId() + "/edit")
-                        .method(HttpMethod.PUT.name())
-                        .build())
-                .formError(formError)
-                .build();
-    }
 }
