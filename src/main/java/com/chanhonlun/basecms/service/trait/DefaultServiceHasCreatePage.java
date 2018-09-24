@@ -46,7 +46,8 @@ public interface DefaultServiceHasCreatePage<
 
         Gson gson = new Gson();
 
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()), new TypeToken<Map<String, Field>>(){}.getType());
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
+                new TypeToken<Map<String, Field>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);
 

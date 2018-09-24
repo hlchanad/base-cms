@@ -34,7 +34,7 @@ public interface DefaultServiceHasEditPage<
 
     SidebarMenuUtil getSidebarMenuUtil();
 
-    Pojo edit(Pojo post, Form form);
+    Pojo edit(Pojo pojo, Form form);
 
     void updateFieldMapValues(Map<String, Field> fieldMap, Form form);
 
@@ -66,8 +66,8 @@ public interface DefaultServiceHasEditPage<
 
         Gson gson = new Gson();
 
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()), new TypeToken<Map<String, Field>>() {
-        }.getType());
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
+                new TypeToken<Map<String, Field>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);
 

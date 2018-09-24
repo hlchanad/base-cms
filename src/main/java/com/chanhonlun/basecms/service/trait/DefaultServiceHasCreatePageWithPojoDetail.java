@@ -32,9 +32,10 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
 
         Gson gson = new Gson();
 
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()), new TypeToken<Map<String, Field>>(){}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone =
-                gson.fromJson(gson.toJson(getFieldDetailMap()), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
+                new TypeToken<Map<String, Field>>() {}.getType());
+        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMap()),
+                new TypeToken<Map<String, Map<Language, Field>>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);
         updateFieldDetailMapValues(fieldDetailMapClone, form);
