@@ -3,15 +3,20 @@ package com.chanhonlun.basecms.controller;
 import com.chanhonlun.basecms.service.page.BaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 public abstract class BaseController {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected String section;
+
+    @Autowired
+    protected HttpSession httpSession;
 
     public String getSection() {
         if (!this.getClass().isAnnotationPresent(RequestMapping.class)) {
@@ -34,6 +39,10 @@ public abstract class BaseController {
     }
 
     protected abstract BaseService getService();
+
+    public HttpSession getHttpSession() {
+        return httpSession;
+    }
 
     @PostConstruct
     protected void init() {
