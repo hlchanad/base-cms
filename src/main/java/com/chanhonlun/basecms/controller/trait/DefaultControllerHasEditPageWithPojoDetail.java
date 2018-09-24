@@ -2,13 +2,13 @@ package com.chanhonlun.basecms.controller.trait;
 
 import com.chanhonlun.basecms.constant.CommonErrorPopup;
 import com.chanhonlun.basecms.constant.MyConstants;
-import com.chanhonlun.basecms.constant.SessionAttributes;
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.BaseDetailPojo;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasEditPageWithPojoDetail;
+import com.chanhonlun.basecms.util.ErrorUtil;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +38,7 @@ public interface DefaultControllerHasEditPageWithPojoDetail<
         Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
 
         if (pojo == null) {
-            getHttpSession().setAttribute(SessionAttributes.ERROR_POPUP, CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);
+            ErrorUtil.setError(getHttpSession(), CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);
             return "redirect:/" + getSection();
         }
 
@@ -52,7 +52,7 @@ public interface DefaultControllerHasEditPageWithPojoDetail<
         Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
 
         if (pojo == null) {
-            getHttpSession().setAttribute(SessionAttributes.ERROR_POPUP, CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);
+            ErrorUtil.setError(getHttpSession(), CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);
             return "redirect:/" + getSection();
         }
 
