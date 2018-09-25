@@ -27,15 +27,35 @@ public class ReflectionUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
+    /**
+     * With the given any class, get the list of properties with Java reflection methods
+     *
+     * @param clazz any class
+     * @return list of reflected {@code java.lang.reflect.Field}
+     */
     public static List<java.lang.reflect.Field> getClassFields(Class<?> clazz) {
         return Arrays.asList(clazz.getDeclaredFields());
     }
 
+    /**
+     * Pre-set some type (property of {@code Field} with given {@code java.lang.reflect.Field}
+     *
+     * @param property {@code java.lang.reflect.Field} from the {@link #getClassFields}
+     * @return my {@code Field} class for Thymeleaf usage
+     */
     public static Field getFieldFromProperty(java.lang.reflect.Field property) {
 
         return getFieldFromProperty(property, null);
     }
 
+    /**
+     * Pre-set some type (property of {@code Field} with given {@code java.lang.reflect.Field} + language
+     * only for Detail Pojo
+     *
+     * @param property {@code java.lang.reflect.Field} from the {@link #getClassFields}
+     * @param language the Language of the Pojo
+     * @return my {@code Field} class for Thymeleaf usage
+     */
     public static Field getFieldFromProperty(java.lang.reflect.Field property, Language language) {
 
         Field.FieldBuilder fieldBuilder = Field.builder();
@@ -87,10 +107,22 @@ public class ReflectionUtil {
         return fieldBuilder.build();
     }
 
+    /**
+     * change from the map which is easier for developer to a list which is easier for Thymeleaf
+     *
+     * @param fieldMap property that a PageService should have
+     * @return a list of {@code Field} for Thymeleaf usage
+     */
     public static List<Field> getFields(Map<String, Field> fieldMap) {
         return new ArrayList<>(fieldMap.values());
     }
 
+    /**
+     * change from the map which is easier for developer to a list which is easier for Thymeleaf
+     *
+     * @param fieldDetailMap property that a PageService should have
+     * @return a list of {@code DetailField} for Thymeleaf usage
+     */
     public static List<DetailField> getDetailFields(Map<String, Map<Language, Field>> fieldDetailMap) {
         List<DetailField> detailFields = new ArrayList<>();
 
@@ -117,6 +149,15 @@ public class ReflectionUtil {
         return detailFields;
     }
 
+    /**
+     * Replace value from {@code pojo} into {@code fieldMap}
+     *
+     * @param fieldMap map for describing the Fields
+     * @param pojo the pojo
+     * @param <Pojo> extending {@link BasePojo}
+     * @param <PojoPK> Primary Key of Pojo, extending {@link Serializable}
+     * @return new {@code fieldMap} with pojo's value
+     */
     public static <Pojo extends BasePojo<PojoPK>, PojoPK extends Serializable>
     Map<String, Field> updateFieldMapWithValues(Map<String, Field> fieldMap, Pojo pojo) {
 
@@ -140,6 +181,18 @@ public class ReflectionUtil {
         return fieldMapClone;
     }
 
+    /**
+     * Replace value from {@code detail pojo} into {@code fieldDetailMap}
+     *
+     * @param fieldDetailMap map for describing the Fields Detail
+     * @param pojo the pojo
+     * @param findByRefIdAndLang a {@code BiFunction} for finding a PojoDetail with RefId and Lang
+     * @param <Pojo> extending {@link BasePojo}
+     * @param <PojoPK> Primary Key of Pojo, extending {@link Serializable}
+     * @param <PojoDetail> extending {@link BaseDetailPojo}
+     * @param <PojoDetailPK> Primary Key of DetailPojo, extending {@link Serializable}
+     * @return new {@code fieldDetailMap} with detail pojo's value
+     */
     public static <
             Pojo extends BasePojo<PojoPK>,
             PojoPK extends Serializable,
