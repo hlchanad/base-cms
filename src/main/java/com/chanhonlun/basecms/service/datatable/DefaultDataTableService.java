@@ -23,10 +23,14 @@ public interface DefaultDataTableService<
 
     List<DataTableColumn> getDataTableColumns();
 
+    default String getTitle() {
+        return StringUtils.capitalize(getSection().replace("-", " "));
+    }
+
     @Override
     default BaseDataTableConfig getDataTableConfig(Map<String, String> extraConfigs) {
         return DefaultDataTableConfig.builder()
-                .title(StringUtils.capitalize(getSection().replace("-", " ")))
+                .title(getTitle())
                 .dataTableId(getSection())
                 .ajaxUrl(getContextPath() + "/" + getSection() + "/data")
                 .dataTableColumns(getDataTableColumns())

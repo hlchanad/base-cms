@@ -44,8 +44,12 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
     }
 
     @Override
-    public CmsUserRowVO getTableVOFromPOJO(CmsUser cmsUser) {
+    public String getTitle() {
+        return "CMS User";
+    }
 
+    @Override
+    public CmsUserRowVO getTableVOFromPOJO(CmsUser cmsUser) {
         return CmsUserRowVO.builder()
                 .id(cmsUser.getId())
                 .username(cmsUser.getUsername())

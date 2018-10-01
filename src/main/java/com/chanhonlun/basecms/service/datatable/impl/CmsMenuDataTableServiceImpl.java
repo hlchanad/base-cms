@@ -26,8 +26,12 @@ public class CmsMenuDataTableServiceImpl extends BaseDataTableServiceImpl implem
     }
 
     @Override
-    public CmsMenuRowVO getTableVOFromPOJO(CmsMenu cmsMenu) {
+    public String getTitle() {
+        return "CMS Menu";
+    }
 
+    @Override
+    public CmsMenuRowVO getTableVOFromPOJO(CmsMenu cmsMenu) {
         return CmsMenuRowVO.builder()
                 .id(cmsMenu.getId())
                 .parent(CmsMenuRowVO.builder()
