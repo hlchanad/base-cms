@@ -25,4 +25,11 @@ public abstract class BaseDataTableServiceImpl {
         actionButtonUtil.init(this.section);
     }
 
+    public String getSection() {
+        return section;
+    }
+
+    public String getContextPath() {
+        return contextPath;
+    }
 }
