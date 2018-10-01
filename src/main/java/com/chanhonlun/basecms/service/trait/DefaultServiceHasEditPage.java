@@ -30,6 +30,10 @@ public interface DefaultServiceHasEditPage<
 
     Map<String, Field> getFieldMap();
 
+    default Map<String, Field> getFieldMapForEdit() {
+        return getFieldMap();
+    }
+
     BreadcrumbUtil getBreadcrumbUtil();
 
     SidebarMenuUtil getSidebarMenuUtil();
@@ -46,7 +50,7 @@ public interface DefaultServiceHasEditPage<
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), pojo);
+        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForEdit(), pojo);
 
         return DefaultEditPageConfig.builder()
                 .pageTitle(pageTitle)
@@ -66,7 +70,7 @@ public interface DefaultServiceHasEditPage<
 
         Gson gson = new Gson();
 
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMapForEdit()),
                 new TypeToken<Map<String, Field>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);

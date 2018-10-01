@@ -24,6 +24,10 @@ public interface DefaultServiceHasDetailPage<
 
     Map<String, Field> getFieldMap();
 
+    default Map<String, Field> getFieldMapForDetail() {
+        return getFieldMap();
+    }
+
     BreadcrumbUtil getBreadcrumbUtil();
 
     SidebarMenuUtil getSidebarMenuUtil();
@@ -38,7 +42,7 @@ public interface DefaultServiceHasDetailPage<
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), pojo);
+        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForDetail(), pojo);
 
         return DefaultCreatePageConfig.builder()
                 .pageTitle(pageTitle)

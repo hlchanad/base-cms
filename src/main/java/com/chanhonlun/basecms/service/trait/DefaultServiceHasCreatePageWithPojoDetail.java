@@ -25,6 +25,10 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
 
+    default Map<String, Map<Language, Field>> getFieldDetailMapForCreate() {
+        return getFieldDetailMap();
+    }
+
     void updateFieldDetailMapValues(Map<String, Map<Language, Field>> fieldDetailMap, Form form);
 
     @Override
@@ -34,7 +38,7 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
 
         Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
                 new TypeToken<Map<String, Field>>() {}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMap()),
+        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMapForCreate()),
                 new TypeToken<Map<String, Map<Language, Field>>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);
@@ -67,7 +71,7 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(getFieldMap()))
-                .detailFields(ReflectionUtil.getDetailFields(getFieldDetailMap()))
+                .detailFields(ReflectionUtil.getDetailFields(getFieldDetailMapForCreate()))
                 .formConfig(FormConfig.builder()
                         .id(getSection() + "-form")
                         .action(getContextPath() + "/" + getSection() + "/create")

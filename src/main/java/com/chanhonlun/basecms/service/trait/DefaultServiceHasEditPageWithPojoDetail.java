@@ -29,6 +29,10 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
 
+    default Map<String, Map<Language, Field>> getFieldDetailMapForEdit() {
+        return getFieldDetailMap();
+    }
+
     BaseDetailRepository<PojoDetail, PojoDetailPK, PojoPK> getDetailRepository();
 
     void updateFieldDetailMapValues(Map<String, Map<Language, Field>> fieldDetailMap, Form form);
@@ -40,7 +44,7 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
 
         Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), pojo);
         Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
-                getFieldDetailMap(), pojo, getDetailRepository()::findByRefIdAndLang);
+                getFieldDetailMapForEdit(), pojo, getDetailRepository()::findByRefIdAndLang);
 
         return DefaultEditPageConfig.builder()
                 .pageTitle(pageTitle)
@@ -63,7 +67,7 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
 
         Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
                 new TypeToken<Map<String, Field>>() {}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMap()),
+        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMapForEdit()),
                 new TypeToken<Map<String, Map<Language, Field>>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);
@@ -79,7 +83,7 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
                 .detailFields(ReflectionUtil.getDetailFields(fieldDetailMapClone))
                 .formConfig(FormConfig.builder()
                         .id(getSection() + "-form")
-                        .action(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/edit")
+                         .action(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/edit")
                         .method(HttpMethod.PUT.name())
                         .build())
                 .formError(formError)

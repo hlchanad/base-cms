@@ -26,6 +26,10 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
 
+    default Map<String, Map<Language, Field>> getFieldDetailMapForDetail() {
+        return getFieldDetailMap();
+    }
+
     @Override
     default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
 
@@ -33,7 +37,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
 
         Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), pojo);
         Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
-                getFieldDetailMap(), pojo, getDetailRepository()::findByRefIdAndLang);
+                getFieldDetailMapForDetail(), pojo, getDetailRepository()::findByRefIdAndLang);
 
         return DefaultCreatePageConfig.builder()
                 .pageTitle(pageTitle)

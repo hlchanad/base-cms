@@ -30,6 +30,10 @@ public interface DefaultServiceHasCreatePage<
 
     Map<String, Field> getFieldMap();
 
+    default Map<String, Field> getFieldMapForCreate() {
+        return getFieldMap();
+    }
+
     BreadcrumbUtil getBreadcrumbUtil();
 
     SidebarMenuUtil getSidebarMenuUtil();
@@ -46,7 +50,7 @@ public interface DefaultServiceHasCreatePage<
 
         Gson gson = new Gson();
 
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMapForCreate()),
                 new TypeToken<Map<String, Field>>() {}.getType());
 
         updateFieldMapValues(fieldMapClone, form);
@@ -76,7 +80,7 @@ public interface DefaultServiceHasCreatePage<
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(getFieldMap()))
+                .fields(ReflectionUtil.getFields(getFieldMapForCreate()))
                 .detailFields(Collections.emptyList())
                 .formConfig(FormConfig.builder()
                         .id(getSection() + "-form")
