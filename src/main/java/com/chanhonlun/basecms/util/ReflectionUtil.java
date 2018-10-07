@@ -171,7 +171,8 @@ public class ReflectionUtil {
                 .forEach(property -> {
                     try {
                         Method getter = pojo.getClass().getMethod("get" + StringUtils.capitalize(property.getName()));
-                        String value = getter.invoke(pojo).toString().replaceAll("\\n", "<br/>");
+                        Object object = getter.invoke(pojo);
+                        String value = object == null ? null : object.toString().replaceAll("\\n", "<br/>");
                         fieldMapClone.get(property.getName()).setValue(value);
                     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                         logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
