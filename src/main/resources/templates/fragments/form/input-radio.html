@@ -8,6 +8,7 @@
                    th:name="${field.id}"
                    th:checked="${field.value == option.value}"
                    th:required="${field.required}"
+                   th:disabled="${field.disabled}"
                    type="radio" />
             <label th:for="${option.id}"
                    th:text="${option.title}">Option Title</label>
