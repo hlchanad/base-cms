@@ -6,5 +6,7 @@ public interface BaseService {
 
     String getSection();
 
+    String getPageTitle();
+
     String getContextPath();
 }

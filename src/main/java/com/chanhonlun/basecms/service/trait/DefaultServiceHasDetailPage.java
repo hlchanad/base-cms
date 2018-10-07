@@ -8,11 +8,8 @@ import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
@@ -21,6 +18,8 @@ public interface DefaultServiceHasDetailPage<
         PK extends Serializable> {
 
     String getSection();
+
+    String getPageTitle();
 
     Map<String, Field> getFieldMap();
 
@@ -40,12 +39,10 @@ public interface DefaultServiceHasDetailPage<
 
     default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
 
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
-
         Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForDetail(), pojo);
 
         return DefaultCreatePageConfig.builder()
-                .pageTitle(pageTitle)
+                .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMap))

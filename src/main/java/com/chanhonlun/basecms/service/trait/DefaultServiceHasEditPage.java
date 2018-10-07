@@ -12,7 +12,6 @@ import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
 import java.io.Serializable;
@@ -25,6 +24,8 @@ public interface DefaultServiceHasEditPage<
         Form extends BaseForm> {
 
     String getSection();
+
+    String getPageTitle();
 
     String getContextPath();
 
@@ -48,12 +49,10 @@ public interface DefaultServiceHasEditPage<
 
     default BaseEditPageConfig getEditPageConfig(Pojo pojo) {
 
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
-
         Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForEdit(), pojo);
 
         return DefaultEditPageConfig.builder()
-                .pageTitle(pageTitle)
+                .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMap))
@@ -75,10 +74,8 @@ public interface DefaultServiceHasEditPage<
 
         updateFieldMapValues(fieldMapClone, form);
 
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
-
         return DefaultEditPageConfig.builder()
-                .pageTitle(pageTitle)
+                .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMapClone))
