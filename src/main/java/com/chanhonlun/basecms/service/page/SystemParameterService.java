@@ -1,15 +1,15 @@
 package com.chanhonlun.basecms.service.page;
 
+import com.chanhonlun.basecms.form.SystemParameterForm;
 import com.chanhonlun.basecms.pojo.SystemParameter;
-import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
+import com.chanhonlun.basecms.service.trait.*;
 
 public interface SystemParameterService extends
         BaseService,
         DefaultServiceHasCRUD<SystemParameter, Long>,
-        DefaultServiceHasDataTable<SystemParameter, Long, SystemParameterRowVO> {
-
-    BaseCreatePageConfig getCreatePageConfig();
+        DefaultServiceHasDataTable<SystemParameter, Long, SystemParameterRowVO>,
+        DefaultServiceHasCreatePage<SystemParameter, Long, SystemParameterForm>,
+        DefaultServiceHasEditPage<SystemParameter, Long, SystemParameterForm>,
+        DefaultServiceHasDetailPage<SystemParameter, Long> {
 }

@@ -1,13 +1,13 @@
 package com.chanhonlun.basecms.service.page.impl;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
+import com.chanhonlun.basecms.form.SystemParameterForm;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
-import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
-import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.SystemParameterDataTableServiceImpl;
@@ -15,12 +15,15 @@ import com.chanhonlun.basecms.service.page.SystemParameterService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 public class SystemParameterServiceImpl extends BaseServiceImpl implements SystemParameterService {
@@ -37,6 +40,7 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     public void init() {
         ReflectionUtil.getClassFields(SystemParameter.class)
                 .stream()
+                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
                 .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
                 .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
     }
@@ -62,13 +66,57 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     }
 
     @Override
-    public BaseCreatePageConfig getCreatePageConfig() {
-
-        return DefaultCreatePageConfig.builder()
-                .pageTitle("System Parameter")
-                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
-                .menu(sidebarMenuUtil.getSidebarMenuList())
-                .fields(new ArrayList<>(fieldMap.values()))
-                .build();
+    public Map<String, Field> getFieldMap() {
+        return fieldMap;
     }
+
+    @Override
+    public void updateFieldMapValues(Map<String, Field> fieldMap, SystemParameterForm form) {
+
+        fieldMap.get("category").setValue(form.getCategory());
+        fieldMap.get("key").setValue(form.getKey());
+        fieldMap.get("value").setValue(form.getValue());
+        fieldMap.get("description").setValue(form.getDescription());
+        fieldMap.get("dataType").setValue(form.getDataType().toString());
+    }
+
+    @Override
+    public Map<String, Field> getFieldMapForEdit() {
+
+        Gson gson = new Gson();
+
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(fieldMap), new TypeToken<Map<String, Field>>(){}.getType());
+
+        fieldMapClone.get("category").setDisabled(true);
+        fieldMapClone.get("key").setDisabled(true);
+        fieldMapClone.get("dataType").setDisabled(true);
+
+        return fieldMapClone;
+    }
+
+    @Override
+    public SystemParameter edit(SystemParameter systemParameter, SystemParameterForm form) {
+
+        systemParameter.setValue(form.getValue());
+        systemParameter.setDescription(form.getDescription());
+        systemParameter.setDataType(form.getDataType());
+        systemParameter = update(systemParameter);
+
+        return systemParameter;
+    }
+
+    @Override
+    public SystemParameter create(SystemParameterForm form) {
+
+        SystemParameter systemParameter = new SystemParameter();
+        systemParameter.setCategory(form.getCategory());
+        systemParameter.setKey(form.getKey());
+        systemParameter.setValue(form.getValue());
+        systemParameter.setDescription(form.getDescription());
+        systemParameter.setDataType(form.getDataType());
+        systemParameter = create(systemParameter);
+
+        return systemParameter;
+    }
+
 }
