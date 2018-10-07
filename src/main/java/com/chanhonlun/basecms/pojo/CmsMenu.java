@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +16,7 @@ public class CmsMenu extends BasePojo<Long> {
     @Column(name = "PARENT_ID")
     private Long parentId;
 
+    @IgnoreAutoReflection
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PARENT_ID", insertable = false, updatable = false)
     private CmsMenu parent;

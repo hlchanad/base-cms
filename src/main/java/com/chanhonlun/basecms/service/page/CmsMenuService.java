@@ -1,16 +1,19 @@
 package com.chanhonlun.basecms.service.page;
 
+import com.chanhonlun.basecms.form.CmsMenuForm;
 import com.chanhonlun.basecms.pojo.CmsMenu;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
-import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
+import com.chanhonlun.basecms.service.trait.*;
 
 import java.util.List;
 
 public interface CmsMenuService extends
         BaseService,
         DefaultServiceHasCRUD<CmsMenu, Long>,
-        DefaultServiceHasDataTable<CmsMenu, Long, CmsMenuRowVO> {
+        DefaultServiceHasDataTable<CmsMenu, Long, CmsMenuRowVO>,
+        DefaultServiceHasCreatePage<CmsMenu, Long, CmsMenuForm>,
+        DefaultServiceHasEditPage<CmsMenu, Long, CmsMenuForm>,
+        DefaultServiceHasDetailPage<CmsMenu, Long> {
 
     List<CmsMenu> findByParentIdNullAndIsDeleteFalse();
 
