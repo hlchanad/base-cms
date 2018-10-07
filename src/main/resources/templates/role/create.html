@@ -21,6 +21,20 @@
             .tab-content.tab-content-transparent {
                 background-color: transparent;
             }
+
+            .form-horizontal .form-group .control-label {
+                opacity: 1;
+            }
+
+            div.form-group.required>label.control-label:after {
+                color: #f35958;
+                content: "*";
+                font-family: arial;
+                font-size: 20px;
+                position: absolute;
+                right: 12px;
+                top: 6px;
+            }
         </style>
     </th:block>
 
@@ -54,7 +68,7 @@
 
                             <div th:each="field, it : ${CMS_RSP.fields}"
                                  class="form-group row"
-                                 th:classappend="${it.last and not #lists.isEmpty(CMS_RSP.detailFields)} ? 'border-bottom-0 mb-4'"
+                                 th:classappend="|${it.last and not #lists.isEmpty(CMS_RSP.detailFields) ? 'border-bottom-0 mb-4' : ''} ${field.required ? 'required' : ''}|"
                                  th:if="${field.show}">
 
                                 <label th:for="${field.id}"
@@ -90,6 +104,7 @@
 
                                         <div th:each="field : ${detailField.fields}"
                                              class="form-group row"
+                                             th:classappend="${field.required ? 'required' : ''}"
                                              th:if="${field.show}">
 
                                             <label th:for="${field.id}"
