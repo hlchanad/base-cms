@@ -16,6 +16,8 @@ import com.chanhonlun.basecms.service.page.RoleService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,6 +97,20 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
     }
 
     @Override
+    public Map<String, Field> getFieldMapForEdit() {
+
+        Gson gson = new Gson();
+
+        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(fieldMap),
+                new TypeToken<Map<String, Field>>() {}.getType());
+
+        fieldMapClone.get("code").setDisabled(true);
+        fieldMapClone.get("title").setDisabled(true);
+
+        return fieldMapClone;
+    }
+
+    @Override
     public FormError ifEditError(Role pojo, RoleForm form) {
         return null;
     }
@@ -102,8 +118,6 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
     @Override
     public Role edit(Role role, RoleForm form) {
 
-        role.setCode(form.getCode());
-        role.setTitle(form.getTitle());
         role.setDescription(form.getDescription());
         role = update(role);
 
