@@ -6,4 +6,6 @@ import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 public interface RoleRepository extends
         BaseRepository<Role, Long>,
         DataTablesRepository<Role, Long> {
+
+    Role findByCodeAndIsDeleteFalse(String code);
 }

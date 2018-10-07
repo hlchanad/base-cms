@@ -81,6 +81,13 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
 
     @Override
     public FormError ifCreateError(RoleForm form) {
+
+        Role role = roleRepository.findByCodeAndIsDeleteFalse(form.getCode());
+
+        if (role != null) {
+            return new FormError("Code \"" + form.getCode() + "\" has been used.");
+        }
+
         return null;
     }
 
