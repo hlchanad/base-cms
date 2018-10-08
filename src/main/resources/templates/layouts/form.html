@@ -112,8 +112,7 @@
                                                    th:text="${field.title}">Field Title</label>
 
                                             <div class="col-md-9">
-                                                <th:block
-                                                        th:replace="/fragments/form/field :: field(field = ${field})"/>
+                                                <th:block th:replace="/fragments/form/field :: field(field = ${field})"/>
                                             </div>
                                         </div>
 
@@ -128,7 +127,12 @@
                                 </div>
                                 <div class="col-md-9">
                                     <button class="btn btn-success" type="submit">Submit</button>
-                                    <button class="btn btn-default" type="reset"><i class="pg-close"></i> Clear</button>
+                                    <a th:if="${formType != null} and ${formType} == 'create'"
+                                       href="list"
+                                       class="btn btn-danger">Cancel</a>
+                                    <a th:if="${formType == null} or ${formType} == 'edit'"
+                                       th:href="detail"
+                                       class="btn btn-danger">Cancel</a>
                                 </div>
                             </div>
 
