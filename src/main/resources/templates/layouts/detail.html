@@ -13,6 +13,10 @@
               media="screen">
 
         <style>
+            .detail-buttons {
+                float: right;
+            }
+
             .language-section .tab-content {
                 margin-left: -15px;
                 margin-right: -15px;
@@ -37,6 +41,28 @@
                 <div class="row">
                     <div class="col-md-10">
                         <h1 th:text="${CMS_RSP.pageTitle}"></h1>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="btn-group detail-buttons">
+                                    <a href="../list"
+                                       th:href="${CMS_RSP.listUrl}"
+                                       class="btn btn-complete detail-list-button">
+                                        <i class="fa fa-list-ul"></i>
+                                    </a>
+                                    <a href="edit"
+                                       th:href="${CMS_RSP.editUrl}"
+                                       class="btn btn-primary detail-edit-button">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="#"
+                                       th:attr="data-href = ${CMS_RSP.deleteUrl}"
+                                       class="btn btn-danger detail-delete-button">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-horizontal">
 
@@ -118,6 +144,48 @@
         <script>
             const myFormElement = new MyFormElement();
             myFormElement.initFormElements();
+        </script>
+
+        <script>
+            $(".detail-buttons .detail-delete-button").click(function(event) {
+                event.preventDefault();
+
+                const deleteUrl = $(this).attr("data-href");
+
+                swal({
+                    title: "Are you sure to DELETE this record ?",
+                    type: "warning",
+                    showCancelButton: true
+                })
+                    .then((result) => {
+                        if (!result.value) return;
+
+                        $.ajax({
+                            url: deleteUrl,
+                            method: "delete",
+                            success: function (response) {
+                                swal({
+                                    type: "success",
+                                    title: "Success!",
+                                    timer: 3000
+                                })
+                                    .then(function() {
+                                        const listUrl = $(".detail-buttons .detail-list-button").attr("href");
+                                        window.location.replace(listUrl);
+                                    });
+                            },
+                            error: function () {
+                                swal({
+                                    type: "error",
+                                    title: "Failed, please try again later"
+                                });
+                            }
+                        });
+                    })
+                    .catch(function () {
+                    });
+            });
+
         </script>
     </th:block>
 
