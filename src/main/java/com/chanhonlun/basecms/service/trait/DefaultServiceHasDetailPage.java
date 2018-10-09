@@ -3,8 +3,7 @@ package com.chanhonlun.basecms.service.trait;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.response.Field;
-import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
-import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
+import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -21,6 +20,8 @@ public interface DefaultServiceHasDetailPage<
 
     String getPageTitle();
 
+    String getContextPath();
+
     Map<String, Field> getFieldMap();
 
     default Map<String, Field> getFieldMapForDetail() {
@@ -33,20 +34,23 @@ public interface DefaultServiceHasDetailPage<
 
     BaseRepository<Pojo, PK> getRepository();
 
-    default BaseCreatePageConfig getDetailPageConfig(PK id) {
+    default DefaultDetailPageConfig getDetailPageConfig(PK id) {
         return getDetailPageConfig(getRepository().findByIdAndIsDeleteFalse(id));
     }
 
-    default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
+    default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
         Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForDetail(), pojo);
 
-        return DefaultCreatePageConfig.builder()
+        return DefaultDetailPageConfig.builder()
                 .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMap))
                 .detailFields(Collections.emptyList())
+                .listUrl(getContextPath() + "/" + getSection())
+                .editUrl(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/edit")
+                .deleteUrl(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/delete")
                 .build();
     }
 

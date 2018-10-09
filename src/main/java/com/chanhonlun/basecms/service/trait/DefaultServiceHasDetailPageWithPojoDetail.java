@@ -5,8 +5,7 @@ import com.chanhonlun.basecms.pojo.BaseDetailPojo;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseDetailRepository;
 import com.chanhonlun.basecms.response.Field;
-import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
-import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
+import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,7 +30,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
     }
 
     @Override
-    default BaseCreatePageConfig getDetailPageConfig(Pojo pojo) {
+    default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
@@ -39,12 +38,15 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
         Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
                 getFieldDetailMapForDetail(), pojo, getDetailRepository()::findByRefIdAndLang);
 
-        return DefaultCreatePageConfig.builder()
+        return DefaultDetailPageConfig.builder()
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMap))
                 .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
+                .listUrl(getContextPath() + "/" + getSection())
+                .editUrl(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/edit")
+                .deleteUrl(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/delete")
                 .build();
     }
 
