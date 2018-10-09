@@ -13,6 +13,11 @@
               media="screen">
 
         <style>
+            .language-section .tab-content {
+                margin-left: -15px;
+                margin-right: -15px;
+            }
+
             .bootstrap-timepicker-widget i {
                 color: #6d5eac;
                 font-weight: 600;
@@ -50,7 +55,7 @@
                             </div>
 
                             <div th:if="${not #lists.isEmpty(CMS_RSP.detailFields)}"
-                                 class="card card-transparent">
+                                 class="card card-transparent language-section">
 
                                 <!-- Language Navigation -->
                                 <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
