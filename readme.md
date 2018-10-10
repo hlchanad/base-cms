@@ -15,6 +15,8 @@ More functions may be added if I have some new ideas.
 
 ## Starting the server
 Replace the database config in `/resources/application.properties`. 
-Run the application with the flag `spring.profiles.active=active`. 
+Run the application with the flag `spring.profiles.active=local`. 
 That's it!
 
+## Credits
+I am using this theme https://themeforest.net/item/pages-admin-dashboard-template-web-app/9694847. Please support them if you like this awesome theme :)
