@@ -69,6 +69,7 @@ public class PostServiceImpl extends BaseServiceImpl implements PostService {
                 })
                 .forEach(pair -> fieldDetailMap.put(pair.getKey(), pair.getValue()));
 
+        fieldMap.get("publishDate").setHintDetail("Remember to set the date again before fixed");
 
         fieldDetailMap.get("content").get(Language.EN).setType(FieldType.LONG_TEXT);
         fieldDetailMap.get("content").get(Language.ZH_HK).setType(FieldType.LONG_TEXT);
