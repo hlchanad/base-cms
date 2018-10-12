@@ -10,16 +10,16 @@ import java.util.List;
 @Builder
 public class Field {
 
-    public String id;
-    public String title;
-    public FieldType type;
-    public String value;
-    public Float numberStep;
-    public String placeholder;
-    public String hintTitle;
-    public String hintDetail;
-    public List<FieldOption> options;
-    @Builder.Default public boolean required = true;
-    @Builder.Default public boolean disabled = false;
-    @Builder.Default public boolean show = true;
+    private String id;
+    private String title;
+    private FieldType type;
+    private String value;
+    private Float numberStep;
+    private String placeholder;
+    private String hintTitle;
+    private String hintDetail;
+    private List<FieldOption> options;
+    @Builder.Default private boolean required = true;
+    @Builder.Default private boolean disabled = false;
+    @Builder.Default private boolean show = true;
 }

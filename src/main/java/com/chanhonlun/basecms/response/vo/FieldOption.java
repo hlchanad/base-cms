@@ -1,12 +1,14 @@
 package com.chanhonlun.basecms.response.vo;
 
 import lombok.Builder;
+import lombok.Data;
 
+@Data
 @Builder
 public class FieldOption {
 
-    public String id;
-    public String title;
-    public String value;
+    private String id;
+    private String title;
+    private String value;
 
 }
