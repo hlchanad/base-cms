@@ -44,9 +44,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
                 .fields(ReflectionUtil.getFields(fieldMap))
                 .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
-                .listUrl(getContextPath() + "/" + getSection())
-                .editUrl(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/edit")
-                .deleteUrl(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/delete")
+                .detailButtons(getDetailButtons(pojo))
                 .build();
     }
 

@@ -45,21 +45,25 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="btn-group detail-buttons">
-                                    <a href="../list"
-                                       th:href="${CMS_RSP.listUrl}"
-                                       class="btn btn-complete detail-list-button">
-                                        <i class="fa fa-list-ul"></i>
-                                    </a>
-                                    <a href="edit"
-                                       th:href="${CMS_RSP.editUrl}"
-                                       class="btn btn-primary detail-edit-button">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a href="#"
-                                       th:attr="data-href = ${CMS_RSP.deleteUrl}"
-                                       class="btn btn-danger detail-delete-button">
-                                        <i class="fa fa-trash-o"></i>
-                                    </a>
+
+                                    <th:block th:each="detailButton : ${CMS_RSP.detailButtons}">
+                                        <th:block th:if="${detailButton.type == detailButton.type.REDIRECT}">
+                                            <a class="btn"
+                                               th:href="${detailButton.href}"
+                                               th:classappend="${'btn-' + detailButton.bootstrapColor}">
+                                                <i class="fa" th:classappend="${detailButton.faIcon}"></i>
+                                            </a>
+                                        </th:block>
+
+                                        <th:block th:if="${detailButton.type == detailButton.type.DELETE}">
+                                            <a href="#" class="btn detail-delete-button"
+                                               th:attr="data-href = ${detailButton.href}, data-redirect = ${detailButton.redirectUrl}"
+                                               th:classappend="${'btn-' + detailButton.bootstrapColor}">
+                                                <i class="fa" th:classappend="${detailButton.faIcon}"></i>
+                                            </a>
+                                        </th:block>
+                                    </th:block>
+
                                 </div>
                             </div>
                         </div>
@@ -150,7 +154,8 @@
             $(".detail-buttons .detail-delete-button").click(function(event) {
                 event.preventDefault();
 
-                const deleteUrl = $(this).attr("data-href");
+                const deleteUrl   = $(this).attr("data-href");
+                const redirectUrl = $(this).attr("data-redirect");
 
                 swal({
                     title: "Are you sure to DELETE this record ?",
@@ -170,8 +175,7 @@
                                     timer: 3000
                                 })
                                     .then(function() {
-                                        const listUrl = $(".detail-buttons .detail-list-button").attr("href");
-                                        window.location.replace(listUrl);
+                                        window.location.replace(redirectUrl);
                                     });
                             },
                             error: function () {
