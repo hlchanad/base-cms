@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.response.page;
 
-import com.chanhonlun.basecms.response.Breadcrumb;
-import com.chanhonlun.basecms.response.MenuItem;
+import com.chanhonlun.basecms.response.vo.Breadcrumb;
+import com.chanhonlun.basecms.response.vo.MenuItem;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import lombok.Builder;
 

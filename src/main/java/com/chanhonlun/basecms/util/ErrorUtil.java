@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.constant.SessionAttributes;
-import com.chanhonlun.basecms.response.ErrorPopup;
+import com.chanhonlun.basecms.response.vo.ErrorPopup;
 
 import javax.servlet.http.HttpSession;
 

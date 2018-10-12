@@ -2,7 +2,7 @@ package com.chanhonlun.basecms.interceptor;
 
 import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.constant.SessionAttributes;
-import com.chanhonlun.basecms.response.ErrorPopup;
+import com.chanhonlun.basecms.response.vo.ErrorPopup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

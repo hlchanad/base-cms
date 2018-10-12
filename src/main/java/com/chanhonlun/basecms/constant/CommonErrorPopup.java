@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.constant;
 
-import com.chanhonlun.basecms.response.ErrorPopup;
+import com.chanhonlun.basecms.response.vo.ErrorPopup;
 
 public class CommonErrorPopup {
 

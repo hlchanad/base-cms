@@ -4,7 +4,7 @@ import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.BasePojo;
-import com.chanhonlun.basecms.response.Field;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.page.FormConfig;

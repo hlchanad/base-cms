@@ -2,7 +2,7 @@ package com.chanhonlun.basecms.service.datatable.impl;
 
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
-import com.chanhonlun.basecms.response.DataTableColumn;
+import com.chanhonlun.basecms.response.vo.DataTableColumn;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
 import com.chanhonlun.basecms.service.datatable.DefaultDataTableService;
 import com.google.gson.Gson;

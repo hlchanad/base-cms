@@ -4,7 +4,7 @@ import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.pojo.BaseDetailPojo;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseDetailRepository;
-import com.chanhonlun.basecms.response.Field;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import org.apache.commons.lang3.StringUtils;

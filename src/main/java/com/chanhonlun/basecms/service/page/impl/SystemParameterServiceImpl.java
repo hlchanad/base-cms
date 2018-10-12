@@ -6,7 +6,7 @@ import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.response.Field;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;

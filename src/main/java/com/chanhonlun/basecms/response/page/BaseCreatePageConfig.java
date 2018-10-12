@@ -1,10 +1,10 @@
 package com.chanhonlun.basecms.response.page;
 
 import com.chanhonlun.basecms.form.FormError;
-import com.chanhonlun.basecms.response.Breadcrumb;
-import com.chanhonlun.basecms.response.DetailField;
-import com.chanhonlun.basecms.response.Field;
-import com.chanhonlun.basecms.response.MenuItem;
+import com.chanhonlun.basecms.response.vo.Breadcrumb;
+import com.chanhonlun.basecms.response.vo.DetailField;
+import com.chanhonlun.basecms.response.vo.Field;
+import com.chanhonlun.basecms.response.vo.MenuItem;
 
 import java.util.List;
 

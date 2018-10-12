@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.response.page;
 
 import com.chanhonlun.basecms.form.FormError;
-import com.chanhonlun.basecms.response.*;
+import com.chanhonlun.basecms.response.vo.*;
 
 import java.util.List;
 

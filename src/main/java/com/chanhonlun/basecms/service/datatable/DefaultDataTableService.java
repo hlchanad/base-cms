@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.service.datatable;
 
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.response.DataTableColumn;
+import com.chanhonlun.basecms.response.vo.DataTableColumn;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.component.DefaultDataTableConfig;
 import com.chanhonlun.basecms.response.vo.row.BaseRowVO;

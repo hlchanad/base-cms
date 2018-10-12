@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.util;
 
-import com.chanhonlun.basecms.response.MenuItem;
+import com.chanhonlun.basecms.response.vo.MenuItem;
 import com.chanhonlun.basecms.service.page.CmsMenuService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;

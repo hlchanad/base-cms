@@ -1,4 +1,4 @@
-package com.chanhonlun.basecms.response;
+package com.chanhonlun.basecms.response.vo;
 
 import com.chanhonlun.basecms.constant.DetailButtonType;
 import lombok.Builder;

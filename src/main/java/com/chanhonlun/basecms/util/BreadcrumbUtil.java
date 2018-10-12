@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.util;
 
-import com.chanhonlun.basecms.response.Breadcrumb;
+import com.chanhonlun.basecms.response.vo.Breadcrumb;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

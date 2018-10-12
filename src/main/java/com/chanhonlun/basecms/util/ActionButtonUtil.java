@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.constant.Action;
-import com.chanhonlun.basecms.response.ActionButton;
+import com.chanhonlun.basecms.response.vo.ActionButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

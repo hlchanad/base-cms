@@ -1,4 +1,4 @@
-package com.chanhonlun.basecms.response;
+package com.chanhonlun.basecms.response.vo;
 
 import com.chanhonlun.basecms.constant.MenuItemIconType;
 import com.chanhonlun.basecms.pojo.CmsMenu;

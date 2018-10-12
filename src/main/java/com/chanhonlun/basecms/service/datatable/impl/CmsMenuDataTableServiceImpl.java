@@ -2,7 +2,7 @@ package com.chanhonlun.basecms.service.datatable.impl;
 
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.repository.CmsMenuRepository;
-import com.chanhonlun.basecms.response.DataTableColumn;
+import com.chanhonlun.basecms.response.vo.DataTableColumn;
 import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
 import com.chanhonlun.basecms.service.datatable.DefaultDataTableService;
 import com.google.gson.Gson;

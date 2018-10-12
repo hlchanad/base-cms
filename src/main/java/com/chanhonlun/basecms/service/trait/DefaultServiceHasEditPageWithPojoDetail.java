@@ -6,7 +6,7 @@ import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.BaseDetailPojo;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseDetailRepository;
-import com.chanhonlun.basecms.response.Field;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.BaseEditPageConfig;
 import com.chanhonlun.basecms.response.page.DefaultEditPageConfig;
 import com.chanhonlun.basecms.response.page.FormConfig;

@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.response.component;
 
-import com.chanhonlun.basecms.response.DataTableColumn;
+import com.chanhonlun.basecms.response.vo.DataTableColumn;
 
 import java.util.List;
 import java.util.Map;
