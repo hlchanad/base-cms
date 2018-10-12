@@ -30,7 +30,7 @@ configurations {
 }
 
 dependencies {
-    compileOnly('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok:1.16.20')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
     compile fileTree(dir: 'lib', include: '*.jar')
