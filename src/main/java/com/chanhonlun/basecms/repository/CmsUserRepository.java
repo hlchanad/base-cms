@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CmsUserRepository extends
         DataTablesRepository<CmsUser, Long>,
         BaseRepository<CmsUser, Long> {
+
+    CmsUser findByUsernameAndIsDeleteFalse(String username);
 }

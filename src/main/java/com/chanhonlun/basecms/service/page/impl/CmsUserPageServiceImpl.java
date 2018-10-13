@@ -3,6 +3,7 @@ package com.chanhonlun.basecms.service.page.impl;
 import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.form.CmsUserForm;
+import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.pojo.CmsUserRole;
 import com.chanhonlun.basecms.pojo.Role;
@@ -132,6 +133,18 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         cmsUser = update(cmsUser);
 
         return cmsUser;
+    }
+
+    @Override
+    public FormError ifCreateError(CmsUserForm form) {
+
+        CmsUser cmsUser = cmsUserRepository.findByUsernameAndIsDeleteFalse(form.getUsername());
+
+        if (cmsUser != null) {
+            return new FormError("Duplicated username, please change your username");
+        }
+
+        return null;
     }
 
     @Override
