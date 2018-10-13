@@ -191,9 +191,10 @@ public class ReflectionUtil {
                 .forEach(property -> {
                     try {
                         Method getter = pojo.getClass().getMethod("get" + StringUtils.capitalize(property.getName()));
-                        Object object = getter.invoke(pojo);
-                        String value = object == null ? null : object.toString().replaceAll("\\n", "<br/>");
-                        fieldMapClone.get(property.getName()).setValue(value);
+                        String value = Optional.ofNullable(getter.invoke(pojo))
+                                .map(Object::toString)
+                                .map(string -> string.replaceAll("\\n", "<br/>"))
+                                .orElse(null);
                     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                         logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
                     }
@@ -233,8 +234,10 @@ public class ReflectionUtil {
                         .forEach(property -> {
                             try {
                                 Method getter = pojoDetail.getClass().getMethod("get" + StringUtils.capitalize(property.getName()));
-                                String value  = getter.invoke(pojoDetail).toString().replaceAll("\\n", "<br/>");
-                                fieldDetailMapClone.get(property.getName()).get(pojoDetail.getLang()).setValue(value);
+                                String value = Optional.ofNullable(getter.invoke(pojoDetail))
+                                        .map(Object::toString)
+                                        .map(string -> string.replaceAll("\\n", "<br/>"))
+                                        .orElse(null);
                             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                                 logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
                             }
