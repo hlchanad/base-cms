@@ -27,7 +27,7 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
 
     Map<String, Map<Language, Field>> getFieldDetailMap();
 
-    default Map<String, Map<Language, Field>> getFieldDetailMapForEdit() {
+    default Map<String, Map<Language, Field>> getFieldDetailMapForEdit(Pojo pojo) {
         return getFieldDetailMap();
     }
 
@@ -38,8 +38,8 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
     @Override
     default BaseEditPageConfig getEditPageConfig(Pojo pojo) {
 
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
-        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit(pojo));
+        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit(pojo));
 
         ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
         ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMapClone, pojo, getDetailRepository()::findByRefIdAndLang);
@@ -61,8 +61,8 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
     @Override
     default BaseEditPageConfig getEditPageConfig(Pojo pojo, Form form, FormError formError) {
 
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
-        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit(pojo));
+        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit(pojo));
 
         updateFieldMapValues(fieldMapClone, form);
         updateFieldDetailMapValues(fieldDetailMapClone, form);

@@ -3,9 +3,9 @@ package com.chanhonlun.basecms.service.trait;
 import com.chanhonlun.basecms.constant.DetailButtonType;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseRepository;
+import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
 import com.chanhonlun.basecms.response.vo.DetailButton;
 import com.chanhonlun.basecms.response.vo.Field;
-import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -28,7 +28,7 @@ public interface DefaultServiceHasDetailPage<
 
     Map<String, Field> getFieldMap();
 
-    default Map<String, Field> getFieldMapForDetail() {
+    default Map<String, Field> getFieldMapForDetail(Pojo pojo) {
         return getFieldMap();
     }
 
@@ -68,7 +68,7 @@ public interface DefaultServiceHasDetailPage<
 
     default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForDetail());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForDetail(pojo));
         ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
 
         return DefaultDetailPageConfig.builder()

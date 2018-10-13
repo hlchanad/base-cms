@@ -29,7 +29,7 @@ public interface DefaultServiceHasEditPage<
 
     Map<String, Field> getFieldMap();
 
-    default Map<String, Field> getFieldMapForEdit() {
+    default Map<String, Field> getFieldMapForEdit(Pojo pojo) {
         return getFieldMap();
     }
 
@@ -47,7 +47,7 @@ public interface DefaultServiceHasEditPage<
 
     default BaseEditPageConfig getEditPageConfig(Pojo pojo) {
 
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit(pojo));
         ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
 
         return DefaultEditPageConfig.builder()
@@ -66,7 +66,7 @@ public interface DefaultServiceHasEditPage<
 
     default BaseEditPageConfig getEditPageConfig(Pojo pojo, Form form, FormError formError) {
 
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit(pojo));
 
         updateFieldMapValues(fieldMapClone, form);
 

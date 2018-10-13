@@ -102,7 +102,7 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
     }
 
     @Override
-    public Map<String, Field> getFieldMapForEdit() {
+    public Map<String, Field> getFieldMapForEdit(Role role) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 

@@ -107,7 +107,7 @@ public class CmsUserServiceImpl extends BaseServiceImpl implements CmsUserServic
     }
 
     @Override
-    public Map<String, Field> getFieldMapForEdit() {
+    public Map<String, Field> getFieldMapForEdit(CmsUser cmsUser) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
@@ -118,7 +118,7 @@ public class CmsUserServiceImpl extends BaseServiceImpl implements CmsUserServic
     }
 
     @Override
-    public Map<String, Field> getFieldMapForDetail() {
+    public Map<String, Field> getFieldMapForDetail(CmsUser cmsUser) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 

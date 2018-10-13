@@ -79,7 +79,7 @@ public class SystemParameterServiceImpl extends BaseServiceImpl implements Syste
     }
 
     @Override
-    public Map<String, Field> getFieldMapForEdit() {
+    public Map<String, Field> getFieldMapForEdit(SystemParameter systemParameter) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
