@@ -4,10 +4,9 @@ import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.pojo.BaseDetailPojo;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseDetailRepository;
-import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.util.ReflectionUtil;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -32,18 +31,18 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
     @Override
     default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForDetail());
+        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForDetail());
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForDetail(), pojo);
-        Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
-                getFieldDetailMapForDetail(), pojo, getDetailRepository()::findByRefIdAndLang);
+        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
+        ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMapClone, pojo, getDetailRepository()::findByRefIdAndLang);
 
         return DefaultDetailPageConfig.builder()
-                .pageTitle(pageTitle)
+                .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMap))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
+                .fields(ReflectionUtil.getFields(fieldMapClone))
+                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMapClone))
                 .detailButtons(getDetailButtons(pojo))
                 .build();
     }

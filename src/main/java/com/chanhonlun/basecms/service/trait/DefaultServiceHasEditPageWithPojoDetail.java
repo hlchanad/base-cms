@@ -38,18 +38,18 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
     @Override
     default BaseEditPageConfig getEditPageConfig(Pojo pojo) {
 
-        String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
+        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit());
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForEdit(), pojo);
-        Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
-                getFieldDetailMapForEdit(), pojo, getDetailRepository()::findByRefIdAndLang);
+        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
+        ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMapClone, pojo, getDetailRepository()::findByRefIdAndLang);
 
         return DefaultEditPageConfig.builder()
-                .pageTitle(pageTitle)
+                .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMap))
-                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMap))
+                .fields(ReflectionUtil.getFields(fieldMapClone))
+                .detailFields(ReflectionUtil.getDetailFields(fieldDetailMapClone))
                 .formConfig(FormConfig.builder()
                         .id(getSection() + "-form")
                         .action(getContextPath() + "/" + getSection() + "/" + pojo.getId() + "/edit")

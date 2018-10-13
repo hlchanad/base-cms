@@ -47,13 +47,14 @@ public interface DefaultServiceHasEditPage<
 
     default BaseEditPageConfig getEditPageConfig(Pojo pojo) {
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForEdit(), pojo);
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
+        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
 
         return DefaultEditPageConfig.builder()
                 .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMap))
+                .fields(ReflectionUtil.getFields(fieldMapClone))
                 .detailFields(Collections.emptyList())
                 .formConfig(FormConfig.builder()
                         .id(getSection() + "-form")

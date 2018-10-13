@@ -68,13 +68,14 @@ public interface DefaultServiceHasDetailPage<
 
     default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForDetail(), pojo);
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForDetail());
+        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
 
         return DefaultDetailPageConfig.builder()
                 .pageTitle(getPageTitle())
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(fieldMap))
+                .fields(ReflectionUtil.getFields(fieldMapClone))
                 .detailFields(Collections.emptyList())
                 .detailButtons(getDetailButtons(pojo))
                 .build();

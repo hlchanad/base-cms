@@ -175,15 +175,13 @@ public class ReflectionUtil {
      * Replace value from {@code pojo} into {@code fieldMap}
      *
      * @param fieldMap map for describing the Fields
-     * @param pojo the pojo
-     * @param <Pojo> extending {@link BasePojo}
+     * @param pojo     the pojo
+     * @param <Pojo>   extending {@link BasePojo}
      * @param <PojoPK> Primary Key of Pojo, extending {@link Serializable}
      * @return new {@code fieldMap} with pojo's value
      */
     public static <Pojo extends BasePojo<PojoPK>, PojoPK extends Serializable>
-    Map<String, Field> updateFieldMapWithValues(Map<String, Field> fieldMap, Pojo pojo) {
-
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
+    void updateFieldMapWithValues(Map<String, Field> fieldMap, Pojo pojo) {
 
         ReflectionUtil.getClassFields(pojo.getClass())
                 .stream()
@@ -195,24 +193,24 @@ public class ReflectionUtil {
                                 .map(Object::toString)
                                 .map(string -> string.replaceAll("\\n", "<br/>"))
                                 .orElse(null);
+                        fieldMap.get(property.getName()).setValue(value);
                     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                         logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
                     }
                 });
 
-        return fieldMapClone;
     }
 
     /**
      * Replace value from {@code detail pojo} into {@code fieldDetailMap}
      *
-     * @param fieldDetailMap map for describing the Fields Detail
-     * @param pojo the pojo
+     * @param fieldDetailMap     map for describing the Fields Detail
+     * @param pojo               the pojo
      * @param findByRefIdAndLang a {@code BiFunction} for finding a PojoDetail with RefId and Lang
-     * @param <Pojo> extending {@link BasePojo}
-     * @param <PojoPK> Primary Key of Pojo, extending {@link Serializable}
-     * @param <PojoDetail> extending {@link BaseDetailPojo}
-     * @param <PojoDetailPK> Primary Key of DetailPojo, extending {@link Serializable}
+     * @param <Pojo>             extending {@link BasePojo}
+     * @param <PojoPK>           Primary Key of Pojo, extending {@link Serializable}
+     * @param <PojoDetail>       extending {@link BaseDetailPojo}
+     * @param <PojoDetailPK>     Primary Key of DetailPojo, extending {@link Serializable}
      * @return new {@code fieldDetailMap} with detail pojo's value
      */
     public static <
@@ -220,11 +218,9 @@ public class ReflectionUtil {
             PojoPK extends Serializable,
             PojoDetail extends BaseDetailPojo<PojoDetailPK, PojoPK>,
             PojoDetailPK extends Serializable>
-    Map<String, Map<Language, Field>> updateFieldDetailMapWithValues(Map<String,Map<Language,Field>> fieldDetailMap,
-                                                                     Pojo pojo,
-                                                                     BiFunction<PojoPK, Language, PojoDetail> findByRefIdAndLang) {
-
-        Map<String, Map<Language, Field>> fieldDetailMapClone = cloneFieldDetailMap(fieldDetailMap);
+    void updateFieldDetailMapWithValues(Map<String, Map<Language, Field>> fieldDetailMap,
+                                        Pojo pojo,
+                                        BiFunction<PojoPK, Language, PojoDetail> findByRefIdAndLang) {
 
         Stream.of(Language.values())
                 .map(language -> findByRefIdAndLang.apply(pojo.getId(), language))
@@ -238,11 +234,11 @@ public class ReflectionUtil {
                                         .map(Object::toString)
                                         .map(string -> string.replaceAll("\\n", "<br/>"))
                                         .orElse(null);
+                                fieldDetailMap.get(property.getName()).get(pojoDetail.getLang()).setValue(value);
                             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                                 logger.error("cannot call getter method for field: {}, e: {}", property.getName(), e);
                             }
                         }));
 
-        return fieldDetailMapClone;
     }
 }
