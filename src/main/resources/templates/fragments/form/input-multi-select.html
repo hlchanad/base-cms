@@ -1,0 +1,18 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+          th:fragment="input-multi-select">
+
+    <select th:id="${field.id}"
+            th:name="${field.id}"
+            class="full-width"
+            data-init-plugin="select2"
+            th:required="${field.required}"
+            multiple>
+        <option th:each="option : ${field.options}"
+                th:id="${option.id}"
+                th:value="${option.value}"
+                th:text="${option.title}"
+                th:selected="${field.value == option.value}"
+        ></option>
+    </select>
+
+</th:block>

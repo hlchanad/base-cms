@@ -24,5 +24,7 @@ public enum FieldType {
 
     DROPDOWN,
 
+    MULTI_SELECT,
+
     IMAGE,
 }

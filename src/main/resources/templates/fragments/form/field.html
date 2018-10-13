@@ -51,6 +51,10 @@
             <th:block th:replace="/fragments/form/input-dropdown :: input-dropdown(field = ${field})"> </th:block>
         </th:block>
 
+        <th:block th:if="${field.type == field.type.MULTI_SELECT}">
+            <th:block th:replace="/fragments/form/input-multi-select :: input-multi-select(field = ${field})"> </th:block>
+        </th:block>
+
         <th:block th:if="${field.type == field.type.IMAGE}">
             <th:block th:replace="/fragments/form/input-image :: input-image(field = ${field})"> </th:block>
         </th:block>
