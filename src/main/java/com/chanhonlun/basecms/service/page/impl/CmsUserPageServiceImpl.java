@@ -12,7 +12,7 @@ import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.CmsUserDataTableServiceImpl;
-import com.chanhonlun.basecms.service.page.CmsUserService;
+import com.chanhonlun.basecms.service.page.CmsUserPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -25,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
-public class CmsUserServiceImpl extends BaseServiceImpl implements CmsUserService {
+public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUserPageService {
 
     @Autowired
     private CmsUserDataTableServiceImpl cmsUserDataTablesService;

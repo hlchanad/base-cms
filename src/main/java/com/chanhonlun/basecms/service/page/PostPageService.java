@@ -6,8 +6,8 @@ import com.chanhonlun.basecms.pojo.PostDetail;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.trait.*;
 
-public interface PostService extends
-        BaseService,
+public interface PostPageService extends
+        BasePageService,
         DefaultServiceHasCRUD<Post, Long>,
         DefaultServiceHasDataTable<Post, Long, PostRowVO>,
         DefaultServiceHasCreatePageWithPojoDetail<Post, Long, PostForm>,

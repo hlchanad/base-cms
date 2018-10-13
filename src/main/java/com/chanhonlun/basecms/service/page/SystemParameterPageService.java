@@ -5,8 +5,8 @@ import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
 import com.chanhonlun.basecms.service.trait.*;
 
-public interface SystemParameterService extends
-        BaseService,
+public interface SystemParameterPageService extends
+        BasePageService,
         DefaultServiceHasCRUD<SystemParameter, Long>,
         DefaultServiceHasDataTable<SystemParameter, Long, SystemParameterRowVO>,
         DefaultServiceHasCreatePage<SystemParameter, Long, SystemParameterForm>,

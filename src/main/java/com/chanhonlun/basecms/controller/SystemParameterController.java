@@ -4,8 +4,8 @@ import com.chanhonlun.basecms.controller.trait.*;
 import com.chanhonlun.basecms.form.SystemParameterForm;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.response.vo.row.SystemParameterRowVO;
-import com.chanhonlun.basecms.service.page.BaseService;
-import com.chanhonlun.basecms.service.page.SystemParameterService;
+import com.chanhonlun.basecms.service.page.BasePageService;
+import com.chanhonlun.basecms.service.page.SystemParameterPageService;
 import com.chanhonlun.basecms.service.trait.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,35 +21,35 @@ public class SystemParameterController extends BaseController implements
         DefaultControllerHasDetailPage<SystemParameter, Long> {
 
     @Autowired
-    private SystemParameterService systemParameterService;
+    private SystemParameterPageService systemParameterPageService;
 
     @Override
-    protected BaseService getService() {
-        return systemParameterService;
+    protected BasePageService getPageService() {
+        return systemParameterPageService;
     }
 
     @Override
     public DefaultServiceHasCRUD<SystemParameter, Long> getDefaultPageHasCRUD() {
-        return systemParameterService;
+        return systemParameterPageService;
     }
 
     @Override
     public DefaultServiceHasDataTable<SystemParameter, Long, SystemParameterRowVO> getDefaultPageHasDataTable() {
-        return systemParameterService;
+        return systemParameterPageService;
     }
 
     @Override
     public DefaultServiceHasEditPage<SystemParameter, Long, SystemParameterForm> getDefaultPageHasEdit() {
-        return systemParameterService;
+        return systemParameterPageService;
     }
 
     @Override
     public DefaultServiceHasDetailPage<SystemParameter, Long> getDefaultPageHasDetail() {
-        return systemParameterService;
+        return systemParameterPageService;
     }
 
     @Override
     public DefaultServiceHasCreatePage<SystemParameter, Long, SystemParameterForm> getDefaultPageHasCreate() {
-        return systemParameterService;
+        return systemParameterPageService;
     }
 }

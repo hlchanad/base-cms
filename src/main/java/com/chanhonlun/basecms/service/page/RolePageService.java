@@ -5,8 +5,8 @@ import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.response.vo.row.RoleRowVO;
 import com.chanhonlun.basecms.service.trait.*;
 
-public interface RoleService extends
-        BaseService,
+public interface RolePageService extends
+        BasePageService,
         DefaultServiceHasCRUD<Role, Long>,
         DefaultServiceHasDataTable<Role, Long, RoleRowVO>,
         DefaultServiceHasCreatePage<Role, Long, RoleForm>,

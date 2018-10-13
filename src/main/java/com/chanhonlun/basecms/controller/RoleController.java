@@ -4,8 +4,8 @@ import com.chanhonlun.basecms.controller.trait.*;
 import com.chanhonlun.basecms.form.RoleForm;
 import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.response.vo.row.RoleRowVO;
-import com.chanhonlun.basecms.service.page.BaseService;
-import com.chanhonlun.basecms.service.page.RoleService;
+import com.chanhonlun.basecms.service.page.BasePageService;
+import com.chanhonlun.basecms.service.page.RolePageService;
 import com.chanhonlun.basecms.service.trait.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,35 +21,35 @@ public class RoleController extends BaseController implements
         DefaultControllerHasDetailPage<Role, Long> {
 
     @Autowired
-    private RoleService roleService;
+    private RolePageService rolePageService;
 
     @Override
-    protected BaseService getService() {
-        return roleService;
+    protected BasePageService getPageService() {
+        return rolePageService;
     }
 
     @Override
     public DefaultServiceHasCreatePage<Role, Long, RoleForm> getDefaultPageHasCreate() {
-        return roleService;
+        return rolePageService;
     }
 
     @Override
     public DefaultServiceHasDataTable<Role, Long, RoleRowVO> getDefaultPageHasDataTable() {
-        return roleService;
+        return rolePageService;
     }
 
     @Override
     public DefaultServiceHasCRUD<Role, Long> getDefaultPageHasCRUD() {
-        return roleService;
+        return rolePageService;
     }
 
     @Override
     public DefaultServiceHasEditPage<Role, Long, RoleForm> getDefaultPageHasEdit() {
-        return roleService;
+        return rolePageService;
     }
 
     @Override
     public DefaultServiceHasDetailPage<Role, Long> getDefaultPageHasDetail() {
-        return roleService;
+        return rolePageService;
     }
 }

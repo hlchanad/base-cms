@@ -4,8 +4,8 @@ import com.chanhonlun.basecms.controller.trait.*;
 import com.chanhonlun.basecms.form.CmsUserForm;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
-import com.chanhonlun.basecms.service.page.BaseService;
-import com.chanhonlun.basecms.service.page.CmsUserService;
+import com.chanhonlun.basecms.service.page.BasePageService;
+import com.chanhonlun.basecms.service.page.CmsUserPageService;
 import com.chanhonlun.basecms.service.trait.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,35 +21,35 @@ public class CmsUserController extends BaseController implements
         DefaultControllerHasDetailPage<CmsUser, Long> {
 
     @Autowired
-    private CmsUserService cmsUserService;
+    private CmsUserPageService cmsUserPageService;
 
     @Override
-    protected BaseService getService() {
-        return cmsUserService;
+    protected BasePageService getPageService() {
+        return cmsUserPageService;
     }
 
     @Override
     public DefaultServiceHasDataTable<CmsUser, Long, CmsUserRowVO> getDefaultPageHasDataTable() {
-        return cmsUserService;
+        return cmsUserPageService;
     }
 
     @Override
     public DefaultServiceHasCRUD<CmsUser, Long> getDefaultPageHasCRUD() {
-        return cmsUserService;
+        return cmsUserPageService;
     }
 
     @Override
     public DefaultServiceHasEditPage<CmsUser, Long, CmsUserForm> getDefaultPageHasEdit() {
-        return cmsUserService;
+        return cmsUserPageService;
     }
 
     @Override
     public DefaultServiceHasDetailPage<CmsUser, Long> getDefaultPageHasDetail() {
-        return cmsUserService;
+        return cmsUserPageService;
     }
 
     @Override
     public DefaultServiceHasCreatePage<CmsUser, Long, CmsUserForm> getDefaultPageHasCreate() {
-        return cmsUserService;
+        return cmsUserPageService;
     }
 }

@@ -12,7 +12,7 @@ import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.vo.row.RoleRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.RoleDataTableServiceImpl;
-import com.chanhonlun.basecms.service.page.RoleService;
+import com.chanhonlun.basecms.service.page.RolePageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -25,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
-public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
+public class RolePageServiceImpl extends BasePageServiceImpl implements RolePageService {
 
     @Autowired
     private RoleRepository roleRepository;

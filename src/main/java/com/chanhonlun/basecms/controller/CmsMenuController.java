@@ -4,8 +4,8 @@ import com.chanhonlun.basecms.controller.trait.*;
 import com.chanhonlun.basecms.form.CmsMenuForm;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
-import com.chanhonlun.basecms.service.page.BaseService;
-import com.chanhonlun.basecms.service.page.CmsMenuService;
+import com.chanhonlun.basecms.service.page.BasePageService;
+import com.chanhonlun.basecms.service.page.CmsMenuPageService;
 import com.chanhonlun.basecms.service.trait.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,35 +21,35 @@ public class CmsMenuController extends BaseController implements
         DefaultControllerHasDetailPage<CmsMenu, Long> {
 
     @Autowired
-    private CmsMenuService cmsMenuService;
+    private CmsMenuPageService cmsMenuPageService;
 
     @Override
-    protected BaseService getService() {
-        return cmsMenuService;
+    protected BasePageService getPageService() {
+        return cmsMenuPageService;
     }
 
     @Override
     public DefaultServiceHasDataTable<CmsMenu, Long, CmsMenuRowVO> getDefaultPageHasDataTable() {
-        return cmsMenuService;
+        return cmsMenuPageService;
     }
 
     @Override
     public DefaultServiceHasCRUD<CmsMenu, Long> getDefaultPageHasCRUD() {
-        return cmsMenuService;
+        return cmsMenuPageService;
     }
 
     @Override
     public DefaultServiceHasEditPage<CmsMenu, Long, CmsMenuForm> getDefaultPageHasEdit() {
-        return cmsMenuService;
+        return cmsMenuPageService;
     }
 
     @Override
     public DefaultServiceHasDetailPage<CmsMenu, Long> getDefaultPageHasDetail() {
-        return cmsMenuService;
+        return cmsMenuPageService;
     }
 
     @Override
     public DefaultServiceHasCreatePage<CmsMenu, Long, CmsMenuForm> getDefaultPageHasCreate() {
-        return cmsMenuService;
+        return cmsMenuPageService;
     }
 }

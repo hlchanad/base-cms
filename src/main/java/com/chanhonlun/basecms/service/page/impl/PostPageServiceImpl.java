@@ -17,7 +17,7 @@ import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.PostDataTableServiceImpl;
-import com.chanhonlun.basecms.service.page.PostService;
+import com.chanhonlun.basecms.service.page.PostPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -30,7 +30,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
-public class PostServiceImpl extends BaseServiceImpl implements PostService {
+public class PostPageServiceImpl extends BasePageServiceImpl implements PostPageService {
 
     @Autowired
     private PostRepository postRepository;

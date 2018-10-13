@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.controller;
 
-import com.chanhonlun.basecms.service.page.BaseService;
+import com.chanhonlun.basecms.service.page.BasePageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public abstract class BaseController {
         return path;
     }
 
-    protected abstract BaseService getService();
+    protected abstract BasePageService getPageService();
 
     public HttpSession getHttpSession() {
         return httpSession;
@@ -47,6 +47,6 @@ public abstract class BaseController {
     @PostConstruct
     protected void init() {
         this.section = getSection();
-        getService().setSection(section);
+        getPageService().setSection(section);
     }
 }

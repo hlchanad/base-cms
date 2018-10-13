@@ -5,8 +5,8 @@ import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
 import com.chanhonlun.basecms.service.trait.*;
 
-public interface CmsUserService extends
-        BaseService,
+public interface CmsUserPageService extends
+        BasePageService,
         DefaultServiceHasCRUD<CmsUser, Long>,
         DefaultServiceHasDataTable<CmsUser, Long, CmsUserRowVO>,
         DefaultServiceHasCreatePage<CmsUser, Long, CmsUserForm>,

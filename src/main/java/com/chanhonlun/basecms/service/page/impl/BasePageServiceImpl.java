@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.service.page.impl;
 
-import com.chanhonlun.basecms.service.page.BaseService;
+import com.chanhonlun.basecms.service.page.BasePageService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BaseServiceImpl implements BaseService {
+public class BasePageServiceImpl implements BasePageService {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

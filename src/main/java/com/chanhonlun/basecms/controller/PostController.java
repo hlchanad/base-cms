@@ -5,8 +5,8 @@ import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.PostDetail;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
-import com.chanhonlun.basecms.service.page.BaseService;
-import com.chanhonlun.basecms.service.page.PostService;
+import com.chanhonlun.basecms.service.page.BasePageService;
+import com.chanhonlun.basecms.service.page.PostPageService;
 import com.chanhonlun.basecms.service.trait.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,36 +22,36 @@ public class PostController extends BaseController implements
         DefaultControllerHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> {
 
     @Autowired
-    private PostService postService;
+    private PostPageService postPageService;
 
     @Override
-    protected BaseService getService() {
-        return postService;
+    protected BasePageService getPageService() {
+        return postPageService;
     }
 
     @Override
     public DefaultServiceHasCRUD<Post, Long> getDefaultPageHasCRUD() {
-        return postService;
+        return postPageService;
     }
 
     @Override
     public DefaultServiceHasDataTable<Post, Long, PostRowVO> getDefaultPageHasDataTable() {
-        return postService;
+        return postPageService;
     }
 
     @Override
     public DefaultServiceHasCreatePageWithPojoDetail<Post, Long, PostForm> getDefaultPageHasCreate() {
-        return postService;
+        return postPageService;
     }
 
     @Override
     public DefaultServiceHasEditPageWithPojoDetail<Post, Long, PostDetail, Long, PostForm> getDefaultPageHasEdit() {
-        return postService;
+        return postPageService;
     }
 
     @Override
     public DefaultServiceHasDetailPageWithPojoDetail<Post, Long, PostDetail, Long> getDefaultPageHasDetail() {
-        return postService;
+        return postPageService;
     }
 
 }

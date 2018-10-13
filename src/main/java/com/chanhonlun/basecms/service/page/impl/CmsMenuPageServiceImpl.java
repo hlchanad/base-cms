@@ -13,7 +13,7 @@ import com.chanhonlun.basecms.response.vo.FieldOption;
 import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.CmsMenuDataTableServiceImpl;
-import com.chanhonlun.basecms.service.page.CmsMenuService;
+import com.chanhonlun.basecms.service.page.CmsMenuPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class CmsMenuServiceImpl extends BaseServiceImpl implements CmsMenuService {
+public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMenuPageService {
 
     @Autowired
     private CmsMenuDataTableServiceImpl cmsMenuDataTablesService;

@@ -7,8 +7,8 @@ import com.chanhonlun.basecms.service.trait.*;
 
 import java.util.List;
 
-public interface CmsMenuService extends
-        BaseService,
+public interface CmsMenuPageService extends
+        BasePageService,
         DefaultServiceHasCRUD<CmsMenu, Long>,
         DefaultServiceHasDataTable<CmsMenu, Long, CmsMenuRowVO>,
         DefaultServiceHasCreatePage<CmsMenu, Long, CmsMenuForm>,

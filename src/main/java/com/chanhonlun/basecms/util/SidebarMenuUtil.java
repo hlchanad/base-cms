@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.util;
 
 import com.chanhonlun.basecms.response.vo.MenuItem;
-import com.chanhonlun.basecms.service.page.CmsMenuService;
+import com.chanhonlun.basecms.service.page.CmsMenuPageService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class SidebarMenuUtil {
     private HttpServletRequest httpServletRequest;
 
     @Autowired
-    private CmsMenuService cmsMenuService;
+    private CmsMenuPageService cmsMenuPageService;
 
     @Value("${server.servlet.context-path}")
     protected String contextPath;
@@ -78,7 +78,7 @@ public class SidebarMenuUtil {
 
     private List<MenuItem> getMenuItemsFromDatabase() {
 
-        return cmsMenuService.findByParentIdNullAndIsDeleteFalse()
+        return cmsMenuPageService.findByParentIdNullAndIsDeleteFalse()
                 .stream()
                 .map(cmsMenu -> new MenuItem(cmsMenu, findChildrenMenuItems(cmsMenu.getId()), contextPath))
                 .collect(Collectors.toList());
@@ -86,7 +86,7 @@ public class SidebarMenuUtil {
 
     private List<MenuItem> findChildrenMenuItems(Long parentId) {
 
-        return cmsMenuService.findByParentIdAndIsDeleteFalse(parentId)
+        return cmsMenuPageService.findByParentIdAndIsDeleteFalse(parentId)
                 .stream()
                 .map(child -> new MenuItem(child, findChildrenMenuItems(child.getId()), contextPath))
                 .collect(Collectors.toList());
