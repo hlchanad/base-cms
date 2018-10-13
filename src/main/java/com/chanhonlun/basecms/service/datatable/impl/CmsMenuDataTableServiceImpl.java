@@ -26,7 +26,7 @@ public class CmsMenuDataTableServiceImpl extends BaseDataTableServiceImpl implem
     }
 
     @Override
-    public String getTitle() {
+    public String getPageTitle() {
         return "CMS Menu";
     }
 

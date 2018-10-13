@@ -44,7 +44,7 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
     }
 
     @Override
-    public String getTitle() {
+    public String getPageTitle() {
         return "CMS User";
     }
 
