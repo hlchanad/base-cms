@@ -17,4 +17,8 @@ public interface CmsMenuRepository extends
     List<CmsMenu> findByParentIdNotNullAndIsDeleteFalse(Sort sort);
 
     List<CmsMenu> findByParentIdAndIsDeleteFalse(Long parentId, Sort sort);
+
+    List<CmsMenu> findByIsDeleteFalse();
+
+    List<CmsMenu> findByIdNotAndIsDeleteFalse(Long id);
 }
