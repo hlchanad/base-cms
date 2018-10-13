@@ -6,13 +6,11 @@ import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.BaseDetailPojo;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.repository.BaseDetailRepository;
-import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.BaseEditPageConfig;
 import com.chanhonlun.basecms.response.page.DefaultEditPageConfig;
 import com.chanhonlun.basecms.response.page.FormConfig;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.util.ReflectionUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
@@ -42,7 +40,7 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), pojo);
+        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForEdit(), pojo);
         Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
                 getFieldDetailMapForEdit(), pojo, getDetailRepository()::findByRefIdAndLang);
 
@@ -63,12 +61,8 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
     @Override
     default BaseEditPageConfig getEditPageConfig(Pojo pojo, Form form, FormError formError) {
 
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
-                new TypeToken<Map<String, Field>>() {}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMapForEdit()),
-                new TypeToken<Map<String, Map<Language, Field>>>() {}.getType());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit());
+        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit());
 
         updateFieldMapValues(fieldMapClone, form);
         updateFieldDetailMapValues(fieldDetailMapClone, form);

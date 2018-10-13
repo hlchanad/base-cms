@@ -34,7 +34,7 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
 
         String pageTitle = StringUtils.capitalize(getSection().replaceAll("-", " "));
 
-        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMap(), pojo);
+        Map<String, Field> fieldMap = ReflectionUtil.updateFieldMapWithValues(getFieldMapForDetail(), pojo);
         Map<String, Map<Language, Field>> fieldDetailMap = ReflectionUtil.updateFieldDetailMapWithValues(
                 getFieldDetailMapForDetail(), pojo, getDetailRepository()::findByRefIdAndLang);
 

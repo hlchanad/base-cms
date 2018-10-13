@@ -7,8 +7,8 @@ import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.RoleRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.vo.row.RoleRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.RoleDataTableServiceImpl;
@@ -16,8 +16,6 @@ import com.chanhonlun.basecms.service.page.RoleService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,10 +104,7 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
     @Override
     public Map<String, Field> getFieldMapForEdit() {
 
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(fieldMap),
-                new TypeToken<Map<String, Field>>() {}.getType());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
         fieldMapClone.get("code").setDisabled(true);
         fieldMapClone.get("title").setDisabled(true);

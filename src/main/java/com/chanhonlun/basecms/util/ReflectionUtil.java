@@ -150,6 +150,28 @@ public class ReflectionUtil {
     }
 
     /**
+     * clone a new instance of fieldMap with Gson
+     *
+     * @param fieldMap the map used by create/ edit/ detail service
+     * @return new fieldMap
+     */
+    public static Map<String, Field> cloneFieldMap(Map<String, Field> fieldMap) {
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(fieldMap), new TypeToken<Map<String, Field>>(){}.getType());
+    }
+
+    /**
+     * clone a new instance of fieldDetailMap with Gson
+     *
+     * @param fieldDetailMap the map used by create/ edit/ detail service
+     * @return new fieldDetailMap
+     */
+    public static Map<String, Map<Language, Field>> cloneFieldDetailMap(Map<String, Map<Language, Field>> fieldDetailMap) {
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(fieldDetailMap), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
+    }
+
+    /**
      * Replace value from {@code pojo} into {@code fieldMap}
      *
      * @param fieldMap map for describing the Fields
@@ -161,9 +183,7 @@ public class ReflectionUtil {
     public static <Pojo extends BasePojo<PojoPK>, PojoPK extends Serializable>
     Map<String, Field> updateFieldMapWithValues(Map<String, Field> fieldMap, Pojo pojo) {
 
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(fieldMap), new TypeToken<Map<String, Field>>(){}.getType());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
         ReflectionUtil.getClassFields(pojo.getClass())
                 .stream()
@@ -202,10 +222,8 @@ public class ReflectionUtil {
     Map<String, Map<Language, Field>> updateFieldDetailMapWithValues(Map<String,Map<Language,Field>> fieldDetailMap,
                                                                      Pojo pojo,
                                                                      BiFunction<PojoPK, Language, PojoDetail> findByRefIdAndLang) {
-        Gson gson = new Gson();
 
-        Map<String, Map<Language, Field>> fieldDetailMapClone =
-                gson.fromJson(gson.toJson(fieldDetailMap), new TypeToken<Map<String, Map<Language, Field>>>(){}.getType());
+        Map<String, Map<Language, Field>> fieldDetailMapClone = cloneFieldDetailMap(fieldDetailMap);
 
         Stream.of(Language.values())
                 .map(language -> findByRefIdAndLang.apply(pojo.getId(), language))

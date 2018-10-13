@@ -3,15 +3,13 @@ package com.chanhonlun.basecms.service.trait;
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.BasePojo;
-import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.page.FormConfig;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import org.springframework.http.HttpMethod;
 
 import java.io.Serializable;
@@ -49,10 +47,7 @@ public interface DefaultServiceHasCreatePage<
 
     default BaseCreatePageConfig getCreatePageConfig(Form form, FormError formError) {
 
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMapForCreate()),
-                new TypeToken<Map<String, Field>>() {}.getType());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForCreate());
 
         updateFieldMapValues(fieldMapClone, form);
 

@@ -4,13 +4,11 @@ import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.form.BaseForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.BasePojo;
-import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.page.BaseCreatePageConfig;
 import com.chanhonlun.basecms.response.page.DefaultCreatePageConfig;
 import com.chanhonlun.basecms.response.page.FormConfig;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.util.ReflectionUtil;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
@@ -34,12 +32,8 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
     @Override
     default BaseCreatePageConfig getCreatePageConfig(Form form, FormError formError) {
 
-        Gson gson = new Gson();
-
-        Map<String, Field> fieldMapClone = gson.fromJson(gson.toJson(getFieldMap()),
-                new TypeToken<Map<String, Field>>() {}.getType());
-        Map<String, Map<Language, Field>> fieldDetailMapClone = gson.fromJson(gson.toJson(getFieldDetailMapForCreate()),
-                new TypeToken<Map<String, Map<Language, Field>>>() {}.getType());
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForCreate());
+        Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForCreate());
 
         updateFieldMapValues(fieldMapClone, form);
         updateFieldDetailMapValues(fieldDetailMapClone, form);
