@@ -6,6 +6,7 @@ import com.chanhonlun.basecms.form.CmsUserForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.pojo.CmsUserRole;
+import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
 import com.chanhonlun.basecms.repository.RoleRepository;
@@ -19,6 +20,7 @@ import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.CmsUserDataTableServiceImpl;
 import com.chanhonlun.basecms.service.page.CmsUserPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
+import com.chanhonlun.basecms.util.ListUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -26,10 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -127,7 +126,17 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
+        String roles = cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(cmsUser.getId())
+                .stream()
+                .map(CmsUserRole::getRoleId)
+                .map(roleRepository::findByIdAndIsDeleteFalse)
+                .map(Role::getTitle)
+                .collect(Collectors.joining(", "));
+
+
         fieldMapClone.get("password").setShow(false);
+
+        fieldMapClone.get("userRoles").setValue(roles);
 
         return fieldMapClone;
     }
@@ -145,6 +154,34 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
 
         cmsUser.setEmail(form.getEmail());
         cmsUser = update(cmsUser);
+
+
+        List<CmsUserRole> cmsUserRoles = cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(cmsUser.getId());
+        List<Long> existingRoleIds = cmsUserRoles.stream().map(CmsUserRole::getRoleId).collect(Collectors.toList());
+
+        List<Long> intersection = ListUtil.getIntersection(Long.class, existingRoleIds, form.getUserRoles());
+
+        List<Long> newRoleIds = new ArrayList<>(form.getUserRoles());
+        newRoleIds.removeAll(intersection);
+
+        List<Long> toBeDeletedRoleIds = new ArrayList<>(existingRoleIds);
+        toBeDeletedRoleIds.removeAll(intersection);
+
+        for (Long roleId : newRoleIds) {
+            CmsUserRole cmsUserRole = new CmsUserRole();
+            cmsUserRole.setCmsUserId(cmsUser.getId());
+            cmsUserRole.setRoleId(roleId);
+            cmsUserRole = cmsUserRoleService.create(cmsUserRole);
+        }
+
+        for (Long roleId : toBeDeletedRoleIds) {
+            CmsUserRole cmsUserRole = cmsUserRoles
+                    .stream()
+                    .filter(cmsUserRole1 -> cmsUserRole1.getRoleId().equals(roleId))
+                    .findAny()
+                    .orElse(null);
+            cmsUserRoleService.softDelete(cmsUserRole);
+        }
 
         return cmsUser;
     }
