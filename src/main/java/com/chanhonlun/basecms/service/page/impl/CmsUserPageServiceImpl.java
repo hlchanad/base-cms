@@ -6,7 +6,6 @@ import com.chanhonlun.basecms.form.CmsUserForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.pojo.CmsUserRole;
-import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
 import com.chanhonlun.basecms.repository.RoleRepository;
@@ -27,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,17 +103,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(this.fieldMap);
 
-        List<Role> roles = roleRepository.findByIsDeleteFalse();
-
-        List<FieldOption> fieldOptions = roles.stream()
-                .map(role -> FieldOption.builder()
-                        .id("roleId-" + role.getId())
-                        .title(role.getTitle())
-                        .value(role.getId().toString())
-                        .build())
-                .collect(Collectors.toList());
-
-        fieldMapClone.get("userRoles").setOptions(fieldOptions);
+        fieldMapClone.get("userRoles").setOptions(getRolesFieldOptions());
 
         return fieldMapClone;
     }
@@ -125,6 +115,9 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
 
         fieldMapClone.get("username").setDisabled(true);
         fieldMapClone.get("password").setShow(false);
+
+        fieldMapClone.get("userRoles").setOptions(getRolesFieldOptions());
+        fieldMapClone.get("userRoles").setMultiValues(getSelectedRolesValue(cmsUser.getId()));
 
         return fieldMapClone;
     }
@@ -187,4 +180,26 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         return cmsUser;
     }
 
+    private List<FieldOption> getRolesFieldOptions() {
+        return roleRepository.findByIsDeleteFalse()
+                .stream()
+                .map(role -> FieldOption.builder()
+                        .id("roleId-" + role.getId())
+                        .title(role.getTitle())
+                        .value(role.getId().toString())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getSelectedRolesValue(Long id) {
+        List<CmsUserRole> cmsUserRoles = id == null
+                ? Collections.emptyList()
+                : cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(id);
+
+        return cmsUserRoles.stream()
+                .map(CmsUserRole::getRoleId)
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+    }
 }

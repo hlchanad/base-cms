@@ -7,6 +7,8 @@ import com.chanhonlun.basecms.service.data.CmsUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsUserRoleServiceImpl extends BaseServiceImpl implements CmsUserRoleService {
 
@@ -16,5 +18,10 @@ public class CmsUserRoleServiceImpl extends BaseServiceImpl implements CmsUserRo
     @Override
     public BaseRepository<CmsUserRole, Long> getRepository() {
         return cmsUserRoleRepository;
+    }
+
+    @Override
+    public List<CmsUserRole> findByCmsUserIdAndIsDeleteFalse(Long cmsUserId) {
+        return cmsUserRoleRepository.findByCmsUserIdAndIsDeleteFalse(cmsUserId);
     }
 }
