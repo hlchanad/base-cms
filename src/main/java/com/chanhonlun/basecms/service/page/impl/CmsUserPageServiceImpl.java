@@ -119,6 +119,27 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     }
 
     @Override
+    public Map<String, Field> getFieldMapForEdit(CmsUser cmsUser) {
+
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
+
+        fieldMapClone.get("username").setDisabled(true);
+        fieldMapClone.get("password").setShow(false);
+
+        return fieldMapClone;
+    }
+
+    @Override
+    public Map<String, Field> getFieldMapForDetail(CmsUser cmsUser) {
+
+        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
+
+        fieldMapClone.get("password").setShow(false);
+
+        return fieldMapClone;
+    }
+
+    @Override
     public void updateFieldMapValues(Map<String, Field> fieldMap, CmsUserForm form) {
 
         fieldMap.get("username").setValue(form.getUsername());
@@ -166,24 +187,4 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         return cmsUser;
     }
 
-    @Override
-    public Map<String, Field> getFieldMapForEdit(CmsUser cmsUser) {
-
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
-
-        fieldMapClone.get("username").setDisabled(true);
-        fieldMapClone.get("password").setShow(false);
-
-        return fieldMapClone;
-    }
-
-    @Override
-    public Map<String, Field> getFieldMapForDetail(CmsUser cmsUser) {
-
-        Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
-
-        fieldMapClone.get("password").setShow(false);
-
-        return fieldMapClone;
-    }
 }
