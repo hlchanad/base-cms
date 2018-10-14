@@ -15,11 +15,15 @@ public class CmsUserRowVO extends BaseRowVO {
     @JsonView(DataTablesOutput.View.class)
     private String email;
 
+    @JsonView(DataTablesOutput.View.class)
+    private String roles;
+
     @Builder
-    public CmsUserRowVO(String action, Long id, String username, String email) {
+    public CmsUserRowVO(String action, Long id, String username, String email, String roles) {
         super(action);
         this.id = id;
         this.username = username;
         this.email = email;
+        this.roles = roles;
     }
 }

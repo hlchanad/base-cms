@@ -1,9 +1,11 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -21,4 +23,10 @@ public class CmsUser extends BasePojo<Long> {
     @Column(name = "EMAIL")
     private String email;
 
+    @IgnoreAutoReflection
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "CMS_USER_ROLE",
+            joinColumns = @JoinColumn(name = "CMS_USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    private List<Role> roles;
 }

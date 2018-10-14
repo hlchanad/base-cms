@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.service.datatable.impl;
 
 import com.chanhonlun.basecms.pojo.CmsUser;
+import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.vo.DataTableColumn;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implements
@@ -37,7 +39,7 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
             List<Expression<Boolean>> expressions = predicate.getExpressions();
 
             expressions.add(cb.equal(root.get("isDelete"), false));
-            expressions.add(cb.greaterThan(root.get("id"), 0L)); // ID smaller than 0 is system-used only
+            expressions.add(cb.greaterThan(root.get("id"), 0L)); // ID <= 0 is system-used only
 
             return predicate;
         };
@@ -54,6 +56,7 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
                 .id(cmsUser.getId())
                 .username(cmsUser.getUsername())
                 .email(cmsUser.getEmail())
+                .roles(cmsUser.getRoles().stream().map(Role::getTitle).collect(Collectors.joining(", ")))
                 .action(new Gson().toJson(actionButtonUtil.get(cmsUser.getId())))
                 .build();
     }
@@ -64,6 +67,7 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
                 DataTableColumn.builder().data("id").title("ID").build(),
                 DataTableColumn.builder().data("username").title("Username").build(),
                 DataTableColumn.builder().data("email").title("Email").build(),
+                DataTableColumn.builder().data("roles").title("Roles").orderable(false).build(),
                 DataTableColumn.builder().data("action").title("Action").orderable(false).searchable(false).build()
         );
     }
