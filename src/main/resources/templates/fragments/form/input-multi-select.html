@@ -11,7 +11,7 @@
                 th:id="${option.id}"
                 th:value="${option.value}"
                 th:text="${option.title}"
-                th:selected="${field.value == option.value}"
+                th:selected="${not #lists.isEmpty(field.multiValues) and field.multiValues.contains(option.value)}"
         ></option>
     </select>
 

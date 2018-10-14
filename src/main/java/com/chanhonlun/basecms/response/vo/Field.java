@@ -14,6 +14,7 @@ public class Field {
     private String title;
     private FieldType type;
     private String value;
+    private List<String> multiValues;
     private Float numberStep;
     private String placeholder;
     private String hintTitle;
