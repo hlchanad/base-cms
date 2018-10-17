@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BasePageServiceImpl implements BasePageService {
+public abstract class BasePageServiceImpl implements BasePageService {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
