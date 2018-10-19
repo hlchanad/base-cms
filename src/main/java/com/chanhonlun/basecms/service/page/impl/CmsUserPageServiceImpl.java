@@ -25,6 +25,7 @@ import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUserPageService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CmsUserDataTableServiceImpl cmsUserDataTablesService;
@@ -203,7 +207,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
 
         CmsUser cmsUser = new CmsUser();
         cmsUser.setUsername(form.getUsername());
-        cmsUser.setPassword(form.getPassword());
+        cmsUser.setPassword(passwordEncoder.encode(form.getPassword()));
         cmsUser.setEmail(form.getEmail());
         cmsUser = create(cmsUser);
 

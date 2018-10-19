@@ -3,7 +3,6 @@ package com.chanhonlun.basecms.service;
 import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
