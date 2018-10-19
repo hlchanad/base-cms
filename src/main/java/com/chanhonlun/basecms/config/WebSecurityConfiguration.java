@@ -1,23 +1,25 @@
 package com.chanhonlun.basecms.config;
 
+import com.chanhonlun.basecms.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        User.UserBuilder userBuilder = User.withDefaultPasswordEncoder();
-
-        auth.inMemoryAuthentication()
-                .withUser(userBuilder.username("admin").password("123456").roles("ADMIN"));
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -36,5 +38,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                     .logoutUrl("/logout")
                     .permitAll();
+    }
+
+    private DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        return authProvider;
     }
 }
