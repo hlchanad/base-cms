@@ -1,0 +1,14 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+          th:fragment="input-tags">
+
+    <input th:id="${field.id}"
+           th:name="${field.id}"
+           th:value="${not #lists.isEmpty(field.multiValues)} ? ${#strings.listJoin(field.multiValues, ',')} : ''"
+           th:placeholder="${not #strings.isEmpty(field.placeholder)} ? ${field.placeholder} : ''"
+           type="text"
+           class="form-control tagsinput custom-tag-input"
+           data-role="tagsinput"
+           th:required="${field.required}"
+           th:disabled="${field.disabled}"/>
+
+</th:block>

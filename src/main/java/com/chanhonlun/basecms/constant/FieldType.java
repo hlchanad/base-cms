@@ -24,6 +24,9 @@ public enum FieldType {
 
     DROPDOWN,
 
+    @Deprecated
+    TAGS,
+
     MULTI_SELECT,
 
     IMAGE,
