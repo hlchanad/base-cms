@@ -1,16 +1,13 @@
 package com.chanhonlun.basecms.service.datatable;
 
-import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
+import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.vo.row.BaseRowVO;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 public interface BaseDataTableService<
@@ -48,13 +45,12 @@ public interface BaseDataTableService<
     default Specification<Pojo> getPreFilterSpecification(Req input) {
         return (root, query, cb) -> {
 
-            Predicate predicate = cb.conjunction();
-            List<Expression<Boolean>> expressions = predicate.getExpressions();
+            @SuppressWarnings("unchecked")
+            Specification<Pojo> where =  (Specification<Pojo>) Specification
+                    .where((root1, query1, cb1) -> cb1.equal(root1.get("isDelete"), false))
+                    .and((root1, query1, cb1) -> cb1.greaterThan(root1.get("id"), 0L));
 
-            expressions.add(cb.equal(root.get("isDelete"), false));
-            expressions.add(cb.greaterThan(root.get("id"), 0L));
-
-            return predicate;
+            return where.toPredicate(root, query, cb);
         };
     }
 
