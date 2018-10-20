@@ -29,4 +29,16 @@ public class ListUtil {
 
         return intersection;
     }
+
+    @SafeVarargs
+    public static <T> List<T> mergeLists(Class<T> classOfT, List<T>... arrayOfList) {
+        return mergeLists(classOfT, Arrays.asList(arrayOfList));
+    }
+
+    public static <T> List<T> mergeLists(Class<T> classOfT, List<List<T>> listOfList) {
+        return listOfList
+                .stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
 }

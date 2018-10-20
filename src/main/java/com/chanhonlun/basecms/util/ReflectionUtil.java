@@ -14,6 +14,9 @@ import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -240,5 +243,26 @@ public class ReflectionUtil {
                             }
                         }));
 
+    }
+
+    /**
+     * Find the List of RequestMapping values for declared from Controller
+     *
+     * @param requestMappingHandlerMapping autowired from any spring bean
+     * @return List of request mapping of controller
+     */
+    public static List<String> getControllerMappings(RequestMappingHandlerMapping requestMappingHandlerMapping) {
+        return Optional.ofNullable(requestMappingHandlerMapping.getApplicationContext())
+                .map(applicationContext -> applicationContext.getBeansWithAnnotation(Controller.class))
+                .orElse(Collections.emptyMap())
+                .entrySet()
+                .stream()
+                .filter(entry -> !entry.getValue().getClass().getPackage().getName().startsWith("org.springframework"))
+                .map(entry -> entry.getValue().getClass().getAnnotation(RequestMapping.class))
+                .map(RequestMapping::value)
+                .map(values -> values[0])
+                .filter(StringUtils::isNotBlank)
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
