@@ -52,6 +52,7 @@ public interface BaseDataTableService<
             List<Expression<Boolean>> expressions = predicate.getExpressions();
 
             expressions.add(cb.equal(root.get("isDelete"), false));
+            expressions.add(cb.greaterThan(root.get("id"), 0L));
 
             return predicate;
         };
