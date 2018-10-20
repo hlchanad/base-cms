@@ -1,19 +1,20 @@
 <div xmlns:th="http://www.thymeleaf.org">
+
     <div th:fragment="user-info-name"
          class="pull-left p-l-20 p-r-10 fs-14 font-heading d-lg-block d-none">
-        <span class="semi-bold">David</span> <span class="text-master">Nest</span>
+        <span class="text-master" th:text="${CURRENT_USER.getUsername()}">User Name</span>
     </div>
+
     <div th:fragment="user-info-icon"
          class="dropdown pull-right d-lg-block d-none">
         <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
               <span class="thumbnail-wrapper d32 circular inline">
-              <img th:src="@{/assets/img/profiles/avatar.jpg}" src="../../../static/assets/img/profiles/avatar.jpg"
+              <img th:src="@{/assets/img/profiles/plain-avatar.png}" src="../../../static/assets/img/profiles/plain-avatar.png"
                    width="32" height="32" alt="">
               </span>
         </button>
         <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
-
             <a href="#" class="dropdown-item"><i class="pg-settings_small"></i> Settings</a>
             <a id="logout-a-tag" th:href="@{/logout}" class="clearfix bg-master-lighter dropdown-item">
                 <form id="logout-form" th:action="@{/logout}" method="post"></form>
@@ -22,4 +23,5 @@
             </a>
         </div>
     </div>
+
 </div>
