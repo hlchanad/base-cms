@@ -7,7 +7,8 @@ const MyDatatableService = function () {
             success: function (response) {
                 swal({
                     type: "success",
-                    title: "Success!"
+                    title: "Success!",
+                    timer: 3000
                 });
                 if (refreshDataTable) dataTable.refresh();
             },
