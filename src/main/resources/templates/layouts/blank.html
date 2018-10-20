@@ -9,6 +9,9 @@
     <meta content="" name="author" />
     <meta content="" name="description" />
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
@@ -109,8 +112,11 @@
 <!-- END CORE TEMPLATE JS -->
 
 <!-- BEGIN PAGE LEVEL JS -->
-<script th:src="@{/assets/js/my-logout.js}"></script>
-<th:block th:replace="/fragments/blank/error-popup :: error-popup"/>
+<script th:src="@{/assets/js/my-page.js}"></script>
+<script th:inline="javascript">
+    const myPage = new MyPage(/*[[${ERROR_POPUP}]]*/ null);
+    myPage.init();
+</script>
 
 <th:block layout:fragment="custom-js" />
 <!-- END PAGE LEVEL JS -->
