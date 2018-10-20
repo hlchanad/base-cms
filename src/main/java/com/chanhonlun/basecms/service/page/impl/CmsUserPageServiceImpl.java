@@ -151,6 +151,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         fieldMap.get("username").setValue(form.getUsername());
         fieldMap.get("password").setValue(form.getPassword());
         fieldMap.get("email").setValue(form.getEmail());
+        fieldMap.get("userRoles").setMultiValues(form.getUserRoles().stream().map(Object::toString).collect(Collectors.toList()));
     }
 
     @Override
