@@ -2,6 +2,8 @@ package com.chanhonlun.basecms.model;
 
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.pojo.Role;
+import com.chanhonlun.basecms.pojo.RoleRoute;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,15 +11,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 public class UserPrincipal implements UserDetails {
 
     private CmsUser cmsUser;
 
     private List<UserAuthority> authorities;
 
-    public UserPrincipal(CmsUser cmsUser, List<Role> roles) {
+    private List<RoleRoute> allowedRoutes;
+
+    public UserPrincipal(CmsUser cmsUser, List<Role> roles, List<RoleRoute> allowedRoutes) {
         this.cmsUser = cmsUser;
         this.authorities = roles.stream().map(UserAuthority::new).collect(Collectors.toList());
+        this.allowedRoutes = allowedRoutes;
     }
 
     @Override
