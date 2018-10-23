@@ -1,7 +1,6 @@
 package com.chanhonlun.basecms.security.voter;
 
 import com.chanhonlun.basecms.model.UserPrincipal;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -39,7 +38,7 @@ public class RoleRoutePermissionVoter implements AccessDecisionVoter<FilterInvoc
         boolean allowed = userPrincipal.getAllowedRoutes()
                 .stream()
                 .anyMatch(roleRoute -> endpoint.startsWith(roleRoute.getUrl())
-                        && roleRoute.getMethod() == null || roleRoute.getMethod().matches(method));
+                        && (roleRoute.getMethod() == null || roleRoute.getMethod().matches(method)));
 
         return allowed ? ACCESS_GRANTED : ACCESS_DENIED;
     }
