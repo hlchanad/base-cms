@@ -11,7 +11,7 @@ import java.io.Serializable;
 public abstract class BaseDetailPojo <PK extends Serializable, FK extends Serializable> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     protected PK id;
 

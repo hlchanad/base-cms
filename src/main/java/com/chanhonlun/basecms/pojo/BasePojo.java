@@ -12,7 +12,7 @@ import java.util.Date;
 public abstract class BasePojo<PK extends Serializable> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     protected PK id;
 
