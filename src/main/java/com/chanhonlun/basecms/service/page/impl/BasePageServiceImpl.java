@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.service.page.impl;
 
+import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.service.page.BasePageService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
@@ -60,6 +63,13 @@ public abstract class BasePageServiceImpl implements BasePageService {
     @Override
     public String getContextPath() {
         return this.contextPath;
+    }
+
+    @Override
+    public UserPrincipal getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getPrincipal() instanceof UserPrincipal
+                ? (UserPrincipal) authentication.getPrincipal() : null;
     }
 
 }
