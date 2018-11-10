@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -32,5 +33,12 @@ public class CmsMenu extends BasePojo<Long> {
 
     @Column(name = "SEQUENCE")
     private Integer sequence;
+
+    @IgnoreAutoReflection
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "CMS_MENU_ROLE",
+            joinColumns = @JoinColumn(name = "CMS_MENU_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    private List<Role> roles;
 
 }
