@@ -30,7 +30,7 @@ public class PostDataTableServiceImpl extends BaseDataTableServiceImpl implement
     public PostRowVO getTableVOFromPOJO(Post post) {
         return PostRowVO.builder()
                 .id(post.getId())
-                .publishDate(post.getPublishDate())
+                .publishDate(post.getPublishDate().toString())
                 .detailEn(PostDetailRowVO.builder()
                         .title(post.getDetailEn().getTitle())
                         .brief(post.getDetailEn().getBrief())
