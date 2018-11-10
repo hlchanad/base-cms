@@ -1,6 +1,5 @@
 package com.chanhonlun.basecms.service.page.impl;
 
-import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.form.CmsMenuForm;
 import com.chanhonlun.basecms.pojo.CmsMenu;
@@ -22,7 +21,6 @@ import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ListUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -50,11 +48,7 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
 
     @PostConstruct
     public void init() {
-        ReflectionUtil.getClassFields(CmsMenu.class)
-                .stream()
-                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
-                .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
-                .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
+        this.fieldMap = ReflectionUtil.getFieldMap(CmsMenu.class);
 
         fieldMap.get("url").setRequired(false);
 

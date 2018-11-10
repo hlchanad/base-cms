@@ -12,6 +12,7 @@ import com.google.common.base.CaseFormat;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -279,5 +280,37 @@ public class ReflectionUtil {
                 .filter(StringUtils::isNotBlank)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public static Map<String, Field> getFieldMap(Class<? extends BasePojo> clazz) {
+        Map<String, Field> fieldMap = new LinkedHashMap<>();
+
+        ReflectionUtil.getClassFields(clazz)
+                .stream()
+                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
+                .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
+                .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
+
+        return fieldMap;
+    }
+
+    public static Map<String, Map<Language, Field>> getFieldDetailMap(Class<? extends BaseDetailPojo> clazz) {
+        Map<String, Map<Language, Field>> fieldDetailMap = new LinkedHashMap<>();
+
+        ReflectionUtil.getClassFields(clazz)
+                .stream()
+                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
+                .map(property -> {
+                    Map<Language, Field> languageFieldMap = new LinkedHashMap<>();
+
+                    for (Language language : Language.values()) {
+                        languageFieldMap.put(language, ReflectionUtil.getFieldFromProperty(property, language));
+                    }
+
+                    return new ImmutablePair<>(property.getName(), languageFieldMap);
+                })
+                .forEach(pair -> fieldDetailMap.put(pair.getKey(), pair.getValue()));
+
+        return fieldDetailMap;
     }
 }

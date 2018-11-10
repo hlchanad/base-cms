@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.service.page.impl;
 
-import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.form.SystemParameterForm;
+import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
@@ -15,7 +15,6 @@ import com.chanhonlun.basecms.service.page.SystemParameterPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +35,7 @@ public class SystemParameterPageServiceImpl extends BasePageServiceImpl implemen
 
     @PostConstruct
     public void init() {
-        ReflectionUtil.getClassFields(SystemParameter.class)
-                .stream()
-                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
-                .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
-                .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
+        this.fieldMap = ReflectionUtil.getFieldMap(SystemParameter.class);
     }
 
     @Override

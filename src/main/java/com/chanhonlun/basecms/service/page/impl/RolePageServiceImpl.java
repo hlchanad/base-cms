@@ -1,6 +1,5 @@
 package com.chanhonlun.basecms.service.page.impl;
 
-import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.RoleForm;
@@ -21,7 +20,6 @@ import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ListUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -50,11 +48,7 @@ public class RolePageServiceImpl extends BasePageServiceImpl implements RolePage
 
     @PostConstruct
     public void init() {
-        ReflectionUtil.getClassFields(Role.class)
-                .stream()
-                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
-                .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
-                .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
+        this.fieldMap = ReflectionUtil.getFieldMap(Role.class);
 
         fieldMap.put("roleRoutes", Field.builder()
                 .id("roleRoutes")

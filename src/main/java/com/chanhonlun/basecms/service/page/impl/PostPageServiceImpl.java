@@ -1,6 +1,5 @@
 package com.chanhonlun.basecms.service.page.impl;
 
-import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.constant.Language;
 import com.chanhonlun.basecms.form.FormError;
@@ -12,8 +11,8 @@ import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.PostDetailRepository;
 import com.chanhonlun.basecms.repository.PostRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
-import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
+import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.vo.row.PostRowVO;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.PostDataTableServiceImpl;
@@ -21,7 +20,6 @@ import com.chanhonlun.basecms.service.page.PostPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,25 +47,8 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
 
     @PostConstruct
     public void init() {
-        ReflectionUtil.getClassFields(Post.class)
-                .stream()
-                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
-                .map(property -> new ImmutablePair<>(property.getName(), ReflectionUtil.getFieldFromProperty(property)))
-                .forEach(pair -> fieldMap.put(pair.getKey(), pair.getValue()));
-
-        ReflectionUtil.getClassFields(PostDetail.class)
-                .stream()
-                .filter(property -> property.getAnnotation(IgnoreAutoReflection.class) == null)
-                .map(property -> {
-                    Map<Language, Field> languageFieldMap = new LinkedHashMap<>();
-
-                    for (Language language : Language.values()) {
-                        languageFieldMap.put(language, ReflectionUtil.getFieldFromProperty(property, language));
-                    }
-
-                    return new ImmutablePair<>(property.getName(), languageFieldMap);
-                })
-                .forEach(pair -> fieldDetailMap.put(pair.getKey(), pair.getValue()));
+        this.fieldMap = ReflectionUtil.getFieldMap(Post.class);
+        this.fieldDetailMap = ReflectionUtil.getFieldDetailMap(PostDetail.class);
 
         fieldMap.get("publishDate").setHintDetail("Remember to set the date again before fixed");
 
