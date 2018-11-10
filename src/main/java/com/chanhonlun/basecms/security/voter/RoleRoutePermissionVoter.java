@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.security.voter;
 
+import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.model.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,12 @@ public class RoleRoutePermissionVoter implements AccessDecisionVoter<FilterInvoc
         if (!(authentication.getPrincipal() instanceof UserPrincipal)) return ACCESS_ABSTAIN;
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        boolean isSuperAdmin = userPrincipal.getCmsUser().getRoles().stream()
+                .anyMatch(role -> MyConstants.CMS_USER_ROLE_SUPER_ADMIN.equals(role.getCode()));
+
+        if (isSuperAdmin) return ACCESS_GRANTED;
+
 
         String method   = filterInvocation.getHttpRequest().getMethod();
         String endpoint = filterInvocation.getHttpRequest().getRequestURI().substring(contextPath.length());
