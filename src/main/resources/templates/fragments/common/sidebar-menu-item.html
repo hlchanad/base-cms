@@ -27,7 +27,7 @@
     <!--/* if the menuItem contains children, show the submenu **RECURSIVELY** */-->
     <ul th:if="${not #lists.isEmpty(menuItem.children)}" class="sub-menu">
         <th:block th:each="child, it2 : ${menuItem.children}">
-            <li th:replace="/fragments/blank/sidebar-menu-item :: sidebar-menu-item(menuItem=${child}, it=${it2}, depth=${depth+1})"></li>
+            <li th:replace="/fragments/common/sidebar-menu-item :: sidebar-menu-item(menuItem=${child}, it=${it2}, depth=${depth+1})"></li>
         </th:block>
     </ul>
 
