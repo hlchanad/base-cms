@@ -34,7 +34,15 @@ public class ActionButtonUtil {
     }
 
     public List<ActionButton> get(Long id) {
-        return this.actions
+        return getActionButtons(id, this.actions);
+    }
+
+    public List<ActionButton> get(Long id, List<Action> actions) {
+        return getActionButtons(id, actions);
+    }
+
+    private List<ActionButton> getActionButtons(Long id, List<Action> actions) {
+        return actions
                 .stream()
                 .map(action -> ActionButton.builder()
                         .type(action.getType())
