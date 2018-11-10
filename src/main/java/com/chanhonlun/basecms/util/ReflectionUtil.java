@@ -103,6 +103,21 @@ public class ReflectionUtil {
 
             fieldBuilder.options(fieldOptions);
         }
+        else if (Boolean.class.equals(clazz)) {
+            fieldBuilder.type(FieldType.RADIO);
+            fieldBuilder.options(Arrays.asList(
+                    FieldOption.builder()
+                            .id(property.getName() + "_" + Boolean.TRUE.toString())
+                            .title("Yes")
+                            .value(Boolean.TRUE.toString())
+                            .build(),
+                    FieldOption.builder()
+                            .id(property.getName() + "_" + Boolean.FALSE.toString())
+                            .title("No")
+                            .value(Boolean.FALSE.toString())
+                            .build()
+            ));
+        }
         else {
             fieldBuilder.type(FieldType.TEXT);
         }
