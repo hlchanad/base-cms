@@ -223,7 +223,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     }
 
     private List<FieldOption> getRolesFieldOptions() {
-        return roleRepository.findByIsDeleteFalse()
+        return roleRepository.findBySelectableTrueAndIsDeleteFalse()
                 .stream()
                 .map(role -> FieldOption.builder()
                         .id("roleId-" + role.getId())

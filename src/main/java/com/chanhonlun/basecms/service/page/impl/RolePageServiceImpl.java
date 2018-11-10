@@ -125,6 +125,7 @@ public class RolePageServiceImpl extends BasePageServiceImpl implements RolePage
         role.setCode(form.getCode());
         role.setTitle(form.getTitle());
         role.setDescription(form.getDescription());
+        role.setSelectable(true);
         role = create(role);
 
         roleRouteService.batchCreate(role.getId(), form.getRoleRoutes());

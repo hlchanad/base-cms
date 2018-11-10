@@ -11,5 +11,5 @@ public interface RoleRepository extends
 
     Role findByCodeAndIsDeleteFalse(String code);
 
-    List<Role> findByIsDeleteFalse();
+    List<Role> findBySelectableTrueAndIsDeleteFalse();
 }

@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,4 +24,8 @@ public class Role extends BasePojo<Long> {
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @IgnoreAutoReflection
+    @Column(name = "SELECTABLE")
+    private Boolean selectable;
 }
