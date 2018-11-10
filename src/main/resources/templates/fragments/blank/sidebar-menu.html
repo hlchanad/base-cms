@@ -10,7 +10,7 @@
 
     <!-- BEGIN SIDEBAR MENU ITEMS-->
     <ul class="menu-items" th:with="depth=${0}">
-        <th:block th:each="menuItem, it : ${CMS_RSP.menu}">
+        <th:block th:each="menuItem, it : ${menu}">
             <li th:replace="/fragments/blank/sidebar-menu-item :: sidebar-menu-item(menuItem=${menuItem}, it=${it}, depth=${depth+1})"></li>
         </th:block>
     </ul>

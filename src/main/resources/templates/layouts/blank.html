@@ -51,7 +51,7 @@
     <!-- END SIDEBAR MENU HEADER-->
 
     <!-- START SIDEBAR MENU -->
-    <div th:replace="/fragments/blank/sidebar-menu :: sidebar-menu"></div>
+    <div th:replace="/fragments/blank/sidebar-menu :: sidebar-menu(menu = ${CMS_RSP.menu})"></div>
     <!-- END SIDEBAR MENU -->
 </nav>
 <!-- END SIDEBPANEL-->
@@ -67,7 +67,7 @@
         <!-- START PAGE CONTENT -->
         <div class="content ">
             <!-- START JUMBOTRON -->
-            <div th:replace="/fragments/blank/jumbotron :: jumbotron"></div>
+            <div th:replace="/fragments/blank/jumbotron :: jumbotron(breadcrumbs = ${CMS_RSP.breadcrumbs})"></div>
             <!-- END JUMBOTRON -->
 
             <!-- START CONTAINER FLUID -->

@@ -2,7 +2,7 @@
     th:fragment="breadcrumb"
     class="breadcrumb">
 
-    <th:block th:each="breadcrumb, it : ${CMS_RSP.breadcrumbs}">
+    <th:block th:each="breadcrumb, it : ${breadcrumbs}">
         <li class="breadcrumb-item" th:classappend="${it.last} ? 'active'">
             <a th:if="${not it.last && breadcrumb.clickable}" th:text="${breadcrumb.title}" th:href="${breadcrumb.url}"></a>
             <span th:if="${not it.last && not breadcrumb.clickable}" th:text="${breadcrumb.title}"></span>
