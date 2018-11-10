@@ -37,7 +37,7 @@ public interface BaseDataTableService<
     }
 
     /**
-     * get preFilter specification, default isDelete = 0, can handle more filtering depends on custom extended DataTableInput
+     * get preFilter specification, default isDeleted = 0, can handle more filtering depends on custom extended DataTableInput
      *
      * @param input datatables.js request, extendable
      * @return Specification of Pojo type for filtering Pojo table
@@ -47,7 +47,7 @@ public interface BaseDataTableService<
 
             @SuppressWarnings("unchecked")
             Specification<Pojo> where =  (Specification<Pojo>) Specification
-                    .where((root1, query1, cb1) -> cb1.equal(root1.get("isDelete"), false))
+                    .where((root1, query1, cb1) -> cb1.equal(root1.get("isDeleted"), false))
                     .and((root1, query1, cb1) -> cb1.greaterThan(root1.get("id"), 0L));
 
             return where.toPredicate(root, query, cb);

@@ -21,7 +21,7 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findBySelectableTrueAndIsDeleteFalse() {
-        return roleRepository.findBySelectableTrueAndIsDeleteFalse();
+    public List<Role> findBySelectableTrueAndIsDeletedFalse() {
+        return roleRepository.findBySelectableTrueAndIsDeletedFalse();
     }
 }

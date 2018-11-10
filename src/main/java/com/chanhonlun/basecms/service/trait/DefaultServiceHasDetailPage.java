@@ -63,7 +63,7 @@ public interface DefaultServiceHasDetailPage<
     }
 
     default DefaultDetailPageConfig getDetailPageConfig(PK id) {
-        return getDetailPageConfig(getRepository().findByIdAndIsDeleteFalse(id));
+        return getDetailPageConfig(getRepository().findByIdAndIsDeletedFalse(id));
     }
 
     default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {

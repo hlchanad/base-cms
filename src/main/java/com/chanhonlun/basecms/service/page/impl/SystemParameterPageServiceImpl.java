@@ -95,7 +95,6 @@ public class SystemParameterPageServiceImpl extends BasePageServiceImpl implemen
 
         systemParameter.setValue(form.getValue());
         systemParameter.setDescription(form.getDescription());
-        systemParameter.setDataType(form.getDataType());
         systemParameter = update(systemParameter);
 
         return systemParameter;

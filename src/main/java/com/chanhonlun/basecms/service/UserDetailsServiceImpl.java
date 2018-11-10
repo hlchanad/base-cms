@@ -31,14 +31,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        CmsUser cmsUser = cmsUserRepository.findByUsernameAndIsDeleteFalse(username);
+        CmsUser cmsUser = cmsUserRepository.findByUsernameAndIsDeletedFalse(username);
 
         if (cmsUser == null) return null;
 
         List<RoleRoute> roleRoutes = cmsUser.getRoles()
                 .stream()
                 .map(Role::getId)
-                .map(roleRouteRepository::findByRoleIdAndIsDeleteFalse)
+                .map(roleRouteRepository::findByRoleIdAndIsDeletedFalse)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 

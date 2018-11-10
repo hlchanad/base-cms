@@ -9,7 +9,7 @@ public interface RoleRepository extends
         BaseRepository<Role, Long>,
         DataTablesRepository<Role, Long> {
 
-    Role findByCodeAndIsDeleteFalse(String code);
+    Role findByCodeAndIsDeletedFalse(String code);
 
-    List<Role> findBySelectableTrueAndIsDeleteFalse();
+    List<Role> findBySelectableTrueAndIsDeletedFalse();
 }

@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface RoleRouteRepository extends BaseRepository<RoleRoute, Long> {
 
-    List<RoleRoute> findByRoleIdAndIsDeleteFalse(Long id);
+    List<RoleRoute> findByRoleIdAndIsDeletedFalse(Long id);
 }

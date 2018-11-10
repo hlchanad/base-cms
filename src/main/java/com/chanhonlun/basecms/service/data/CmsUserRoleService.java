@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CmsUserRoleService extends DefaultServiceHasCRUD<CmsUserRole, Long> {
 
-    List<CmsUserRole> findByCmsUserIdAndIsDeleteFalse(Long cmsUserId);
+    List<CmsUserRole> findByCmsUserIdAndIsDeletedFalse(Long cmsUserId);
 }

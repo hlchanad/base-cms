@@ -20,8 +20,8 @@ public abstract class BasePojo<PK extends Serializable> {
     @Column(name = "STATUS")
     protected Status status;
 
-    @Column(name = "IS_DELETE")
-    protected Boolean isDelete;
+    @Column(name = "IS_DELETED")
+    protected Boolean isDeleted;
 
     @Column(name = "CREATED_AT")
     protected Date createdAt;

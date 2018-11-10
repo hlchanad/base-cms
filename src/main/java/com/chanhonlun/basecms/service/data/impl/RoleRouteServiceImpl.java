@@ -22,8 +22,8 @@ public class RoleRouteServiceImpl extends BaseServiceImpl implements RoleRouteSe
     }
 
     @Override
-    public List<RoleRoute> findByRoleIdAndIsDeleteFalse(Long id) {
-        return roleRouteRepository.findByRoleIdAndIsDeleteFalse(id);
+    public List<RoleRoute> findByRoleIdAndIsDeletedFalse(Long id) {
+        return roleRouteRepository.findByRoleIdAndIsDeletedFalse(id);
     }
 
     @Override

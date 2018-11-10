@@ -130,10 +130,10 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
-        String roles = cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(cmsUser.getId())
+        String roles = cmsUserRoleService.findByCmsUserIdAndIsDeletedFalse(cmsUser.getId())
                 .stream()
                 .map(CmsUserRole::getRoleId)
-                .map(roleService::findByIdAndIsDeleteFalse)
+                .map(roleService::findByIdAndIsDeletedFalse)
                 .map(Role::getTitle)
                 .collect(Collectors.joining(", "));
 
@@ -161,7 +161,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         cmsUser = update(cmsUser);
 
 
-        List<CmsUserRole> cmsUserRoles = cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(cmsUser.getId());
+        List<CmsUserRole> cmsUserRoles = cmsUserRoleService.findByCmsUserIdAndIsDeletedFalse(cmsUser.getId());
         List<Long> existingRoleIds = cmsUserRoles.stream().map(CmsUserRole::getRoleId).collect(Collectors.toList());
 
         List<Long> intersection = ListUtil.getIntersection(Long.class, existingRoleIds, form.getUserRoles());
@@ -194,7 +194,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     @Override
     public FormError ifCreateError(CmsUserForm form) {
 
-        CmsUser cmsUser = cmsUserRepository.findByUsernameAndIsDeleteFalse(form.getUsername());
+        CmsUser cmsUser = cmsUserRepository.findByUsernameAndIsDeletedFalse(form.getUsername());
 
         if (cmsUser != null) {
             return new FormError("Duplicated username, please change your username");
@@ -223,7 +223,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     }
 
     private List<FieldOption> getRolesFieldOptions() {
-        return roleService.findBySelectableTrueAndIsDeleteFalse()
+        return roleService.findBySelectableTrueAndIsDeletedFalse()
                 .stream()
                 .map(role -> FieldOption.builder()
                         .id("roleId-" + role.getId())
@@ -236,7 +236,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     private List<String> getSelectedRolesValue(Long id) {
         List<CmsUserRole> cmsUserRoles = id == null
                 ? Collections.emptyList()
-                : cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(id);
+                : cmsUserRoleService.findByCmsUserIdAndIsDeletedFalse(id);
 
         return cmsUserRoles.stream()
                 .map(CmsUserRole::getRoleId)

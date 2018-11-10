@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CmsMenuRoleService extends DefaultServiceHasCRUD<CmsMenuRole, Long> {
 
-    List<CmsMenuRole> findByCmsMenuIdAndIsDeleteFalse(Long cmsMenuId);
+    List<CmsMenuRole> findByCmsMenuIdAndIsDeletedFalse(Long cmsMenuId);
 }

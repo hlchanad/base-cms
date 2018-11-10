@@ -21,7 +21,7 @@ public class CmsMenuRoleServiceImpl extends BaseServiceImpl implements CmsMenuRo
     }
 
     @Override
-    public List<CmsMenuRole> findByCmsMenuIdAndIsDeleteFalse(Long cmsMenuId) {
-        return cmsMenuRoleRepository.findByCmsMenuIdAndIsDeleteFalse(cmsMenuId);
+    public List<CmsMenuRole> findByCmsMenuIdAndIsDeletedFalse(Long cmsMenuId) {
+        return cmsMenuRoleRepository.findByCmsMenuIdAndIsDeletedFalse(cmsMenuId);
     }
 }

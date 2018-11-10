@@ -35,7 +35,7 @@ public interface DefaultControllerHasEditPageWithPojoDetail<
     @GetMapping(value = "/{id}/edit")
     default String edit(Model model, @PathVariable(value = "id") PojoPK id) {
 
-        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
+        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeletedFalse(id);
 
         if (pojo == null) {
             ErrorUtil.setError(getHttpSession(), CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);
@@ -49,7 +49,7 @@ public interface DefaultControllerHasEditPageWithPojoDetail<
     @PutMapping(value = "/{id}/edit")
     default String doEdit(Model model, @PathVariable(value = "id") PojoPK id, Form form) {
 
-        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
+        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeletedFalse(id);
 
         if (pojo == null) {
             ErrorUtil.setError(getHttpSession(), CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);

@@ -15,13 +15,13 @@ public interface DefaultServiceHasCRUD<Pojo extends BasePojo<PK>, PK extends Ser
 
     UserPrincipal getCurrentUser();
 
-    default Pojo findByIdAndIsDeleteFalse(PK id) {
-        return getRepository().findByIdAndIsDeleteFalse(id);
+    default Pojo findByIdAndIsDeletedFalse(PK id) {
+        return getRepository().findByIdAndIsDeletedFalse(id);
     }
 
     default Pojo softDelete(Pojo pojo) {
         CmsUser currentUser = getCurrentUser().getCmsUser();
-        pojo.setIsDelete(true);
+        pojo.setIsDeleted(true);
         pojo.setUpdatedAt(new Date());
         pojo.setUpdatedBy(currentUser.getId());
         return getRepository().save(pojo);
@@ -29,7 +29,7 @@ public interface DefaultServiceHasCRUD<Pojo extends BasePojo<PK>, PK extends Ser
 
     default Pojo create(Pojo pojo) {
         CmsUser currentUser = getCurrentUser().getCmsUser();
-        pojo.setIsDelete(false);
+        pojo.setIsDeleted(false);
         pojo.setStatus(Status.NORMAL);
         pojo.setCreatedBy(currentUser.getId());
         pojo.setCreatedAt(new Date());

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RoleService extends DefaultServiceHasCRUD<Role, Long> {
 
-    List<Role> findBySelectableTrueAndIsDeleteFalse();
+    List<Role> findBySelectableTrueAndIsDeletedFalse();
 }

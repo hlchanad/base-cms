@@ -21,7 +21,7 @@ public class CmsUserRoleServiceImpl extends BaseServiceImpl implements CmsUserRo
     }
 
     @Override
-    public List<CmsUserRole> findByCmsUserIdAndIsDeleteFalse(Long cmsUserId) {
-        return cmsUserRoleRepository.findByCmsUserIdAndIsDeleteFalse(cmsUserId);
+    public List<CmsUserRole> findByCmsUserIdAndIsDeletedFalse(Long cmsUserId) {
+        return cmsUserRoleRepository.findByCmsUserIdAndIsDeletedFalse(cmsUserId);
     }
 }

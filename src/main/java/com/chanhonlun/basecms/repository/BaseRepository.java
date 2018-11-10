@@ -10,5 +10,5 @@ import java.io.Serializable;
 public interface BaseRepository<Pojo extends BasePojo<PK>, PK extends Serializable>
         extends CrudRepository<Pojo, PK> {
 
-    Pojo findByIdAndIsDeleteFalse(PK id);
+    Pojo findByIdAndIsDeletedFalse(PK id);
 }

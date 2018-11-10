@@ -130,10 +130,10 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
 
-        String roles = cmsMenuRoleService.findByCmsMenuIdAndIsDeleteFalse(cmsMenu.getId())
+        String roles = cmsMenuRoleService.findByCmsMenuIdAndIsDeletedFalse(cmsMenu.getId())
                 .stream()
                 .map(CmsMenuRole::getRoleId)
-                .map(roleService::findByIdAndIsDeleteFalse)
+                .map(roleService::findByIdAndIsDeletedFalse)
                 .map(Role::getTitle)
                 .collect(Collectors.joining(", "));
 
@@ -163,7 +163,7 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
         cmsMenu = update(cmsMenu);
 
 
-        List<CmsMenuRole> cmsMenuRoles = cmsMenuRoleService.findByCmsMenuIdAndIsDeleteFalse(cmsMenu.getId());
+        List<CmsMenuRole> cmsMenuRoles = cmsMenuRoleService.findByCmsMenuIdAndIsDeletedFalse(cmsMenu.getId());
         List<Long> existingRoleIds = cmsMenuRoles.stream().map(CmsMenuRole::getRoleId).collect(Collectors.toList());
 
         List<Long> intersection = ListUtil.getIntersection(Long.class, existingRoleIds, form.getRoles());
@@ -214,20 +214,20 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
     }
 
     @Override
-    public List<CmsMenu> findByParentIdNullAndIsDeleteFalse() {
-        return cmsMenuRepository.findByParentIdNullAndIsDeleteFalse(new Sort(Sort.Direction.ASC, "sequence"));
+    public List<CmsMenu> findByParentIdNullAndIsDeletedFalse() {
+        return cmsMenuRepository.findByParentIdNullAndIsDeletedFalse(new Sort(Sort.Direction.ASC, "sequence"));
     }
 
     @Override
-    public List<CmsMenu> findByParentIdAndIsDeleteFalse(Long parentId) {
-        return cmsMenuRepository.findByParentIdAndIsDeleteFalse(parentId, new Sort(Sort.Direction.ASC, "sequence"));
+    public List<CmsMenu> findByParentIdAndIsDeletedFalse(Long parentId) {
+        return cmsMenuRepository.findByParentIdAndIsDeletedFalse(parentId, new Sort(Sort.Direction.ASC, "sequence"));
     }
 
     private List<FieldOption> getParentIdFieldOptions(Long id) {
 
         List<CmsMenu> cmsMenus = id == null
-                ? cmsMenuRepository.findByIsDeleteFalse()
-                : cmsMenuRepository.findByIdNotAndIsDeleteFalse(id);
+                ? cmsMenuRepository.findByIsDeletedFalse()
+                : cmsMenuRepository.findByIdNotAndIsDeletedFalse(id);
 
         List<FieldOption> fieldOptions = new ArrayList<>();
 
@@ -249,7 +249,7 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
     }
 
     private List<FieldOption> getRolesFieldOptions() {
-        return roleService.findBySelectableTrueAndIsDeleteFalse()
+        return roleService.findBySelectableTrueAndIsDeletedFalse()
                 .stream()
                 .map(role -> FieldOption.builder()
                         .id("roleId-" + role.getId())
@@ -262,7 +262,7 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
     private List<String> getSelectedRolesValue(Long id) {
         List<CmsMenuRole> cmsMenuRoles = id == null
                 ? Collections.emptyList()
-                : cmsMenuRoleService.findByCmsMenuIdAndIsDeleteFalse(id);
+                : cmsMenuRoleService.findByCmsMenuIdAndIsDeletedFalse(id);
 
         return cmsMenuRoles.stream()
                 .map(CmsMenuRole::getRoleId)

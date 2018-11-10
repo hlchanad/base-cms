@@ -17,7 +17,7 @@ public interface DefaultControllerHasDeleteActionButton<Pojo extends BasePojo<PK
     @ResponseBody
     default ResponseEntity delete(@PathVariable(name = "id") PK id) {
 
-        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
+        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeletedFalse(id);
 
         if (pojo == null) {
             return ResponseEntity.notFound().build();

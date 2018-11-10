@@ -33,7 +33,7 @@ public interface DefaultControllerHasDetailPage<
     @GetMapping("/{id}/detail")
     default String detail(Model model, @PathVariable(value = "id") PojoPK id) {
 
-        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeleteFalse(id);
+        Pojo pojo = getDefaultPageHasCRUD().findByIdAndIsDeletedFalse(id);
 
         if (pojo == null) {
             ErrorUtil.setError(getHttpSession(), CommonErrorPopup.ERROR_404_0001_RECORD_NOT_FOUND);

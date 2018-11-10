@@ -109,7 +109,7 @@ public class RolePageServiceImpl extends BasePageServiceImpl implements RolePage
     @Override
     public FormError ifCreateError(RoleForm form) {
 
-        Role role = roleRepository.findByCodeAndIsDeleteFalse(form.getCode());
+        Role role = roleRepository.findByCodeAndIsDeletedFalse(form.getCode());
 
         if (role != null) {
             return new FormError("Code \"" + form.getCode() + "\" has been used.");
@@ -154,7 +154,7 @@ public class RolePageServiceImpl extends BasePageServiceImpl implements RolePage
         role = update(role);
 
 
-        List<RoleRoute> roleRoutes = roleRouteService.findByRoleIdAndIsDeleteFalse(role.getId());
+        List<RoleRoute> roleRoutes = roleRouteService.findByRoleIdAndIsDeletedFalse(role.getId());
         List<String> existingRoutes = roleRoutes.stream().map(RoleRoute::getUrl).collect(Collectors.toList());
 
         List<String> intersection = ListUtil.getIntersection(String.class, existingRoutes, form.getRoleRoutes());
@@ -207,7 +207,7 @@ public class RolePageServiceImpl extends BasePageServiceImpl implements RolePage
     private List<String> getSelectedRolesValue(Long id) {
         List<RoleRoute> roleRoutes = id == null
                 ? Collections.emptyList()
-                : roleRouteService.findByRoleIdAndIsDeleteFalse(id);
+                : roleRouteService.findByRoleIdAndIsDeletedFalse(id);
 
         logger.info("roleRoutes: {}", roleRoutes);
 

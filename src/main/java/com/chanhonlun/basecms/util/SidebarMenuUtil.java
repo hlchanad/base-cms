@@ -78,7 +78,7 @@ public class SidebarMenuUtil {
 
     private List<MenuItem> getMenuItemsFromDatabase() {
 
-        return cmsMenuPageService.findByParentIdNullAndIsDeleteFalse()
+        return cmsMenuPageService.findByParentIdNullAndIsDeletedFalse()
                 .stream()
                 .map(cmsMenu -> new MenuItem(cmsMenu, findChildrenMenuItems(cmsMenu.getId()), contextPath))
                 .collect(Collectors.toList());
@@ -86,7 +86,7 @@ public class SidebarMenuUtil {
 
     private List<MenuItem> findChildrenMenuItems(Long parentId) {
 
-        return cmsMenuPageService.findByParentIdAndIsDeleteFalse(parentId)
+        return cmsMenuPageService.findByParentIdAndIsDeletedFalse(parentId)
                 .stream()
                 .map(child -> new MenuItem(child, findChildrenMenuItems(child.getId()), contextPath))
                 .collect(Collectors.toList());
