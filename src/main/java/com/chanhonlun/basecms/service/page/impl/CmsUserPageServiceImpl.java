@@ -1,8 +1,10 @@
 package com.chanhonlun.basecms.service.page.impl;
 
+import com.chanhonlun.basecms.constant.DetailAction;
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.form.CmsUserForm;
 import com.chanhonlun.basecms.form.FormError;
+import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.pojo.CmsUserRole;
 import com.chanhonlun.basecms.pojo.Role;
@@ -10,6 +12,7 @@ import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
+import com.chanhonlun.basecms.response.vo.DetailButton;
 import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.vo.FieldOption;
 import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
@@ -23,6 +26,8 @@ import com.chanhonlun.basecms.util.ListUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +98,19 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     @Override
     public SidebarMenuUtil getSidebarMenuUtil() {
         return sidebarMenuUtil;
+    }
+
+    @Override
+    public List<DetailButton> getDetailButtons(CmsUser cmsUser) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        List<DetailAction> actions = (userPrincipal.getCmsUser().getId().equals(cmsUser.getId()))
+                ? Arrays.asList(DetailAction.LIST, DetailAction.EDIT)
+                : Arrays.asList(DetailAction.LIST, DetailAction.EDIT, DetailAction.DELETE);
+
+        return getDetailActionButtonUtil().get(cmsUser.getId(), actions);
     }
 
     @Override

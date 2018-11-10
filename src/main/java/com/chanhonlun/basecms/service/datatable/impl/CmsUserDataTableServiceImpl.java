@@ -1,5 +1,7 @@
 package com.chanhonlun.basecms.service.datatable.impl;
 
+import com.chanhonlun.basecms.constant.ListAction;
+import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.pojo.CmsUser;
 import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
@@ -9,6 +11,8 @@ import com.chanhonlun.basecms.service.datatable.DefaultDataTableService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -34,12 +38,20 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
 
     @Override
     public CmsUserRowVO getTableVOFromPOJO(CmsUser cmsUser) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        List<ListAction> actions = (userPrincipal.getCmsUser().getId().equals(cmsUser.getId()))
+                ? Arrays.asList(ListAction.DETAIL, ListAction.EDIT)
+                : Arrays.asList(ListAction.DETAIL, ListAction.EDIT, ListAction.DELETE);
+
         return CmsUserRowVO.builder()
                 .id(cmsUser.getId())
                 .username(cmsUser.getUsername())
                 .email(cmsUser.getEmail())
                 .roles(cmsUser.getRoles().stream().map(Role::getTitle).collect(Collectors.joining(", ")))
-                .action(new Gson().toJson(listActionButtonUtil.get(cmsUser.getId())))
+                .action(new Gson().toJson(listActionButtonUtil.get(cmsUser.getId(), actions)))
                 .build();
     }
 
