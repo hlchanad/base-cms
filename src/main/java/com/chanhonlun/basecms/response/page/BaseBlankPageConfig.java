@@ -2,14 +2,18 @@ package com.chanhonlun.basecms.response.page;
 
 import com.chanhonlun.basecms.response.vo.Breadcrumb;
 import com.chanhonlun.basecms.response.vo.MenuItem;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class BaseBlankPageConfig extends BaseConfig {
 
-    public List<Breadcrumb> breadcrumbs;
+    private List<Breadcrumb> breadcrumbs;
 
-    public List<MenuItem> menu;
+    private List<MenuItem> menu;
 
     public BaseBlankPageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu) {
         super(pageTitle);

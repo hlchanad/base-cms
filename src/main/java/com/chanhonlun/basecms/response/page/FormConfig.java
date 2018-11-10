@@ -1,13 +1,15 @@
 package com.chanhonlun.basecms.response.page;
 
 import lombok.Builder;
+import lombok.Data;
 
+@Data
 @Builder
 public class FormConfig {
 
-    public String id;
+    private String id;
 
-    public String action;
+    private String action;
 
-    public String method;
+    private String method;
 }

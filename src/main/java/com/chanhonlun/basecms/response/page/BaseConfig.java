@@ -1,8 +1,11 @@
 package com.chanhonlun.basecms.response.page;
 
+import lombok.Data;
+
+@Data
 public abstract class BaseConfig {
 
-    public String pageTitle;
+    private String pageTitle;
 
     public BaseConfig(String pageTitle) {
         this.pageTitle = pageTitle;

@@ -2,16 +2,20 @@ package com.chanhonlun.basecms.response.page;
 
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.response.vo.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class BaseDetailPageConfig extends BaseBlankPageConfig {
 
-    public List<Field> fields;
-    public List<DetailField> detailFields;
-    public FormConfig formConfig;
-    public FormError formError;
-    public List<DetailButton> detailButtons;
+    private List<Field> fields;
+    private List<DetailField> detailFields;
+    private FormConfig formConfig;
+    private FormError formError;
+    private List<DetailButton> detailButtons;
 
     public BaseDetailPageConfig(String pageTitle, List<Breadcrumb> breadcrumbs, List<MenuItem> menu, List<Field> fields, List<DetailField> detailFields, FormConfig formConfig, FormError formError, List<DetailButton> detailButtons) {
         super(pageTitle, breadcrumbs, menu);

@@ -10,6 +10,6 @@ import java.util.List;
 @Builder
 public class DetailField {
 
-    public Language    language;
-    public List<Field> fields;
+    private Language    language;
+    private List<Field> fields;
 }
