@@ -9,13 +9,13 @@ import com.chanhonlun.basecms.pojo.CmsUserRole;
 import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.CmsUserRepository;
-import com.chanhonlun.basecms.repository.RoleRepository;
 import com.chanhonlun.basecms.request.datatable.BaseDataTableInput;
 import com.chanhonlun.basecms.response.component.BaseDataTableConfig;
 import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.response.vo.FieldOption;
 import com.chanhonlun.basecms.response.vo.row.CmsUserRowVO;
 import com.chanhonlun.basecms.service.data.CmsUserRoleService;
+import com.chanhonlun.basecms.service.data.RoleService;
 import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.CmsUserDataTableServiceImpl;
 import com.chanhonlun.basecms.service.page.CmsUserPageService;
@@ -48,7 +48,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     private CmsUserRoleService cmsUserRoleService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleService roleService;
 
     private Map<String, Field> fieldMap = new LinkedHashMap<>();
 
@@ -133,7 +133,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         String roles = cmsUserRoleService.findByCmsUserIdAndIsDeleteFalse(cmsUser.getId())
                 .stream()
                 .map(CmsUserRole::getRoleId)
-                .map(roleRepository::findByIdAndIsDeleteFalse)
+                .map(roleService::findByIdAndIsDeleteFalse)
                 .map(Role::getTitle)
                 .collect(Collectors.joining(", "));
 
@@ -213,7 +213,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         cmsUser = create(cmsUser);
 
         for (Long roleId : form.getUserRoles()) {
-            CmsUserRole  cmsUserRole = new CmsUserRole();
+            CmsUserRole cmsUserRole = new CmsUserRole();
             cmsUserRole.setCmsUserId(cmsUser.getId());
             cmsUserRole.setRoleId(roleId);
             cmsUserRole = cmsUserRoleService.create(cmsUserRole);
@@ -223,7 +223,7 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
     }
 
     private List<FieldOption> getRolesFieldOptions() {
-        return roleRepository.findBySelectableTrueAndIsDeleteFalse()
+        return roleService.findBySelectableTrueAndIsDeleteFalse()
                 .stream()
                 .map(role -> FieldOption.builder()
                         .id("roleId-" + role.getId())
