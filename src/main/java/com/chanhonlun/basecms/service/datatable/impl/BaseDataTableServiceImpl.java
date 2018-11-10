@@ -1,12 +1,10 @@
 package com.chanhonlun.basecms.service.datatable.impl;
 
-import com.chanhonlun.basecms.util.ActionButtonUtil;
+import com.chanhonlun.basecms.util.ListActionButtonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
-import javax.annotation.PostConstruct;
 
 public abstract class BaseDataTableServiceImpl {
 
@@ -18,11 +16,11 @@ public abstract class BaseDataTableServiceImpl {
     protected String contextPath;
 
     @Autowired
-    protected ActionButtonUtil actionButtonUtil;
+    protected ListActionButtonUtil listActionButtonUtil;
 
     public void setSection(String section) {
         this.section = section;
-        actionButtonUtil.init(this.section);
+        listActionButtonUtil.init(this.section);
     }
 
     public String getSection() {

@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public enum DetailAction {
 
-    DELETE("fa-trash-o", "/delete", "danger", true, DetailButtonType.DELETE),
+    DELETE("fa-trash-o", "/delete", "danger", true, ActionButtonType.DELETE),
 
-    EDIT("fa-pencil", "/edit", "primary", true, DetailButtonType.REDIRECT),
+    EDIT("fa-pencil", "/edit", "primary", true, ActionButtonType.REDIRECT),
 
-    LIST("fa-list-ul", "", "complete", false, DetailButtonType.REDIRECT),
+    LIST("fa-list-ul", "", "complete", false, ActionButtonType.REDIRECT),
 
     ;
 
@@ -20,9 +20,9 @@ public enum DetailAction {
 
     private boolean insertId;
 
-    private DetailButtonType type;
+    private ActionButtonType type;
 
-    DetailAction(String faIcon, String uri, String bootstrapColor, boolean insertId, DetailButtonType type) {
+    DetailAction(String faIcon, String uri, String bootstrapColor, boolean insertId, ActionButtonType type) {
         this.faIcon = faIcon;
         this.uri = uri;
         this.bootstrapColor = bootstrapColor;
@@ -50,7 +50,7 @@ public enum DetailAction {
         return insertId;
     }
 
-    public DetailButtonType getType() {
+    public ActionButtonType getType() {
         return type;
     }
 

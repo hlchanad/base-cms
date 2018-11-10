@@ -1,6 +1,6 @@
 package com.chanhonlun.basecms.constant;
 
-public enum Action {
+public enum ListAction {
 
     DELETE("Delete", "/delete", "danger", ActionButtonType.DELETE),
 
@@ -18,7 +18,7 @@ public enum Action {
 
     private ActionButtonType type;
 
-    Action(String displayName, String uri, String bootstrapColor, ActionButtonType type) {
+    ListAction(String displayName, String uri, String bootstrapColor, ActionButtonType type) {
         this.displayName = displayName;
         this.uri = uri;
         this.bootstrapColor = bootstrapColor;

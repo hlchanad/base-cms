@@ -39,7 +39,7 @@ public class CmsUserDataTableServiceImpl extends BaseDataTableServiceImpl implem
                 .username(cmsUser.getUsername())
                 .email(cmsUser.getEmail())
                 .roles(cmsUser.getRoles().stream().map(Role::getTitle).collect(Collectors.joining(", ")))
-                .action(new Gson().toJson(actionButtonUtil.get(cmsUser.getId())))
+                .action(new Gson().toJson(listActionButtonUtil.get(cmsUser.getId())))
                 .build();
     }
 

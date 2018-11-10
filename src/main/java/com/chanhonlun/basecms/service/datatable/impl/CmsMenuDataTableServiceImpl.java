@@ -41,7 +41,7 @@ public class CmsMenuDataTableServiceImpl extends BaseDataTableServiceImpl implem
                 .url(cmsMenu.getUrl())
                 .icon(cmsMenu.getIcon())
                 .sequence(cmsMenu.getSequence())
-                .action(new Gson().toJson(actionButtonUtil.get(cmsMenu.getId())))
+                .action(new Gson().toJson(listActionButtonUtil.get(cmsMenu.getId())))
                 .build();
     }
 

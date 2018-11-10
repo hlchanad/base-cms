@@ -34,7 +34,7 @@ public class SystemParameterDataTableServiceImpl extends BaseDataTableServiceImp
                 .key(systemParameter.getKey())
                 .value(systemParameter.getValue())
                 .description(systemParameter.getDescription())
-                .action(new Gson().toJson(actionButtonUtil.get(systemParameter.getId())))
+                .action(new Gson().toJson(listActionButtonUtil.get(systemParameter.getId())))
                 .build();
     }
 

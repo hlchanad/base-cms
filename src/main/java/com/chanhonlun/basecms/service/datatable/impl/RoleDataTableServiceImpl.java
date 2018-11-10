@@ -32,7 +32,7 @@ public class RoleDataTableServiceImpl extends BaseDataTableServiceImpl implement
                 .code(role.getCode())
                 .title(role.getTitle())
                 .description(role.getDescription())
-                .action(new Gson().toJson(actionButtonUtil.get(role.getId())))
+                .action(new Gson().toJson(listActionButtonUtil.get(role.getId())))
                 .build();
     }
 

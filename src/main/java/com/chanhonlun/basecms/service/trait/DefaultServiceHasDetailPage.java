@@ -6,7 +6,7 @@ import com.chanhonlun.basecms.response.page.DefaultDetailPageConfig;
 import com.chanhonlun.basecms.response.vo.DetailButton;
 import com.chanhonlun.basecms.response.vo.Field;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
-import com.chanhonlun.basecms.util.DetailButtonUtil;
+import com.chanhonlun.basecms.util.DetailActionButtonUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 
@@ -35,12 +35,12 @@ public interface DefaultServiceHasDetailPage<
 
     SidebarMenuUtil getSidebarMenuUtil();
 
-    DetailButtonUtil getDetailButtonUtil();
+    DetailActionButtonUtil getDetailActionButtonUtil();
 
     BaseRepository<Pojo, PK> getRepository();
 
     default List<DetailButton> getDetailButtons(Pojo pojo) {
-        return getDetailButtonUtil().get(pojo.getId());
+        return getDetailActionButtonUtil().get(pojo.getId());
     }
 
     default DefaultDetailPageConfig getDetailPageConfig(PK id) {

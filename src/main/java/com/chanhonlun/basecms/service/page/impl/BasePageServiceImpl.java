@@ -4,7 +4,7 @@ import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.service.page.BasePageService;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasDataTable;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
-import com.chanhonlun.basecms.util.DetailButtonUtil;
+import com.chanhonlun.basecms.util.DetailActionButtonUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public abstract class BasePageServiceImpl implements BasePageService {
     protected SidebarMenuUtil sidebarMenuUtil;
 
     @Autowired
-    private DetailButtonUtil detailButtonUtil;
+    private DetailActionButtonUtil detailActionButtonUtil;
 
     protected String section;
 
@@ -47,7 +47,7 @@ public abstract class BasePageServiceImpl implements BasePageService {
     public void setSection(String section) {
         this.section = section;
 
-        detailButtonUtil.init(section);
+        detailActionButtonUtil.init(section);
 
         if (this instanceof DefaultServiceHasDataTable) {
             ((DefaultServiceHasDataTable) this).getDataTablesService().setSection(this.section);
@@ -71,8 +71,8 @@ public abstract class BasePageServiceImpl implements BasePageService {
         return this.contextPath;
     }
 
-    public DetailButtonUtil getDetailButtonUtil() {
-        return detailButtonUtil;
+    public DetailActionButtonUtil getDetailActionButtonUtil() {
+        return detailActionButtonUtil;
     }
 
     @Override

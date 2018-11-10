@@ -35,7 +35,7 @@ public class PostDataTableServiceImpl extends BaseDataTableServiceImpl implement
                         .title(post.getDetailEn().getTitle())
                         .brief(post.getDetailEn().getBrief())
                         .build())
-                .action(new Gson().toJson(actionButtonUtil.get(post.getId())))
+                .action(new Gson().toJson(listActionButtonUtil.get(post.getId())))
                 .build();
     }
 
