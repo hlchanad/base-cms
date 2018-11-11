@@ -21,6 +21,7 @@ import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ListUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
+import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -215,6 +216,16 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
     @Override
     public List<CmsMenu> findByParentIdAndIsDeletedFalse(Long parentId) {
         return cmsMenuRepository.findByParentIdAndIsDeletedFalse(parentId, new Sort(Sort.Direction.ASC, "sequence"));
+    }
+
+    @Override
+    public void refreshSidebarMenu() {
+        /*
+         * FIXME
+         * can only remove bean from current session,
+         * need to find a way to remove from all session
+         */
+        ((ScopedObject) this.sidebarMenuUtil).removeFromScope();
     }
 
     private List<FieldOption> getParentIdFieldOptions(Long id) {

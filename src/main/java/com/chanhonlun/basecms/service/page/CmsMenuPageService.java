@@ -18,4 +18,6 @@ public interface CmsMenuPageService extends
     List<CmsMenu> findByParentIdNullAndIsDeletedFalse();
 
     List<CmsMenu> findByParentIdAndIsDeletedFalse(Long parentId);
+
+    void refreshSidebarMenu();
 }

@@ -35,8 +35,8 @@ public interface DefaultControllerHasCreatePage<
             return getSection() + "/create";
         }
 
-        Pojo post = getDefaultPageHasCreate().create(form);
+        Pojo pojo = getDefaultPageHasCreate().create(form);
 
-        return "redirect:/" + getSection() + "/" + post.getId() + "/detail";
+        return "redirect:/" + getSection() + "/" + pojo.getId() + "/detail";
     }
 }
