@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.util;
 
+import com.chanhonlun.basecms.constant.MyConstants;
 import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.pojo.Role;
@@ -79,21 +80,37 @@ public class SidebarMenuUtil {
 
     private List<MenuItem> getMenuItems(List<Role> roles) {
 
+        boolean isSuperAdmin = roles.stream()
+                .map(Role::getCode)
+                .anyMatch(MyConstants.CMS_USER_ROLE_SUPER_ADMIN::equals);
+
         List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
 
         return cmsMenus.stream()
                 .filter(cmsMenu -> cmsMenu.getParentId() == null)
+                .filter(cmsMenu -> {
+                    List<Long> allowedRoleIds = cmsMenu.getRoles().stream().map(Role::getId).collect(Collectors.toList());
+                    return isSuperAdmin || roleIds.stream().anyMatch(allowedRoleIds::contains);
+                })
                 .map(cmsMenu -> new MenuItem(cmsMenu, findChildrenMenuItems(roles, cmsMenu.getId()), contextPath))
                 .collect(Collectors.toList());
     }
 
     private List<MenuItem> findChildrenMenuItems(List<Role> roles, Long parentId) {
 
+        boolean isSuperAdmin = roles.stream()
+                .map(Role::getCode)
+                .anyMatch(MyConstants.CMS_USER_ROLE_SUPER_ADMIN::equals);
+
         List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
 
         return cmsMenus.stream()
                 .filter(cmsMenu -> cmsMenu.getParentId() != null)
                 .filter(cmsMenu -> cmsMenu.getParentId().equals(parentId))
+                .filter(cmsMenu -> {
+                    List<Long> allowedRoleIds = cmsMenu.getRoles().stream().map(Role::getId).collect(Collectors.toList());
+                    return isSuperAdmin || roleIds.stream().anyMatch(allowedRoleIds::contains);
+                })
                 .map(child -> new MenuItem(child, findChildrenMenuItems(roles, child.getId()), contextPath))
                 .collect(Collectors.toList());
     }
