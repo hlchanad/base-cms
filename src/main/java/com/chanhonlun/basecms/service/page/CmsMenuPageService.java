@@ -15,9 +15,7 @@ public interface CmsMenuPageService extends
         DefaultServiceHasEditPage<CmsMenu, Long, CmsMenuForm>,
         DefaultServiceHasDetailPage<CmsMenu, Long> {
 
-    List<CmsMenu> findByParentIdNullAndIsDeletedFalse();
-
-    List<CmsMenu> findByParentIdAndIsDeletedFalse(Long parentId);
+    List<CmsMenu> findByIsDeletedFalse();
 
     void refreshSidebarMenu();
 }

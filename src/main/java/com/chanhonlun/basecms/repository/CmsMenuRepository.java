@@ -12,13 +12,7 @@ public interface CmsMenuRepository extends
         DataTablesRepository<CmsMenu, Long>,
         BaseRepository<CmsMenu, Long> {
 
-    List<CmsMenu> findByParentIdNullAndIsDeletedFalse(Sort sort);
-
-    List<CmsMenu> findByParentIdNotNullAndIsDeletedFalse(Sort sort);
-
-    List<CmsMenu> findByParentIdAndIsDeletedFalse(Long parentId, Sort sort);
-
-    List<CmsMenu> findByIsDeletedFalse();
+    List<CmsMenu> findByIsDeletedFalse(Sort sort);
 
     List<CmsMenu> findByIdNotAndIsDeletedFalse(Long id);
 }

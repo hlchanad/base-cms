@@ -1,5 +1,8 @@
 package com.chanhonlun.basecms.util;
 
+import com.chanhonlun.basecms.model.UserPrincipal;
+import com.chanhonlun.basecms.pojo.CmsMenu;
+import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.response.vo.MenuItem;
 import com.chanhonlun.basecms.service.page.CmsMenuPageService;
 import com.google.gson.Gson;
@@ -8,17 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SidebarMenuUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(SidebarMenuUtil.class);
@@ -32,32 +33,32 @@ public class SidebarMenuUtil {
     @Value("${server.servlet.context-path}")
     protected String contextPath;
 
-    private List<MenuItem> menuItems = null;
+    private List<CmsMenu> cmsMenus;
+
+    public void updateMenu() {
+        this.cmsMenus = cmsMenuPageService.findByIsDeletedFalse();
+    }
 
     public List<MenuItem> getSidebarMenuList() {
 
-        if (menuItems == null) {
-            this.menuItems = getMenuItemsFromDatabase();
+        if (cmsMenus == null) {
+            updateMenu();
         }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        List<MenuItem> menuItems = getMenuItems(userPrincipal.getCmsUser().getRoles());
 
         logger.info("uri: {}", httpServletRequest.getRequestURI());
 
-        this.menuItems.forEach(this::setActiveFalse);
-
-        this.menuItems.forEach(menuItem -> {
-            if (checkIfActiveRoute(menuItem, httpServletRequest.getRequestURI())) {
-                menuItem.setActive(true);
-            }
-        });
+        menuItems.stream()
+                .filter(menuItem -> checkIfActiveRoute(menuItem, httpServletRequest.getRequestURI()))
+                .forEach(menuItem -> menuItem.setActive(true));
 
         logger.info("menuItems: {}", new Gson().toJson(menuItems));
 
         return menuItems;
-    }
-
-    private void setActiveFalse(MenuItem menuItem) {
-        menuItem.setActive(false);
-        menuItem.getChildren().forEach(this::setActiveFalse);
     }
 
     private boolean checkIfActiveRoute(MenuItem menuItem, String uri) {
@@ -76,19 +77,24 @@ public class SidebarMenuUtil {
         return false;
     }
 
-    private List<MenuItem> getMenuItemsFromDatabase() {
+    private List<MenuItem> getMenuItems(List<Role> roles) {
 
-        return cmsMenuPageService.findByParentIdNullAndIsDeletedFalse()
-                .stream()
-                .map(cmsMenu -> new MenuItem(cmsMenu, findChildrenMenuItems(cmsMenu.getId()), contextPath))
+        List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
+
+        return cmsMenus.stream()
+                .filter(cmsMenu -> cmsMenu.getParentId() == null)
+                .map(cmsMenu -> new MenuItem(cmsMenu, findChildrenMenuItems(roles, cmsMenu.getId()), contextPath))
                 .collect(Collectors.toList());
     }
 
-    private List<MenuItem> findChildrenMenuItems(Long parentId) {
+    private List<MenuItem> findChildrenMenuItems(List<Role> roles, Long parentId) {
 
-        return cmsMenuPageService.findByParentIdAndIsDeletedFalse(parentId)
-                .stream()
-                .map(child -> new MenuItem(child, findChildrenMenuItems(child.getId()), contextPath))
+        List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
+
+        return cmsMenus.stream()
+                .filter(cmsMenu -> cmsMenu.getParentId() != null)
+                .filter(cmsMenu -> cmsMenu.getParentId().equals(parentId))
+                .map(child -> new MenuItem(child, findChildrenMenuItems(roles, child.getId()), contextPath))
                 .collect(Collectors.toList());
     }
 }

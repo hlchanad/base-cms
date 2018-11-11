@@ -21,8 +21,8 @@ import com.chanhonlun.basecms.util.BreadcrumbUtil;
 import com.chanhonlun.basecms.util.ListUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
-import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +32,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMenuPageService {
+
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     private CmsMenuDataTableServiceImpl cmsMenuDataTablesService;
@@ -209,29 +212,19 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
     }
 
     @Override
-    public List<CmsMenu> findByParentIdNullAndIsDeletedFalse() {
-        return cmsMenuRepository.findByParentIdNullAndIsDeletedFalse(new Sort(Sort.Direction.ASC, "sequence"));
-    }
-
-    @Override
-    public List<CmsMenu> findByParentIdAndIsDeletedFalse(Long parentId) {
-        return cmsMenuRepository.findByParentIdAndIsDeletedFalse(parentId, new Sort(Sort.Direction.ASC, "sequence"));
+    public List<CmsMenu> findByIsDeletedFalse() {
+        return cmsMenuRepository.findByIsDeletedFalse(new Sort(Sort.Direction.ASC, "sequence"));
     }
 
     @Override
     public void refreshSidebarMenu() {
-        /*
-         * FIXME
-         * can only remove bean from current session,
-         * need to find a way to remove from all session
-         */
-        ((ScopedObject) this.sidebarMenuUtil).removeFromScope();
+        sidebarMenuUtil.updateMenu();
     }
 
     private List<FieldOption> getParentIdFieldOptions(Long id) {
 
         List<CmsMenu> cmsMenus = id == null
-                ? cmsMenuRepository.findByIsDeletedFalse()
+                ? findByIsDeletedFalse()
                 : cmsMenuRepository.findByIdNotAndIsDeletedFalse(id);
 
         List<FieldOption> fieldOptions = new ArrayList<>();
