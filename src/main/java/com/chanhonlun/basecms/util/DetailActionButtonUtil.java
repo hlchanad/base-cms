@@ -50,6 +50,7 @@ public class DetailActionButtonUtil {
                         .faIcon(action.getFaIcon())
                         .bootstrapColor(action.getBootstrapColor())
                         .href(action.getUri(contextPath, section, id))
+                        .redirectUrl(action.getRedirectUrl(contextPath, section, id))
                         .build())
                 .collect(Collectors.toList());
     }
