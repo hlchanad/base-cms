@@ -221,6 +221,24 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
         sidebarMenuUtil.updateMenu();
     }
 
+    @Override
+    public List<Role> findRoleByCmsMenuIdAndIsDeletedFalse(Long cmsMenuId) {
+        return cmsMenuRoleService.findByCmsMenuIdAndIsDeletedFalse(cmsMenuId)
+                .stream()
+                .map(CmsMenuRole::getRoleId)
+                .map(roleService::findByIdAndIsDeletedFalse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> getAllowedRoleIds(CmsMenu cmsMenu) {
+        return Optional.ofNullable(cmsMenu.getRoles())
+                .orElse(findRoleByCmsMenuIdAndIsDeletedFalse(cmsMenu.getId()))
+                .stream()
+                .map(Role::getId)
+                .collect(Collectors.toList());
+    }
+
     private List<FieldOption> getParentIdFieldOptions(Long id) {
 
         List<CmsMenu> cmsMenus = id == null

@@ -89,7 +89,7 @@ public class SidebarMenuUtil {
         return cmsMenus.stream()
                 .filter(cmsMenu -> cmsMenu.getParentId() == null)
                 .filter(cmsMenu -> {
-                    List<Long> allowedRoleIds = cmsMenu.getRoles().stream().map(Role::getId).collect(Collectors.toList());
+                    List<Long> allowedRoleIds = cmsMenuPageService.getAllowedRoleIds(cmsMenu);
                     return isSuperAdmin || roleIds.stream().anyMatch(allowedRoleIds::contains);
                 })
                 .map(cmsMenu -> new MenuItem(cmsMenu, findChildrenMenuItems(roles, cmsMenu.getId()), contextPath))
@@ -108,7 +108,7 @@ public class SidebarMenuUtil {
                 .filter(cmsMenu -> cmsMenu.getParentId() != null)
                 .filter(cmsMenu -> cmsMenu.getParentId().equals(parentId))
                 .filter(cmsMenu -> {
-                    List<Long> allowedRoleIds = cmsMenu.getRoles().stream().map(Role::getId).collect(Collectors.toList());
+                    List<Long> allowedRoleIds = cmsMenuPageService.getAllowedRoleIds(cmsMenu);
                     return isSuperAdmin || roleIds.stream().anyMatch(allowedRoleIds::contains);
                 })
                 .map(child -> new MenuItem(child, findChildrenMenuItems(roles, child.getId()), contextPath))

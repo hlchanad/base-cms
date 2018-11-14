@@ -2,6 +2,7 @@ package com.chanhonlun.basecms.service.page;
 
 import com.chanhonlun.basecms.form.CmsMenuForm;
 import com.chanhonlun.basecms.pojo.CmsMenu;
+import com.chanhonlun.basecms.pojo.Role;
 import com.chanhonlun.basecms.response.vo.row.CmsMenuRowVO;
 import com.chanhonlun.basecms.service.trait.*;
 
@@ -18,4 +19,8 @@ public interface CmsMenuPageService extends
     List<CmsMenu> findByIsDeletedFalse();
 
     void refreshSidebarMenu();
+
+    List<Role> findRoleByCmsMenuIdAndIsDeletedFalse(Long cmsMenuId);
+
+    List<Long> getAllowedRoleIds(CmsMenu cmsMenu);
 }
