@@ -1,0 +1,57 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="/layouts/blank">
+
+    <th:block layout:fragment="custom-css">
+
+    </th:block>
+
+    <th:block layout:fragment="content">
+
+        <form id="image-uploader" method="post" th:action="@{/image}">
+            <input name="image" type="file"/>
+            <button>Submit</button>
+        </form>
+
+        <div id="result"></div>
+
+    </th:block>
+
+    <th:block layout:fragment="custom-js">
+
+        <script>
+            $("form#image-uploader").submit(function(event) {
+                console.log("event: {}", event);
+                event.preventDefault();
+
+                const form = $("form#image-uploader")[0];
+                console.log("form", form);
+
+                const data = new FormData(form);
+                data.append("customField", "This is some extra data, testing");
+
+                console.log("data", data);
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: form.getAttribute("action"),
+                    data: data,
+                    processData: false, // prevent jQuery from automatically transforming the data into a query string
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        $("#result").text(data);
+                        console.log("SUCCESS : ", data);
+                    },
+                    error: function (e) {
+                        $("#result").text(e.responseText);
+                        console.log("ERROR : ", e);
+                    }
+                });
+            })
+        </script>
+
+    </th:block>
+</div>

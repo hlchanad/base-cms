@@ -16,5 +16,14 @@ public class PhotoGalleryPageServiceImpl extends BasePageServiceImpl implements 
                 .menu(sidebarMenuUtil.getSidebarMenuList())
                 .build();
     }
+
+    @Override
+    public BaseBlankPageConfig getCreateConfig() {
+        return DefaultBlankPageConfig.builder()
+                .pageTitle("Photo Gallery")
+                .breadcrumbs(breadcrumbUtil.getBreadcrumbs())
+                .menu(sidebarMenuUtil.getSidebarMenuList())
+                .build();
+    }
 }
 

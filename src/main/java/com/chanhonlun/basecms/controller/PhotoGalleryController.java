@@ -26,4 +26,10 @@ public class PhotoGalleryController extends BaseController {
         model.addAttribute(MyConstants.PAGE_RESPONSE, photoGalleryPageService.getListConfig());
         return "photo-gallery/index";
     }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute(MyConstants.PAGE_RESPONSE, photoGalleryPageService.getCreateConfig());
+        return "photo-gallery/create";
+    }
 }
