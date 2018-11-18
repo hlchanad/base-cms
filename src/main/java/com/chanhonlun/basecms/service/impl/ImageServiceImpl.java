@@ -5,14 +5,17 @@ import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.ImageRepository;
 import com.chanhonlun.basecms.request.ImageCreateRequest;
+import com.chanhonlun.basecms.request.Paging;
 import com.chanhonlun.basecms.service.ImageService;
 import com.chanhonlun.basecms.service.data.impl.BaseServiceImpl;
+import com.chanhonlun.basecms.util.PagingUtil;
 import com.chanhonlun.basecms.util.StorageUtil;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +26,7 @@ import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,6 +69,11 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
         image = create(image);
 
         return image;
+    }
+
+    @Override
+    public List<Image> list(Paging paging) {
+        return imageRepository.findByIsDeletedFalse(PagingUtil.parsePagination(paging, Sort.Direction.ASC, "id"));
     }
 
     private ImageType getImageType(@Nullable String contentType) {

@@ -4,6 +4,7 @@ import com.chanhonlun.basecms.constant.ApiResponseCode;
 import com.chanhonlun.basecms.model.ApiResponse;
 import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.request.ImageCreateRequest;
+import com.chanhonlun.basecms.request.ImageListRequest;
 import com.chanhonlun.basecms.response.vo.ImageCreateResponse;
 import com.chanhonlun.basecms.response.vo.ImageVO;
 import com.chanhonlun.basecms.service.ImageService;
@@ -13,9 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/image")
@@ -42,6 +47,19 @@ public class ImageController {
         ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_201_000_SUCCESS, response);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+    }
+
+    @GetMapping()
+    public ResponseEntity<ApiResponse> list(ImageListRequest request) {
+
+        List<ImageVO> imageVOs = imageService.list(request.getPaging())
+                .stream()
+                .map(image -> new ImageVO(image, imagePath))
+                .collect(Collectors.toList());
+
+        ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_200_000_SUCCESS, imageVOs);
+
+        return ResponseEntity.ok(apiResponse);
     }
 
 }
