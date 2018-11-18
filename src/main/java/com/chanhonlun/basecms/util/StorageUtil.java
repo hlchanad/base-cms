@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,9 @@ public class StorageUtil {
 
     private Storage storage;
 
+    @Value("${com.chanhonlun.path.upload}")
+    private String uploadPath;
+
     @Autowired
     private FileSystemStorage fileSystemStorage;
 
@@ -29,22 +33,22 @@ public class StorageUtil {
         this.storage = fileSystemStorage;
     }
 
-    public boolean saveObject(InputStream inputStream, String destinationPath, String fileName) {
-        return storage.saveObject(inputStream, destinationPath, fileName);
+    public boolean saveObject(InputStream inputStream, String destinationFolder, String fileName) {
+        return storage.saveObject(inputStream, uploadPath + destinationFolder, fileName);
     }
 
-    public boolean saveObject(String filePath, String destinationPath, String fileName) {
+    public boolean saveObject(String filePath, String destinationFolder, String fileName) {
         try {
-            return saveObject(FileUtils.openInputStream(new File(filePath)), destinationPath, fileName);
+            return saveObject(FileUtils.openInputStream(new File(filePath)), destinationFolder, fileName);
         } catch (IOException e) {
             logger.error("fail getting input stream, e: {}", e);
             return false;
         }
     }
 
-    public boolean saveObject(MultipartFile file, String destinationPath, String fileName) {
+    public boolean saveObject(MultipartFile file, String destinationFolder, String fileName) {
         try {
-            return saveObject(file.getInputStream(), destinationPath, fileName);
+            return saveObject(file.getInputStream(), destinationFolder, fileName);
         } catch (IOException e) {
             logger.error("fail getting input stream, e: {}", e);
             return false;

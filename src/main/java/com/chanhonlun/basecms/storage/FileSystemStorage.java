@@ -17,11 +17,11 @@ public class FileSystemStorage implements Storage {
     private static final Logger logger = LoggerFactory.getLogger(FileSystemStorage.class);
 
     @Override
-    public boolean saveObject(InputStream inputStream, String destinationPath, String fileName) {
+    public boolean saveObject(InputStream inputStream, String destinationFolder, String fileName) {
 
         try {
             byte[] bytes = IOUtils.toByteArray(inputStream);
-            Path path = Paths.get(destinationPath + fileName);
+            Path path = Paths.get(destinationFolder + fileName);
             Files.write(path, bytes);
         } catch (IOException e) {
             logger.error("fail writing file, e: {}", e);

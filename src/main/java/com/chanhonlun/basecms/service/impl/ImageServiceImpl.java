@@ -31,7 +31,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
     private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
 
     @Value("${com.chanhonlun.path.upload.image}")
-    private String imageUploadPath;
+    private String uploadImagePath;
 
     @Autowired
     private ImageRepository imageRepository;
@@ -49,16 +49,16 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
         ImageType imageType = getImageType(request.getImage().getContentType());
 
-        String    fileName  = getFileName(imageType);
-        String    uri       = imageUploadPath + fileName;
-        Dimension dimension = getImageDimension(request.getImage());
+        String    fileName    = getFileName(imageType);
+        String    destination = uploadImagePath + fileName;
+        Dimension dimension   = getImageDimension(request.getImage());
 
-        boolean saveResult = storageUtil.saveObject(request.getImage(), uri, fileName);
+        boolean saveResult = storageUtil.saveObject(request.getImage(), destination, fileName);
 
         if (!saveResult) return null;
 
         Image image = new Image();
-        image.setUri(uri);
+        image.setUri(destination);
         image.setImageType(imageType);
         image.setFileName(fileName);
         image.setFileSize(request.getImage().getSize());
