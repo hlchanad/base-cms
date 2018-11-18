@@ -3,6 +3,7 @@ package com.chanhonlun.basecms.controller;
 import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.request.ImageCreateRequest;
 import com.chanhonlun.basecms.response.vo.ImageCreateResponse;
+import com.chanhonlun.basecms.response.vo.ImageVO;
 import com.chanhonlun.basecms.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class ImageController {
 
         Image image = imageService.create(request);
 
-        ImageCreateResponse response = new ImageCreateResponse(image, imagePath);
+        ImageCreateResponse response = new ImageCreateResponse(new ImageVO(image, imagePath));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
