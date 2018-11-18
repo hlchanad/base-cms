@@ -9,6 +9,6 @@ public class ImageCreateResponse {
     private String url;
 
     public ImageCreateResponse(Image image, String imagePath) {
-        this.url = imagePath + image.getUri();
+        this.url = imagePath + image.getFileName();
     }
 }

@@ -58,7 +58,6 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
         if (!saveResult) return null;
 
         Image image = new Image();
-        image.setUri(destination);
         image.setImageType(imageType);
         image.setFileName(fileName);
         image.setFileSize(request.getImage().getSize());

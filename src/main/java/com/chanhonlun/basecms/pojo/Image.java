@@ -13,9 +13,6 @@ import javax.persistence.*;
 @SequenceGenerator(name = "SEQUENCE_GENERATOR", sequenceName = "IMAGE_ID_SEQ")
 public class Image extends BasePojo<Long>{
 
-    @Column(name = "URI")
-    private String uri;
-
     @Column(name = "FILE_NAME")
     private String fileName;
 
