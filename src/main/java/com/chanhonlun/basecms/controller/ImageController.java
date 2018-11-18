@@ -1,5 +1,7 @@
 package com.chanhonlun.basecms.controller;
 
+import com.chanhonlun.basecms.constant.ApiResponseCode;
+import com.chanhonlun.basecms.model.ApiResponse;
 import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.request.ImageCreateRequest;
 import com.chanhonlun.basecms.response.vo.ImageCreateResponse;
@@ -28,7 +30,7 @@ public class ImageController {
     private ImageService imageService;
 
     @PostMapping()
-    public ResponseEntity<ImageCreateResponse> create(ImageCreateRequest request) {
+    public ResponseEntity<ApiResponse> create(ImageCreateRequest request) {
 
         if (request.getImage().isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -37,7 +39,9 @@ public class ImageController {
         Image image = imageService.create(request);
 
         ImageCreateResponse response = new ImageCreateResponse(new ImageVO(image, imagePath));
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_201_000_SUCCESS, response);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
 }
