@@ -1,20 +1,28 @@
 package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.ImageType;
+import com.chanhonlun.basecms.format.UriFormat;
 import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.ImageRepository;
 import com.chanhonlun.basecms.request.ImageCreateRequest;
 import com.chanhonlun.basecms.request.Paging;
+import com.chanhonlun.basecms.response.hateoas.HateoasLink;
+import com.chanhonlun.basecms.response.hateoas.ImagesHateoasVO;
+import com.chanhonlun.basecms.response.vo.ImageVO;
 import com.chanhonlun.basecms.service.ImageService;
 import com.chanhonlun.basecms.service.data.impl.BaseServiceImpl;
 import com.chanhonlun.basecms.util.PagingUtil;
 import com.chanhonlun.basecms.util.StorageUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,12 +35,23 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
+
+    @Value("${com.chanhonlun.url.domain}")
+    private String domain;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
+    @Value("${com.chanhonlun.url.image}")
+    private String imagePath;
 
     @Value("${com.chanhonlun.path.upload.image}")
     private String uploadImagePath;
@@ -53,7 +72,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
         ImageType imageType = getImageType(request.getImage().getContentType());
 
-        String    fileName  = getFileName(imageType);
+        String fileName = getFileName(imageType);
         Dimension dimension = getImageDimension(request.getImage());
 
         boolean saveResult = storageUtil.saveObject(request.getImage(), uploadImagePath, fileName);
@@ -72,8 +91,40 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> list(Paging paging) {
+    public Page<Image> list(Paging paging) {
         return imageRepository.findByIsDeletedFalse(PagingUtil.parsePagination(paging, Sort.Direction.ASC, "id"));
+    }
+
+    @Override
+    public ImagesHateoasVO listWithHateoas(Paging paging) {
+
+        Pageable pageable = PagingUtil.parsePagination(paging, Sort.Direction.ASC, "id");
+
+        Page<Image> images = imageRepository.findByIsDeletedFalse(pageable);
+
+        List<ImageVO> imageVOs = images
+                .stream()
+                .map(image -> new ImageVO(image, imagePath))
+                .collect(Collectors.toList());
+
+        Map<String, Pageable> linkMap = PagingUtil.getHateoasPageable(images, pageable);
+
+        Map<String, HateoasLink> links = linkMap.entrySet().stream()
+                .map(entry -> {
+                    if (entry.getValue() == null) {
+                        return new ImmutablePair<>(entry.getKey(), new HateoasLink(entry.getKey(), null));
+                    }
+
+                    Paging paging1 = PagingUtil.getPaging(entry.getValue());
+
+                    String query = "?" + new ObjectMapper().convertValue(paging1, UriFormat.class);
+                    HateoasLink hateoasLink = new HateoasLink(entry.getKey(), domain + contextPath + "/image" + query);
+
+                    return new ImmutablePair<>(entry.getKey(), hateoasLink);
+                })
+                .collect(Collectors.toMap(ImmutablePair::getKey, ImmutablePair::getValue));
+
+        return new ImagesHateoasVO(imageVOs, links, images.getTotalElements());
     }
 
     private ImageType getImageType(@Nullable String contentType) {
@@ -107,7 +158,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
         Dimension dimension;
 
-        try (ImageInputStream inputStream = ImageIO.createImageInputStream(image.getInputStream())){
+        try (ImageInputStream inputStream = ImageIO.createImageInputStream(image.getInputStream())) {
 
             final Iterator<ImageReader> readers = ImageIO.getImageReaders(inputStream);
 

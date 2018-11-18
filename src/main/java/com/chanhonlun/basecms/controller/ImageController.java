@@ -5,6 +5,7 @@ import com.chanhonlun.basecms.model.ApiResponse;
 import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.request.ImageCreateRequest;
 import com.chanhonlun.basecms.request.ImageListRequest;
+import com.chanhonlun.basecms.response.hateoas.ImagesHateoasVO;
 import com.chanhonlun.basecms.response.vo.ImageCreateResponse;
 import com.chanhonlun.basecms.response.vo.ImageVO;
 import com.chanhonlun.basecms.service.ImageService;
@@ -19,14 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/image")
 public class ImageController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
+
+    @Value("${com.chanhonlun.url.domain}")
+    private String domain;
 
     @Value("${com.chanhonlun.url.image}")
     private String imagePath;
@@ -52,12 +53,9 @@ public class ImageController {
     @GetMapping()
     public ResponseEntity<ApiResponse> list(ImageListRequest request) {
 
-        List<ImageVO> imageVOs = imageService.list(request.getPaging())
-                .stream()
-                .map(image -> new ImageVO(image, imagePath))
-                .collect(Collectors.toList());
+        ImagesHateoasVO imagesHateoasVO = imageService.listWithHateoas(request);
 
-        ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_200_000_SUCCESS, imageVOs);
+        ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_200_000_SUCCESS, imagesHateoasVO);
 
         return ResponseEntity.ok(apiResponse);
     }

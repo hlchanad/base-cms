@@ -4,9 +4,13 @@ import com.chanhonlun.basecms.request.Paging;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PagingUtil {
 
@@ -81,5 +85,47 @@ public class PagingUtil {
         int limit = paging.getLimit() != null ? paging.getLimit() : DEFAULT_PAGING_ITEMS;
 
         return PageRequest.of(page, limit, parseSorting(paging, defaultDirection, defaultSortBy));
+    }
+
+    /**
+     * transform simple {@code Pageable} to {@code Paging}
+     *
+     * @param pageable
+     * @return Paging
+     */
+    public static Paging getPaging(Pageable pageable) {
+        Sort.Order order = pageable.getSort().iterator().next();
+
+        return Paging.builder()
+                .page(pageable.getPageNumber())
+                .limit(pageable.getPageSize())
+                .direction(order.getDirection().name())
+                .sortBy(order.getProperty())
+                .build();
+    }
+
+    /**
+     * get hateoas links about self, previous, next, first, last
+     *
+     * @param page result fetched from repository
+     * @param pageable original {@code Pageable} request
+     * @return map of rel -> pageable
+     */
+    public static Map<String, Pageable> getHateoasPageable(Page<?> page, Pageable pageable) {
+
+        Paging lastPaging = getPaging(pageable);
+        lastPaging.setPage(page.getTotalPages() - 1);
+
+        boolean hasNextPage = pageable.getPageNumber() < page.getTotalPages() - 1;
+
+        Map<String, Pageable> map = new HashMap<>();
+
+        map.put("self", pageable);
+        map.put("previous", pageable.hasPrevious() ? pageable.previousOrFirst() : null);
+        map.put("next", hasNextPage ? pageable.next() : null);
+        map.put("first", pageable.first());
+        map.put("last", parsePagination(lastPaging));
+
+        return map;
     }
 }
