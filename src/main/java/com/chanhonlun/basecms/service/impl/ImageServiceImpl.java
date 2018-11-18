@@ -49,11 +49,10 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
         ImageType imageType = getImageType(request.getImage().getContentType());
 
-        String    fileName    = getFileName(imageType);
-        String    destination = uploadImagePath + fileName;
-        Dimension dimension   = getImageDimension(request.getImage());
+        String    fileName  = getFileName(imageType);
+        Dimension dimension = getImageDimension(request.getImage());
 
-        boolean saveResult = storageUtil.saveObject(request.getImage(), destination, fileName);
+        boolean saveResult = storageUtil.saveObject(request.getImage(), uploadImagePath, fileName);
 
         if (!saveResult) return null;
 
