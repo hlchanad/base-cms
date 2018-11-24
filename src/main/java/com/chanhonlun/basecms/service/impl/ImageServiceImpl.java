@@ -96,7 +96,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
     }
 
     @Override
-    public ImagesHateoasVO listWithHateoas(Paging paging) {
+    public ImagesHateoasVO listWithHateoas(Paging paging, String section) {
 
         if (paging.getPage() != null) {
             paging.setPage(paging.getPage() - 1); // support pagination.js
@@ -122,7 +122,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
                     Paging paging1 = PagingUtil.getPaging(entry.getValue());
 
                     String query = "?" + new ObjectMapper().convertValue(paging1, UriFormat.class);
-                    HateoasLink hateoasLink = new HateoasLink(entry.getKey(), domain + contextPath + "/image" + query);
+                    HateoasLink hateoasLink = new HateoasLink(entry.getKey(), domain + contextPath + "/" + section + query);
 
                     return new ImmutablePair<>(entry.getKey(), hateoasLink);
                 })

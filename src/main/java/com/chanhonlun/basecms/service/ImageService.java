@@ -13,5 +13,5 @@ public interface ImageService extends DefaultServiceHasCRUD<Image, Long> {
 
     Page<Image> list(Paging paging);
 
-    ImagesHateoasVO listWithHateoas(Paging paging);
+    ImagesHateoasVO listWithHateoas(Paging paging, String section);
 }

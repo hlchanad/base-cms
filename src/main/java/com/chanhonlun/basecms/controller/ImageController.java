@@ -53,7 +53,7 @@ public class ImageController {
     @GetMapping()
     public ResponseEntity<ApiResponse> list(ImageListRequest request) {
 
-        ImagesHateoasVO imagesHateoasVO = imageService.listWithHateoas(request);
+        ImagesHateoasVO imagesHateoasVO = imageService.listWithHateoas(request, "image");
 
         ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_200_000_SUCCESS, imagesHateoasVO);
 
