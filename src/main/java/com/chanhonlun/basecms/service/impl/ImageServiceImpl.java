@@ -98,6 +98,10 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
     @Override
     public ImagesHateoasVO listWithHateoas(Paging paging) {
 
+        if (paging.getPage() != null) {
+            paging.setPage(paging.getPage() - 1); // support pagination.js
+        }
+
         Pageable pageable = PagingUtil.parsePagination(paging, Sort.Direction.ASC, "id");
 
         Page<Image> images = imageRepository.findByIsDeletedFalse(pageable);
