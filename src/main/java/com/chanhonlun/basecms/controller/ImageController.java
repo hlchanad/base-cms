@@ -9,16 +9,19 @@ import com.chanhonlun.basecms.response.hateoas.ImagesHateoasVO;
 import com.chanhonlun.basecms.response.vo.ImageCreateResponse;
 import com.chanhonlun.basecms.response.vo.ImageVO;
 import com.chanhonlun.basecms.service.ImageService;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @RequestMapping("/image")
@@ -58,6 +61,32 @@ public class ImageController {
         ApiResponse apiResponse = new ApiResponse(ApiResponseCode.STATUS_200_000_SUCCESS, imagesHateoasVO);
 
         return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/{fileName}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String fileName) {
+
+        Image image = imageService.findByFileNameAndIsDeletedFalse(fileName);
+
+        if (image == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        InputStream inputStream = imageService.getInputStream(image);
+
+        byte[] media;
+        try {
+            media = IOUtils.toByteArray(inputStream);
+        } catch (IOException e) {
+            logger.error("fail to get byte[] from inputStream, e: {}", e);
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+
+        return new ResponseEntity<>(media, headers, HttpStatus.OK);
+
     }
 
 }

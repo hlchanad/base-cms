@@ -7,6 +7,8 @@ import com.chanhonlun.basecms.response.hateoas.ImagesHateoasVO;
 import com.chanhonlun.basecms.service.trait.DefaultServiceHasCRUD;
 import org.springframework.data.domain.Page;
 
+import java.io.InputStream;
+
 public interface ImageService extends DefaultServiceHasCRUD<Image, Long> {
 
     Image create(ImageCreateRequest request);
@@ -14,4 +16,8 @@ public interface ImageService extends DefaultServiceHasCRUD<Image, Long> {
     Page<Image> list(Paging paging);
 
     ImagesHateoasVO listWithHateoas(Paging paging, String section);
+
+    InputStream getInputStream(Image image);
+
+    Image findByFileNameAndIsDeletedFalse(String fileName);
 }

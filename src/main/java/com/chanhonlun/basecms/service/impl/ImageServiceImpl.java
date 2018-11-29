@@ -33,6 +33,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +131,16 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
                 .collect(Collectors.toMap(ImmutablePair::getKey, ImmutablePair::getValue));
 
         return new ImagesHateoasVO(imageVOs, links, images.getTotalElements());
+    }
+
+    @Override
+    public InputStream getInputStream(Image image) {
+        return storageUtil.getObject(uploadImagePath, image.getFileName() + "." + image.getImageType().getExtension());
+    }
+
+    @Override
+    public Image findByFileNameAndIsDeletedFalse(String fileName) {
+        return imageRepository.findByFileNameAndIsDeletedFalse(fileName);
     }
 
     private ImageType getImageType(@Nullable String contentType) {

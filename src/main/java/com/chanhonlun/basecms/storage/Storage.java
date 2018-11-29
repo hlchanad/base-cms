@@ -5,4 +5,6 @@ import java.io.InputStream;
 public interface Storage {
 
     boolean saveObject(InputStream inputStream, String destinationFolder, String fileName);
+
+    InputStream getObject(String destinationFolder, String fileName);
 }

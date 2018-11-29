@@ -55,4 +55,7 @@ public class StorageUtil {
         }
     }
 
+    public InputStream getObject(String destinationFolder, String fileName) {
+        return storage.getObject(uploadPath + destinationFolder, fileName);
+    }
 }
