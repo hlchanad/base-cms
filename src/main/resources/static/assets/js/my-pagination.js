@@ -44,6 +44,10 @@ const MyPagination = function() {
                 });
 
                 dataContainer.html(html);
+
+                if (config.afterVendorHandler) {
+                    config.afterVendorHandler();
+                }
             },
             ...config.extra
         });
