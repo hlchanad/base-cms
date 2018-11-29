@@ -16,6 +16,9 @@ public class Image extends BasePojo<Long>{
     @Column(name = "FILE_NAME")
     private String fileName;
 
+    @Column(name = "ORIGINAL_FILE_NAME")
+    private String originalFileName;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "IMAGE_TYPE")
     private ImageType imageType;

@@ -72,16 +72,17 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
 
         ImageType imageType = getImageType(request.getImage().getContentType());
 
-        String fileName = getFileName(imageType);
+        String fileName = getFileName();
         Dimension dimension = getImageDimension(request.getImage());
 
-        boolean saveResult = storageUtil.saveObject(request.getImage(), uploadImagePath, fileName);
+        boolean saveResult = storageUtil.saveObject(request.getImage(), uploadImagePath, fileName + "." + imageType.getExtension());
 
         if (!saveResult) return null;
 
         Image image = new Image();
         image.setImageType(imageType);
         image.setFileName(fileName);
+        image.setOriginalFileName(request.getImage().getOriginalFilename());
         image.setFileSize(request.getImage().getSize());
         image.setWidth(Optional.ofNullable(dimension).map(Dimension::getWidth).orElse(0d));
         image.setHeight(Optional.ofNullable(dimension).map(Dimension::getHeight).orElse(0d));
@@ -152,10 +153,10 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
         return imageType;
     }
 
-    private String getFileName(ImageType imageType) {
-        String fileName = ObjectId.get() + "." + imageType.getExtension();
+    private String getFileName() {
+        String fileName = ObjectId.get().toString();
         Image image = imageRepository.findByFileNameAndIsDeletedFalse(fileName);
-        return (image != null) ? getFileName(imageType) : fileName;
+        return (image != null) ? getFileName() : fileName;
     }
 
     private Dimension getImageDimension(MultipartFile image) {
