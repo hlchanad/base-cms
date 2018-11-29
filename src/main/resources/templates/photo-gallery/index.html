@@ -8,6 +8,36 @@
         <link th:href="@{/assets/plugins/codrops-dialogFx/dialog-sandra.css}" rel="stylesheet" type="text/css" media="screen" />
         <link th:href="@{/assets/plugins/owl-carousel/assets/owl.carousel.css}" rel="stylesheet" type="text/css" media="screen" />
         <link th:href="@{/assets/plugins/jquery-nouislider/jquery.nouislider.css}" rel="stylesheet" type="text/css" media="screen" />
+
+        <!--<link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/pagination/pagination.css}"/>-->
+        <style>
+            /* Copy style from corporate.css for datatables pagination */
+            /* and not to use original css file */
+
+            .paginationjs .paginationjs-pages ul > li {
+                display: inline-block;
+                padding-left: 0;
+                font-size: 11px;
+            }
+
+            .paginationjs .paginationjs-pages ul > li.disabled a {
+                opacity: .35;
+            }
+
+            .paginationjs .paginationjs-pages ul > li.active > a {
+                font-weight: bold;
+                color: #575757;
+                opacity: 1;
+            }
+
+            .paginationjs .paginationjs-pages ul > li > a {
+                padding: 5px 10px;
+                color: #575757;
+                opacity: .35;
+                -webkit-transition: opacity 0.3s ease;
+                transition: opacity 0.3s ease;
+            }
+        </style>
     </th:block>
 
     <th:block layout:fragment="content">
@@ -807,7 +837,6 @@
         <!--</script>-->
 
 
-        <link rel="stylesheet" type="text/css" th:href="@{/assets/plugins/pagination/pagination.css}"/>
         <script th:src="@{/assets/plugins/pagination/pagination.min.js}" type="application/javascript"></script>
 
         <script th:inline="javascript">
@@ -821,6 +850,8 @@
                     pageNumber: "page",
                     pageSize: "limit"
                 },
+                prevText: "<i class=\"pg-arrow_left\"></i>",
+                nextText: "<i class=\"pg-arrow_right\"></i>",
                 data: {},
                 ajax: {
                     beforeSend: function() {
