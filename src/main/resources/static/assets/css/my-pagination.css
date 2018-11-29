@@ -1,0 +1,26 @@
+/* Copy style from corporate.css for datatables pagination */
+/* and not to use original css file */
+
+.paginationjs .paginationjs-pages ul > li {
+    display: inline-block;
+    padding-left: 0;
+    font-size: 11px;
+}
+
+.paginationjs .paginationjs-pages ul > li.disabled a {
+    opacity: .35;
+}
+
+.paginationjs .paginationjs-pages ul > li.active > a {
+    font-weight: bold;
+    color: #575757;
+    opacity: 1;
+}
+
+.paginationjs .paginationjs-pages ul > li > a {
+    padding: 5px 10px;
+    color: #575757;
+    opacity: .35;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
