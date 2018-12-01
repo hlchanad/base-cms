@@ -8,6 +8,8 @@ public enum ImageType {
 
     JPG,
 
+    JPEG,
+
     PNG,
 
     ;
