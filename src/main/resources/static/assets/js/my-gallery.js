@@ -7,19 +7,20 @@ new (function() {
             dataContainerSelector: ".gallery",
             dataLocator: "data.images",
             totalLocator: "data.total",
-            handler: this.createImageItem,
+            datumVendorHandler: this.createImageItem,
+            beforeVendorHandler: this.destroyIsotope,
             afterVendorHandler: this.applyIsotope,
             extra: {
                 pageSize: 8
             }
         });
+
+        this.applyIsotope();
     };
 
     this.applyIsotope = function() {
 
-        console.log("applying isotope");
-
-        let gallery = $('.gallery');
+        let gallery = $(".gallery");
 
         gallery.imagesLoaded(function() {
             gallery.isotope({
@@ -31,6 +32,13 @@ new (function() {
                 }
             });
         });
+    };
+
+    this.destroyIsotope = function() {
+        let gallery = $(".gallery");
+        if (gallery.data("isotope")) {
+            gallery.isotope("destroy");
+        }
     };
 
     this.createImageItem = function(image){

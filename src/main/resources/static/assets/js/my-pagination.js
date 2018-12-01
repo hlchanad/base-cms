@@ -37,10 +37,20 @@ const MyPagination = function() {
                 }
             },
             callback: function(data, pagination) {
+
+                if (config.handler) {
+                    config.handler(data, pagination);
+                    return ;
+                }
+
+                if (config.beforeVendorHandler) {
+                    config.beforeVendorHandler();
+                }
+
                 let html = "";
 
                 data.forEach(function(datum) {
-                    html += config.handler(datum);
+                    html += config.datumVendorHandler(datum);
                 });
 
                 dataContainer.html(html);
