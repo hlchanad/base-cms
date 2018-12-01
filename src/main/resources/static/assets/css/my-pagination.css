@@ -36,3 +36,10 @@
     bottom: 20px;
     right: 35px;
 }
+
+.item-details .dialog__content .dialog__overview .item-slideshow .slide {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+}

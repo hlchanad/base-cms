@@ -38,7 +38,7 @@ new (function() {
         this.setOnClickListenerOnImageItemDeleteButton();
     };
 
-    this.applyIsotopeOnGrid = function() {
+    this.applyIsotopeOnGrid = function () {
 
         const gallery = $(".gallery");
 
@@ -72,19 +72,18 @@ new (function() {
         });
     };
 
-    this.setOnClickListenerOnImageItemDeleteButton = function() {
+    this.setOnClickListenerOnImageItemDeleteButton = function () {
         $("body").on("click", ".delete-image", function() {
             const fileName = $(this).data("filename");
             console.log("TODO: delete image ", fileName);
         });
     };
 
-    this.makeItemDetailImageUseCssBg = function() {
+    this.makeItemDetailImageUseCssBg = function () {
         $('.item-slideshow > div').each(function() {
             const imageUrl = $(this).data('image');
             $(this).css({
-                'background-image': 'url(' + imageUrl + ')',
-                'background-size': 'cover'
+                'background-image': 'url(' + imageUrl + ')'
             })
         });
     };
