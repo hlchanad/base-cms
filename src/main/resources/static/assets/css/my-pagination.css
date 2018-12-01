@@ -24,3 +24,15 @@
     -webkit-transition: opacity 0.3s ease;
     transition: opacity 0.3s ease;
 }
+
+
+/* item detail */
+.item-details .item-description > h2 {
+    word-break: break-all;
+}
+
+.item-details .dialog__content .dialog__overview .delete-image {
+    position: absolute;
+    bottom: 20px;
+    right: 35px;
+}

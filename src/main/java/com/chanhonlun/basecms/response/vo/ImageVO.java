@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class ImageVO {
 
+    private String fileName;
+
     private String originalFileName;
 
     private String url;
@@ -17,6 +19,7 @@ public class ImageVO {
     private Long fileSize;
 
     public ImageVO(Image image, String imagePath) {
+        this.fileName = image.getFileName();
         this.originalFileName = image.getOriginalFileName();
         this.url = imagePath + image.getFileName();
         this.width = image.getWidth();

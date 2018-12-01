@@ -15,7 +15,7 @@ $(function() {
     */
     var $gallery = $('.gallery');
     $gallery.imagesLoaded(function() {
-        applyIsotope();
+        applyIsotopeOnGrid();
     });
 
     /*  Apply Isotope plugin 
