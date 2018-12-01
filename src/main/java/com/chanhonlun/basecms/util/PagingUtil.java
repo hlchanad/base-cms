@@ -114,7 +114,7 @@ public class PagingUtil {
     public static Map<String, Pageable> getHateoasPageable(Page<?> page, Pageable pageable) {
 
         Paging lastPaging = getPaging(pageable);
-        lastPaging.setPage(page.getTotalPages() - 1);
+        lastPaging.setPage(page.getTotalPages() > 0 ? page.getTotalPages() - 1 : page.getTotalPages());
 
         boolean hasNextPage = pageable.getPageNumber() < page.getTotalPages() - 1;
 
