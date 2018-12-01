@@ -86,7 +86,20 @@ public class ImageController {
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
 
         return new ResponseEntity<>(media, headers, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/{fileName}")
+    public ResponseEntity delete(@PathVariable String fileName) {
+
+        Image image = imageService.findByFileNameAndIsDeletedFalse(fileName);
+
+        if (image == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        imageService.softDelete(image);
+
+        return ResponseEntity.ok().build();
     }
 
 }
