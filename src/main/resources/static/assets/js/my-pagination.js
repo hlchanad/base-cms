@@ -1,7 +1,7 @@
 const MyPagination = function() {
 
     this.createDataContainer = function(paginationContainer) {
-        $("<div class='my-pagination-data-container'></div>").insertBefore(paginationContainer);
+        $('<div class="my-pagination-data-container"></div>').insertBefore(paginationContainer);
         return paginationContainer.prev();
     };
 
@@ -33,7 +33,7 @@ const MyPagination = function() {
             nextText: "<i class=\"pg-arrow_right\"></i>",
             ajax: {
                 beforeSend: function() {
-                    dataContainer.html('Loading ...');
+                    dataContainer.html('<div style="text-align: center;">Loading ...</div>');
                 }
             },
             callback: function(data, pagination) {

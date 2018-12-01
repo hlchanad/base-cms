@@ -1,19 +1,22 @@
 new (function() {
 
+    this.dataContainerSelector = ".gallery";
+    this.paginationContainerSelector = ".gallery-pagination";
+
     this.init = function() {
         const _this = this;
 
         new MyPagination().paginate({
             url: "image",
-            dataContainerSelector: ".gallery",
-            paginationContainerSelector: ".gallery-pagination",
+            dataContainerSelector: this.dataContainerSelector,
+            paginationContainerSelector: this.paginationContainerSelector,
             dataLocator: "data.images",
             totalLocator: "data.total",
             handler: function(data, pagination) {
 
                 _this.destroyIsotopeOnGrid();
 
-                let imageGrid = "";
+                let imageGrid = data.length > 0 ? "" : '<div style="text-align: center;">No images found ...</div>';
                 data.forEach(function(datum) {
                     imageGrid += _this.createImageItem(datum);
                 });
@@ -73,9 +76,61 @@ new (function() {
     };
 
     this.setOnClickListenerOnImageItemDeleteButton = function () {
+        const _this = this;
+
         $("body").on("click", ".delete-image", function() {
+
             const fileName = $(this).data("filename");
+            const originalFileName = $(this).data("original-filename");
             console.log("TODO: delete image ", fileName);
+
+            swal({
+                title: `Are you sure to delete this image (${originalFileName}) ?`,
+                type: "warning",
+                showCancelButton: true
+            })
+                .then((result) => {
+                    if (!result.value) return;
+
+                    $.ajax({
+                        url: "image/" + fileName,
+                        method: "DELETE",
+                        success: function (response) {
+                            swal({
+                                type: "success",
+                                title: "Success!",
+                                timer: 3000
+                            });
+
+                            // hide dialog
+                            const itemDetail = $(`#item-detail-${fileName}`);
+
+                            const dialog = new DialogFx(itemDetail.get(0));
+                            dialog.toggle();
+
+                            // refresh (?)
+                            const paginationContainer = $(_this.paginationContainerSelector);
+                            const currentPage = paginationContainer.pagination("getSelectedPageNum");
+                            const images = paginationContainer.pagination("getSelectedPageData");
+
+                            if (images.length <= 1) {
+                                paginationContainer.pagination("previous");
+                            }
+                            else {
+                                paginationContainer.pagination("go", currentPage);
+                            }
+                        },
+                        error: function () {
+                            swal({
+                                type: "error",
+                                title: "Failed, please try again later"
+                            });
+                        }
+                    });
+                })
+                .catch(function () {
+                });
+
         });
     };
 
@@ -90,12 +145,12 @@ new (function() {
 
     this.getFileSize = function (fileSize) {
 
-        const fileSizeUnit = [ "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" ];
+        const fileSizeUnit = [ "Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" ];
 
         let fileSizeLeft = fileSize;
 
         for (let i = 0; i < fileSizeUnit.length; i++) {
-            if (fileSizeLeft / 1024 < 1) {
+            if (fileSizeLeft < 1024) {
                 return fileSizeLeft.toFixed(2) + " " + fileSizeUnit[i];
             }
 
@@ -167,7 +222,9 @@ new (function() {
                                     <div class="col-md-5">File Size :</div>
                                     <div class="col-md-7">${fileSize}</div>
                                 </div>
-                                <button class="btn btn-danger delete-image" data-filename="${image.fileName}">Delete</button>
+                                <button class="btn btn-danger delete-image" 
+                                    data-original-filename="${image.originalFileName}"
+                                    data-filename="${image.fileName}">Delete</button>
                             </div>
                         </div>
                     </div>
