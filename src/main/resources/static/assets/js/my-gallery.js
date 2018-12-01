@@ -113,7 +113,7 @@ new (function() {
                             const currentPage = paginationContainer.pagination("getSelectedPageNum");
                             const images = paginationContainer.pagination("getSelectedPageData");
 
-                            if (images.length <= 1) {
+                            if (images.length <= 1 && currentPage > 1) {
                                 paginationContainer.pagination("previous");
                             }
                             else {
