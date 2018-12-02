@@ -41,7 +41,7 @@ public class ImageController {
     @PostMapping()
     public ResponseEntity<ApiResponse> create(ImageCreateRequest request) {
 
-        if (request.getImage().isEmpty()) {
+        if (request.getImage() == null || request.getImage().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
