@@ -33,6 +33,12 @@ const MyPagination = function() {
             nextText: "<i class=\"pg-arrow_right\"></i>",
             ajax: {
                 beforeSend: function() {
+
+                    if (config.beforeSend) {
+                        config.beforeSend();
+                        return ;
+                    }
+
                     dataContainer.html('<div style="text-align: center;">Loading ...</div>');
                 },
                 data: config.data

@@ -1,7 +1,11 @@
 new (function() {
 
-    this.dataContainerSelector = ".gallery";
-    this.paginationContainerSelector = ".gallery-pagination";
+    this.gallerySelector = "#gallery";
+    this.paginationContainerSelector = "#gallery-pagination";
+    this.galleryFilterSelector = "#gallery-filter";
+    this.galleryItemSelector = ".gallery-item";
+    this.galleryItemDetailsSelector = "#gallery-item-details";
+    this.galleryToolBarSelector = ".gallery-filters";
 
     this.data = {};
 
@@ -10,26 +14,32 @@ new (function() {
 
         new MyPagination().paginate({
             url: "image",
-            dataContainerSelector: this.dataContainerSelector,
+            dataContainerSelector: this.gallerySelector,
             paginationContainerSelector: this.paginationContainerSelector,
             dataLocator: "data.images",
             totalLocator: "data.total",
             data: this.data,
+            beforeSend: function () {
+                _this.updateGalleryContent('<div id="gallery-loading}" style="text-align: center;">Loading ...</div>');
+            },
             handler: function(data, pagination) {
 
                 _this.destroyIsotopeOnGrid();
+
 
                 let imageGrid = data.length > 0 ? "" : '<div style="text-align: center;">No images found ...</div>';
                 data.forEach(function(datum) {
                     imageGrid += _this.createImageItem(datum);
                 });
-                $(".gallery").html(imageGrid);
+                _this.updateGalleryContent(imageGrid);
+
 
                 let imageDetails = "";
                 data.forEach(function(datum) {
                     imageDetails += _this.createImageDetail(datum);
                 });
-                $(".gallery-item-details").html(imageDetails);
+                _this.updateGalleryItemDetailContent(imageDetails);
+
 
                 _this.applyIsotopeOnGrid();
                 _this.makeItemDetailImageUseCssBg();
@@ -42,15 +52,26 @@ new (function() {
 
         this.setOnClickListenerOnImageItem();
         this.setOnClickListenerOnImageItemDeleteButton();
+        this.setOnClickListenerOnMoreFilters();
+    };
+
+    this.updateGalleryContent = function(html) {
+        $(this.gallerySelector).children().not(this.galleryToolBarSelector).remove();
+        $(this.gallerySelector).html($(this.gallerySelector).html() + html);
+    };
+
+    this.updateGalleryItemDetailContent = function (html) {
+        $(this.galleryItemDetailsSelector).html(html);
     };
 
     this.applyIsotopeOnGrid = function () {
+        const _this = this;
 
-        const gallery = $(".gallery");
+        const gallery = $(_this.gallerySelector);
 
         gallery.imagesLoaded(function() {
             gallery.isotope({
-                itemSelector: '.gallery-item',
+                itemSelector: _this.galleryItemSelector,
                 masonry: {
                     columnWidth: 280,
                     gutter: 10,
@@ -61,14 +82,18 @@ new (function() {
     };
 
     this.destroyIsotopeOnGrid = function() {
-        let gallery = $(".gallery");
+        const _this = this;
+
+        let gallery = $(_this.gallerySelector);
         if (gallery.data("isotope")) {
             gallery.isotope("destroy");
         }
     };
 
     this.setOnClickListenerOnImageItem = function () {
-        $("body").on("click", ".gallery-item", function() {
+        const _this = this;
+
+        $("body").on("click", _this.galleryItemSelector, function() {
 
             const fileName = $(this).data("filename");
             const itemDetail = $(`#item-detail-${fileName}`);
@@ -134,6 +159,14 @@ new (function() {
                 .catch(function () {
                 });
 
+        });
+    };
+
+    this.setOnClickListenerOnMoreFilters = function() {
+        const _this = this;
+
+        $("body").on("click", '[data-toggle="filters"]', function() {
+            $(_this.galleryFilterSelector).toggleClass('open');
         });
     };
 

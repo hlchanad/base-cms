@@ -12,16 +12,24 @@
     </th:block>
 
     <th:block layout:fragment="content">
-        <div class="gallery"></div>
-        <div class="gallery-pagination b-t b-grey p-t-10 m-t-20"></div>
-        <div class="gallery-item-details"></div>
-    </th:block>
+        <div id="gallery" class="gallery">
+            <div class="gallery-filters p-t-20 p-b-10">
+                <ul class="list-inline text-right">
+                    <li>
+                        <button id="upload-image" class="btn btn-primary m-l-10">Upload</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-success m-l-10" data-toggle="filters">Filters</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="gallery-pagination" class="gallery-pagination b-t b-grey p-t-10 m-t-20"></div>
+        <div id="gallery-item-details" class="gallery-item-details"></div>
 
-    <th:block layout:fragment="content-bak">
-
-        <div class="quickview-wrapper" id="filters">
+        <div id="gallery-filter" class="quickview-wrapper">
             <div class="padding-40 ">
-                <a class="builder-close quickview-toggle pg-close" data-toggle="quickview" data-toggle-element="#filters" href="#"></a>
+                <a class="builder-close quickview-toggle pg-close" data-toggle="quickview" data-toggle-element="#gallery-filter" href="#"></a>
                 <form class="" role="form">
                     <h5 class="all-caps font-montserrat fs-12 m-b-20">Advance filters</h5>
                     <div class="form-group form-group-default ">
