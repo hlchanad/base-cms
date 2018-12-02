@@ -1,4 +1,4 @@
-new (function() {
+new (function () {
 
     this.gallerySelector = "#gallery";
     this.paginationContainerSelector = "#gallery-pagination";
@@ -9,7 +9,7 @@ new (function() {
 
     this.data = {};
 
-    this.init = function() {
+    this.init = function () {
         const _this = this;
 
         new MyPagination().paginate({
@@ -22,20 +22,20 @@ new (function() {
             beforeSend: function () {
                 _this.updateGalleryContent('<div id="gallery-loading}" style="text-align: center;">Loading ...</div>');
             },
-            handler: function(data, pagination) {
+            handler: function (data, pagination) {
 
                 _this.destroyIsotopeOnGrid();
 
 
                 let imageGrid = data.length > 0 ? "" : '<div style="text-align: center;">No images found ...</div>';
-                data.forEach(function(datum) {
+                data.forEach(function (datum) {
                     imageGrid += _this.createImageItem(datum);
                 });
                 _this.updateGalleryContent(imageGrid);
 
 
                 let imageDetails = "";
-                data.forEach(function(datum) {
+                data.forEach(function (datum) {
                     imageDetails += _this.createImageDetail(datum);
                 });
                 _this.updateGalleryItemDetailContent(imageDetails);
@@ -55,7 +55,7 @@ new (function() {
         this.setOnClickListenerOnMoreFilters();
     };
 
-    this.updateGalleryContent = function(html) {
+    this.updateGalleryContent = function (html) {
         $(this.gallerySelector).children().not(this.galleryToolBarSelector).remove();
         $(this.gallerySelector).html($(this.gallerySelector).html() + html);
     };
@@ -69,7 +69,7 @@ new (function() {
 
         const gallery = $(_this.gallerySelector);
 
-        gallery.imagesLoaded(function() {
+        gallery.imagesLoaded(function () {
             gallery.isotope({
                 itemSelector: _this.galleryItemSelector,
                 masonry: {
@@ -81,7 +81,7 @@ new (function() {
         });
     };
 
-    this.destroyIsotopeOnGrid = function() {
+    this.destroyIsotopeOnGrid = function () {
         const _this = this;
 
         let gallery = $(_this.gallerySelector);
@@ -93,7 +93,7 @@ new (function() {
     this.setOnClickListenerOnImageItem = function () {
         const _this = this;
 
-        $("body").on("click", _this.galleryItemSelector, function() {
+        $("body").on("click", _this.galleryItemSelector, function () {
 
             const fileName = $(this).data("filename");
             const itemDetail = $(`#item-detail-${fileName}`);
@@ -106,7 +106,7 @@ new (function() {
     this.setOnClickListenerOnImageItemDeleteButton = function () {
         const _this = this;
 
-        $("body").on("click", ".delete-image", function() {
+        $("body").on("click", ".delete-image", function () {
 
             const fileName = $(this).data("filename");
             const originalFileName = $(this).data("original-filename");
@@ -137,16 +137,7 @@ new (function() {
                             dialog.toggle();
 
                             // refresh (?)
-                            const paginationContainer = $(_this.paginationContainerSelector);
-                            const currentPage = paginationContainer.pagination("getSelectedPageNum");
-                            const images = paginationContainer.pagination("getSelectedPageData");
-
-                            if (images.length <= 1 && currentPage > 1) {
-                                paginationContainer.pagination("previous");
-                            }
-                            else {
-                                paginationContainer.pagination("go", currentPage);
-                            }
+                            _this.refreshPagination();
                         },
                         error: function () {
                             swal({
@@ -162,16 +153,16 @@ new (function() {
         });
     };
 
-    this.setOnClickListenerOnMoreFilters = function() {
+    this.setOnClickListenerOnMoreFilters = function () {
         const _this = this;
 
-        $("body").on("click", '[data-toggle="filters"]', function() {
+        $("body").on("click", '[data-toggle="filters"]', function () {
             $(_this.galleryFilterSelector).toggleClass('open');
         });
     };
 
     this.makeItemDetailImageUseCssBg = function () {
-        $('.item-slideshow > div').each(function() {
+        $('.item-slideshow > div').each(function () {
             const imageUrl = $(this).data('image');
             $(this).css({
                 'background-image': 'url(' + imageUrl + ')'
@@ -179,9 +170,21 @@ new (function() {
         });
     };
 
+    this.refreshPagination = function () {
+        const paginationContainer = $(this.paginationContainerSelector);
+        const currentPage = paginationContainer.pagination("getSelectedPageNum");
+        const images = paginationContainer.pagination("getSelectedPageData");
+
+        if (images.length <= 1 && currentPage > 1) {
+            paginationContainer.pagination("previous");
+        } else {
+            paginationContainer.pagination("go", currentPage);
+        }
+    };
+
     this.getFileSize = function (fileSize) {
 
-        const fileSizeUnit = [ "Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" ];
+        const fileSizeUnit = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
         let fileSizeLeft = fileSize;
 
