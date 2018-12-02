@@ -3,6 +3,8 @@ new (function() {
     this.dataContainerSelector = ".gallery";
     this.paginationContainerSelector = ".gallery-pagination";
 
+    this.data = {};
+
     this.init = function() {
         const _this = this;
 
@@ -12,6 +14,7 @@ new (function() {
             paginationContainerSelector: this.paginationContainerSelector,
             dataLocator: "data.images",
             totalLocator: "data.total",
+            data: this.data,
             handler: function(data, pagination) {
 
                 _this.destroyIsotopeOnGrid();

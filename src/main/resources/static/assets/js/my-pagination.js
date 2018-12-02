@@ -34,7 +34,8 @@ const MyPagination = function() {
             ajax: {
                 beforeSend: function() {
                     dataContainer.html('<div style="text-align: center;">Loading ...</div>');
-                }
+                },
+                data: config.data
             },
             callback: function(data, pagination) {
 
