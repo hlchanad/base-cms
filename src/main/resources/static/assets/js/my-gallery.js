@@ -56,8 +56,13 @@ new (function () {
     };
 
     this.updateGalleryContent = function (html) {
+
+        // remove all content other than the toolbar
         $(this.gallerySelector).children().not(this.galleryToolBarSelector).remove();
-        $(this.gallerySelector).html($(this.gallerySelector).html() + html);
+
+        // append the html elements
+        const content = $.parseHTML(html);
+        $(this.gallerySelector).append(content);
     };
 
     this.updateGalleryItemDetailContent = function (html) {
