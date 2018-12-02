@@ -3,12 +3,12 @@
      layout:decorate="/layouts/blank">
 
     <th:block layout:fragment="custom-css">
-        <link th:href="@{/assets/plugins/jquery-metrojs/MetroJs.css}" rel="stylesheet" type="text/css" media="screen" />
-        <link th:href="@{/assets/plugins/codrops-dialogFx/dialog.css}" rel="stylesheet" type="text/css" media="screen" />
-        <link th:href="@{/assets/plugins/codrops-dialogFx/dialog-sandra.css}" rel="stylesheet" type="text/css" media="screen" />
-        <link th:href="@{/assets/plugins/owl-carousel/assets/owl.carousel.css}" rel="stylesheet" type="text/css" media="screen" />
-        <link th:href="@{/assets/plugins/jquery-nouislider/jquery.nouislider.css}" rel="stylesheet" type="text/css" media="screen" />
-        <link th:href="@{/assets/css/my-pagination.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/plugins/jquery-metrojs/MetroJs.css}" rel="stylesheet" type="text/css" media="screen"/>
+        <link th:href="@{/assets/plugins/codrops-dialogFx/dialog.css}" rel="stylesheet" type="text/css" media="screen"/>
+        <link th:href="@{/assets/plugins/codrops-dialogFx/dialog-sandra.css}" rel="stylesheet" type="text/css" media="screen"/>
+        <link th:href="@{/assets/plugins/owl-carousel/assets/owl.carousel.css}" rel="stylesheet" type="text/css" media="screen"/>
+        <link th:href="@{/assets/plugins/jquery-nouislider/jquery.nouislider.css}" rel="stylesheet" type="text/css" media="screen"/>
+        <link th:href="@{/assets/css/my-pagination.css}" rel="stylesheet" type="text/css"/>
     </th:block>
 
     <th:block layout:fragment="content">
@@ -16,7 +16,12 @@
             <div class="gallery-filters p-t-20 p-b-10">
                 <ul class="list-inline text-right">
                     <li>
-                        <button id="upload-image" class="btn btn-primary m-l-10">Upload</button>
+                        <button id="upload-image-popover" class="btn btn-primary m-l-10"
+                                data-placement="bottom" data-toggle="popover">Upload</button>
+
+                        <div id="upload-image-popover-content" style="display: none;">
+                            hello world
+                        </div>
                     </li>
                     <li>
                         <button class="btn btn-success m-l-10" data-toggle="filters">Filters</button>
@@ -28,8 +33,9 @@
         <div id="gallery-item-details" class="gallery-item-details"></div>
 
         <div id="gallery-filter" class="quickview-wrapper">
-            <div class="padding-40 ">
-                <a class="builder-close quickview-toggle pg-close" data-toggle="quickview" data-toggle-element="#gallery-filter" href="#"></a>
+            <div class="padding-40">
+                <a class="builder-close quickview-toggle pg-close" href="#"
+                   data-toggle="quickview" data-toggle-element="#gallery-filter"></a>
                 <form class="" role="form">
                     <h5 class="all-caps font-montserrat fs-12 m-b-20">Advance filters</h5>
                     <div class="form-group form-group-default ">

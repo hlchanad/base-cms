@@ -6,6 +6,8 @@ new (function () {
     this.galleryItemSelector = ".gallery-item";
     this.galleryItemDetailsSelector = "#gallery-item-details";
     this.galleryToolBarSelector = ".gallery-filters";
+    this.uploadImagePopoverSelector = "#upload-image-popover";
+    this.uploadImagePopoverContentSelector = "#upload-image-popover-content";
 
     this.data = {};
 
@@ -53,6 +55,7 @@ new (function () {
         this.setOnClickListenerOnImageItem();
         this.setOnClickListenerOnImageItemDeleteButton();
         this.setOnClickListenerOnMoreFilters();
+        this.setOnClickListenerOnUploadButton();
     };
 
     this.updateGalleryContent = function (html) {
@@ -162,6 +165,15 @@ new (function () {
 
         $("body").on("click", '[data-toggle="filters"]', function () {
             $(_this.galleryFilterSelector).toggleClass('open');
+        });
+    };
+
+    this.setOnClickListenerOnUploadButton = function () {
+        const _this = this;
+
+        $(this.uploadImagePopoverSelector).popover({
+            html: true,
+            content: $(this.uploadImagePopoverContentSelector).html()
         });
     };
 
