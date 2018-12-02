@@ -43,3 +43,9 @@
     background-size: contain;
     width: 100%;
 }
+
+
+/* upload popover */
+.popover {
+    min-width: 400px;
+}

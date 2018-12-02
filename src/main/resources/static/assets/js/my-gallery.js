@@ -175,6 +175,15 @@ new (function () {
             html: true,
             content: $(this.uploadImagePopoverContentSelector).html()
         });
+        $(this.uploadImagePopoverSelector).on("shown.bs.popover", function () {
+            $(".popover > .popover-body .dropzone").dropzone({
+                paramName: "image",
+                acceptedFiles: "image/*",
+                success: function(event) {
+                    _this.refreshPagination();
+                }
+            });
+        });
     };
 
     this.makeItemDetailImageUseCssBg = function () {

@@ -8,6 +8,7 @@
         <link th:href="@{/assets/plugins/codrops-dialogFx/dialog-sandra.css}" rel="stylesheet" type="text/css" media="screen"/>
         <link th:href="@{/assets/plugins/owl-carousel/assets/owl.carousel.css}" rel="stylesheet" type="text/css" media="screen"/>
         <link th:href="@{/assets/plugins/jquery-nouislider/jquery.nouislider.css}" rel="stylesheet" type="text/css" media="screen"/>
+        <link th:href="@{/assets/plugins/dropzone/css/dropzone.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/assets/css/my-pagination.css}" rel="stylesheet" type="text/css"/>
     </th:block>
 
@@ -20,7 +21,21 @@
                                 data-placement="bottom" data-toggle="popover">Upload</button>
 
                         <div id="upload-image-popover-content" style="display: none;">
-                            hello world
+                            <div class="card card-default">
+                                <div class="card-header ">
+                                    <div class="card-title">
+                                        Upload new image
+                                    </div>
+                                </div>
+                                <div class="card-body no-scroll no-padding">
+                                    <form action="image" method="post" enctype="multipart/form-data" class="dropzone no-margin">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        <div class="fallback">
+                                            <input name="image" type="file" multiple/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <li>
@@ -74,6 +89,7 @@
         <script th:src="@{/assets/plugins/jquery-nouislider/jquery.nouislider.min.js}" type="text/javascript"></script>
         <script th:src="@{/assets/plugins/jquery-nouislider/jquery.liblink.js}" type="text/javascript"></script>
         <script th:src="@{/assets/plugins/pagination/pagination.min.js}" type="application/javascript"></script>
+        <script th:src="@{/assets/plugins/dropzone/dropzone.js}" type="application/javascript"></script>
 
         <!--<script th:src="@{/assets/js/gallery.js}" type="text/javascript"></script>-->
 
