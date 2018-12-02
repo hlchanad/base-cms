@@ -110,7 +110,6 @@ new (function () {
 
             const fileName = $(this).data("filename");
             const originalFileName = $(this).data("original-filename");
-            console.log("TODO: delete image ", fileName);
 
             swal({
                 title: `Are you sure to delete this image (${originalFileName}) ?`,
