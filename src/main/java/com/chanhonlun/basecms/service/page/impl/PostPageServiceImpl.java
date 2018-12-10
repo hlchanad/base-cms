@@ -50,6 +50,8 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
         this.fieldMap = ReflectionUtil.getFieldMap(Post.class);
         this.fieldDetailMap = ReflectionUtil.getFieldDetailMap(PostDetail.class);
 
+        fieldMap.get("thumbnail").setType(FieldType.IMAGE);
+
         fieldMap.get("publishDate").setHintDetail("Remember to set the date again before fixed");
 
         fieldDetailMap.get("content").get(Language.EN).setType(FieldType.LONG_TEXT);

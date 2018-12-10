@@ -1,6 +1,18 @@
 <th:block xmlns:th="http://www.thymeleaf.org"
           th:fragment="input-image">
 
-    <span>later sin make</span>
+    <input th:id="${field.id}"
+           th:name="${field.id}"
+           th:value="${not #strings.isEmpty(field.value)} ? ${field.value} : ''"
+           type="text"
+           class="form-control hidden"
+           th:required="${field.required}"
+           th:disabled="${field.disabled}"/>
+
+    <button type="button"
+            th:id="${'select-image-button-' + field.id}"
+            class="select-image-button btn btn-success btn-cons"
+            th:attr="data-id = ${field.id}"
+    >Select Image</button>
 
 </th:block>

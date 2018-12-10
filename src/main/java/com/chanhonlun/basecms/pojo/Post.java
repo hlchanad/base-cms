@@ -15,6 +15,9 @@ import java.util.Date;
 @SequenceGenerator(name = "SEQUENCE_GENERATOR", sequenceName = "POST_ID_SEQ", allocationSize = 1)
 public class Post extends BasePojo<Long> {
 
+    @Column(name = "THUMBNAIL")
+    private Long thumbnail;
+
     @Column(name = "PUBLISH_DATE")
     private Date publishDate;
 
