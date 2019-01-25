@@ -2,7 +2,9 @@ const MyFormElement = function() {
 
     this.initFormElements = function() {
 
-        $("input.my-datepicker").datepicker();
+        $("input.my-datepicker").datepicker({
+            format: 'yyyy-mm-dd',
+        });
         //
         $("input.my-timepicker").timepicker();
         

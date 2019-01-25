@@ -28,14 +28,18 @@ public interface DefaultServiceHasDetailPageWithPojoDetail<
         return getFieldDetailMap();
     }
 
+    default void updateFieldDetailMapValuesForDetail(Map<String, Map<Language, Field>> fieldDetailMap, Pojo pojo) {
+        ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMap, pojo, getDetailRepository()::findByRefIdAndLang);
+    }
+
     @Override
     default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForDetail(pojo));
         Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForDetail(pojo));
 
-        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
-        ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMapClone, pojo, getDetailRepository()::findByRefIdAndLang);
+        updateFieldMapValuesForDetail(fieldMapClone, pojo);
+        updateFieldDetailMapValuesForDetail(fieldDetailMapClone, pojo);
 
         return DefaultDetailPageConfig.builder()
                 .pageTitle(getPageTitle())

@@ -47,10 +47,14 @@ public interface DefaultServiceHasDetailPage<
         return getDetailPageConfig(getRepository().findByIdAndIsDeletedFalse(id));
     }
 
+    default void updateFieldMapValuesForDetail(Map<String, Field> fieldMap, Pojo pojo) {
+        ReflectionUtil.updateFieldMapWithValues(fieldMap, pojo);
+    }
+
     default DefaultDetailPageConfig getDetailPageConfig(Pojo pojo) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForDetail(pojo));
-        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
+        updateFieldMapValuesForDetail(fieldMapClone, pojo);
 
         return DefaultDetailPageConfig.builder()
                 .pageTitle(getPageTitle())

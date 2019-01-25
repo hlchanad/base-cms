@@ -18,6 +18,7 @@ import com.chanhonlun.basecms.service.datatable.BaseDataTableService;
 import com.chanhonlun.basecms.service.datatable.impl.PostDataTableServiceImpl;
 import com.chanhonlun.basecms.service.page.PostPageService;
 import com.chanhonlun.basecms.util.BreadcrumbUtil;
+import com.chanhonlun.basecms.util.DateUtil;
 import com.chanhonlun.basecms.util.ReflectionUtil;
 import com.chanhonlun.basecms.util.SidebarMenuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
 
         fieldMap.get("thumbnail").setType(FieldType.IMAGE);
 
+        fieldMap.get("publishDate").setType(FieldType.DATE);
         fieldMap.get("publishDate").setHintDetail("Remember to set the date again before fixed");
 
         fieldDetailMap.get("content").get(Language.EN).setType(FieldType.LONG_TEXT);
@@ -94,8 +96,18 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
     }
 
     @Override
+    public void updateFieldMapValuesForEdit(Map<String, Field> fieldMap, Post post) {
+        fieldMap.get("publishDate").setValue(DateUtil.formatDate(post.getPublishDate(), DateUtil.DATE_FORMAT_1));
+    }
+
+    @Override
+    public void updateFieldMapValuesForDetail(Map<String, Field> fieldMap, Post post) {
+        fieldMap.get("publishDate").setValue(DateUtil.formatDate(post.getPublishDate(), DateUtil.DATE_FORMAT_1));
+    }
+
+    @Override
     public void updateFieldMapValues(Map<String, Field> fieldMap, PostForm form) {
-        fieldMap.get("publishDate").setValue(form.getPublishDate().toString());
+        fieldMap.get("publishDate").setValue(DateUtil.formatDate(form.getPublishDate(), DateUtil.DATE_FORMAT_1));
     }
 
     @Override

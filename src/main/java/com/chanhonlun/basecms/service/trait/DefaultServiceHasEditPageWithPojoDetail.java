@@ -35,14 +35,18 @@ public interface DefaultServiceHasEditPageWithPojoDetail<
 
     void updateFieldDetailMapValues(Map<String, Map<Language, Field>> fieldDetailMap, Form form);
 
+    default void updateFieldDetailMapValuesForEdit(Map<String, Map<Language, Field>> fieldDetailMap, Pojo pojo) {
+        ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMap, pojo, getDetailRepository()::findByRefIdAndLang);
+    }
+
     @Override
     default BaseEditPageConfig getEditPageConfig(Pojo pojo) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(getFieldMapForEdit(pojo));
         Map<String, Map<Language, Field>> fieldDetailMapClone = ReflectionUtil.cloneFieldDetailMap(getFieldDetailMapForEdit(pojo));
 
-        ReflectionUtil.updateFieldMapWithValues(fieldMapClone, pojo);
-        ReflectionUtil.updateFieldDetailMapWithValues(fieldDetailMapClone, pojo, getDetailRepository()::findByRefIdAndLang);
+        updateFieldMapValuesForEdit(fieldMapClone, pojo);
+        updateFieldDetailMapValuesForEdit(fieldDetailMapClone, pojo);
 
         return DefaultEditPageConfig.builder()
                 .pageTitle(getPageTitle())
