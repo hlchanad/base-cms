@@ -51,10 +51,13 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
         this.fieldMap = ReflectionUtil.getFieldMap(Post.class);
         this.fieldDetailMap = ReflectionUtil.getFieldDetailMap(PostDetail.class);
 
+        fieldMap.put("time", Field.builder().title("Time").id("time").type(FieldType.TIME).build());
+        fieldMap.put("date", Field.builder().title("Date").id("date").type(FieldType.DATE).build());
+        fieldMap.put("datetime", Field.builder().title("DateTime").id("dateTime").type(FieldType.DATE_TIME).build());
+
         fieldMap.get("thumbnail").setType(FieldType.IMAGE);
 
-        fieldMap.get("publishDate").setType(FieldType.DATE);
-        fieldMap.get("publishDate").setHintDetail("Remember to set the date again before fixed");
+        fieldMap.get("publishDate").setType(FieldType.DATE_TIME);
 
         fieldDetailMap.get("content").get(Language.EN).setType(FieldType.LONG_TEXT);
         fieldDetailMap.get("content").get(Language.ZH_HK).setType(FieldType.LONG_TEXT);
@@ -97,17 +100,17 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
 
     @Override
     public void updateFieldMapValuesForEdit(Map<String, Field> fieldMap, Post post) {
-        fieldMap.get("publishDate").setValue(DateUtil.formatDate(post.getPublishDate(), DateUtil.DATE_FORMAT_1));
+        fieldMap.get("publishDate").setValue(DateUtil.formatDate(post.getPublishDate(), DateUtil.DATE_FORMAT_2));
     }
 
     @Override
     public void updateFieldMapValuesForDetail(Map<String, Field> fieldMap, Post post) {
-        fieldMap.get("publishDate").setValue(DateUtil.formatDate(post.getPublishDate(), DateUtil.DATE_FORMAT_1));
+        fieldMap.get("publishDate").setValue(DateUtil.formatDate(post.getPublishDate(), DateUtil.DATE_FORMAT_2));
     }
 
     @Override
     public void updateFieldMapValues(Map<String, Field> fieldMap, PostForm form) {
-        fieldMap.get("publishDate").setValue(DateUtil.formatDate(form.getPublishDate(), DateUtil.DATE_FORMAT_1));
+        fieldMap.get("publishDate").setValue(DateUtil.formatDate(form.getPublishDate(), DateUtil.DATE_FORMAT_2));
     }
 
     @Override

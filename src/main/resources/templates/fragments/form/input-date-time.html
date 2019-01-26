@@ -1,24 +1,13 @@
 <th:block xmlns:th="http://www.thymeleaf.org"
           th:fragment="input-date-time">
 
-    <!--<div class="date my-datetimepicker">-->
-        <!--<input th:id="${field.id}"-->
-               <!--th:name="${field.id}"-->
-               <!--th:value="${not #strings.isEmpty(field.value)} ? ${field.value} : ''"-->
-               <!--th:placeholder="${not #strings.isEmpty(field.placeholder)} ? ${field.placeholder} : ''"-->
-               <!--type="text"-->
-               <!--class="form-control"-->
-               <!--th:required="${field.required}"-->
-               <!--th:disabled="${field.disabled}"/>-->
-    <!--</div>-->
-
-    <div class="form-group">
-        <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control" />
-            <span class="input-group-append">
-                <span class="input-group-text">C</span>
-            </span>
-        </div>
-    </div>
+    <input th:id="${field.id}"
+           th:name="${field.id}"
+           th:value="${not #strings.isEmpty(field.value)} ? ${field.value} : ''"
+           th:placeholder="${not #strings.isEmpty(field.placeholder)} ? ${field.placeholder} : ''"
+           type="text"
+           class="form-control my-datetimepicker"
+           th:required="${field.required}"
+           th:disabled="${field.disabled}"/>
 
 </th:block>
