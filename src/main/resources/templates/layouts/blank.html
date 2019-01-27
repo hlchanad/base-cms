@@ -36,6 +36,7 @@
     <link th:href="@{/pages/css/pages-icons.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/pages/css/themes/corporate.css}" class="main-stylesheet" rel="stylesheet" type="text/css" />
 
+    <th:block layout:fragment="template-css" />
     <th:block layout:fragment="custom-css" />
 </head>
 
@@ -118,6 +119,7 @@
     myPage.init();
 </script>
 
+<th:block layout:fragment="template-js" />
 <th:block layout:fragment="custom-js" />
 <!-- END PAGE LEVEL JS -->
 </body>

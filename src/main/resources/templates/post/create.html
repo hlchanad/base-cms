@@ -1,3 +1,10 @@
-<div xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
      layout:decorate="/layouts/create">
+
+    <th:block layout:fragment="custom-js">
+        <script>
+            console.log("custom js");
+        </script>
+    </th:block>
 </div>
