@@ -1,12 +1,10 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -20,5 +18,9 @@ public class CmsMenuRole extends BasePojo<Long> {
 
     @Column(name = "ROLE_ID")
     private Long roleId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 
 }

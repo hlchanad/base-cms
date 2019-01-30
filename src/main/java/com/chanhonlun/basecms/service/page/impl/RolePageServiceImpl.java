@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.constant.FieldType;
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.RoleForm;
 import com.chanhonlun.basecms.pojo.Role;
@@ -120,6 +121,7 @@ public class RolePageServiceImpl extends BasePageServiceImpl implements RolePage
         role.setTitle(form.getTitle());
         role.setDescription(form.getDescription());
         role.setSelectable(true);
+        role.setStatus(Status.NORMAL);
         role = create(role);
 
         roleRouteService.batchCreate(role.getId(), form.getRoleRoutes());

@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpMethod;
@@ -23,4 +24,7 @@ public class RoleRoute extends BasePojo<Long> {
     @Column(name = "URL")
     private String url;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 }

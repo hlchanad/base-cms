@@ -2,6 +2,7 @@ package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.constant.DetailAction;
 import com.chanhonlun.basecms.constant.FieldType;
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.CmsUserForm;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.model.UserPrincipal;
@@ -222,12 +223,14 @@ public class CmsUserPageServiceImpl extends BasePageServiceImpl implements CmsUs
         cmsUser.setUsername(form.getUsername());
         cmsUser.setPassword(passwordEncoder.encode(form.getPassword()));
         cmsUser.setEmail(form.getEmail());
+        cmsUser.setStatus(Status.NORMAL);
         cmsUser = create(cmsUser);
 
         for (Long roleId : form.getUserRoles()) {
             CmsUserRole cmsUserRole = new CmsUserRole();
             cmsUserRole.setCmsUserId(cmsUser.getId());
             cmsUserRole.setRoleId(roleId);
+            cmsUserRole.setStatus(Status.NORMAL);
             cmsUserRole = cmsUserRoleService.create(cmsUserRole);
         }
 

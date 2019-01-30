@@ -2,6 +2,7 @@ package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.constant.FieldType;
 import com.chanhonlun.basecms.constant.Language;
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.FormError;
 import com.chanhonlun.basecms.form.PostForm;
 import com.chanhonlun.basecms.pojo.Post;
@@ -139,6 +140,7 @@ public class PostPageServiceImpl extends BasePageServiceImpl implements PostPage
 
         Post post = new Post();
         post.setPublishDate(form.getPublishDate());
+        post.setStatus(Status.NORMAL);
         post = create(post);
 
         PostDetail postDetailEn = new PostDetail();

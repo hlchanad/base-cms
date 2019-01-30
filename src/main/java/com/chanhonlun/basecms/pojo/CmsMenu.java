@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.pojo;
 
 import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
+import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -40,5 +41,10 @@ public class CmsMenu extends BasePojo<Long> {
             joinColumns = @JoinColumn(name = "CMS_MENU_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private List<Role> roles;
+
+    @IgnoreAutoReflection
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 
 }

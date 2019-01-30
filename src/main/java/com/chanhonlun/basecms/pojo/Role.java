@@ -1,13 +1,11 @@
 package com.chanhonlun.basecms.pojo;
 
 import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
+import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -28,4 +26,9 @@ public class Role extends BasePojo<Long> {
     @IgnoreAutoReflection
     @Column(name = "SELECTABLE")
     private Boolean selectable;
+
+    @IgnoreAutoReflection
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 }

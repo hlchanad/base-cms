@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.service.impl;
 
 import com.chanhonlun.basecms.constant.ImageType;
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.format.UriFormat;
 import com.chanhonlun.basecms.pojo.Image;
 import com.chanhonlun.basecms.repository.BaseRepository;
@@ -87,6 +88,7 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
         image.setFileSize(request.getImage().getSize());
         image.setWidth(Optional.ofNullable(dimension).map(Dimension::getWidth).orElse(0d));
         image.setHeight(Optional.ofNullable(dimension).map(Dimension::getHeight).orElse(0d));
+        image.setStatus(Status.NORMAL);
         image = create(image);
 
         return image;

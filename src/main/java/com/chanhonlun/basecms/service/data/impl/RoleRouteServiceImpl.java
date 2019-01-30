@@ -1,5 +1,6 @@
 package com.chanhonlun.basecms.service.data.impl;
 
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.pojo.RoleRoute;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.RoleRouteRepository;
@@ -34,6 +35,7 @@ public class RoleRouteServiceImpl extends BaseServiceImpl implements RoleRouteSe
                     roleRoute.setRoleId(roleId);
                     roleRoute.setMethod(null);
                     roleRoute.setUrl(route);
+                    roleRoute.setStatus(Status.NORMAL);
                     return create(roleRoute);
                 })
                 .collect(Collectors.toList());

@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.pojo;
 
 import com.chanhonlun.basecms.constant.ImageType;
+import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -31,4 +32,8 @@ public class Image extends BasePojo<Long>{
 
     @Column(name = "FILE_SIZE")
     private Long fileSize;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 }

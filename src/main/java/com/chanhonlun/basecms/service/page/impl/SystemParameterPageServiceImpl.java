@@ -1,7 +1,7 @@
 package com.chanhonlun.basecms.service.page.impl;
 
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.SystemParameterForm;
-import com.chanhonlun.basecms.pojo.Post;
 import com.chanhonlun.basecms.pojo.SystemParameter;
 import com.chanhonlun.basecms.repository.BaseRepository;
 import com.chanhonlun.basecms.repository.SystemParameterRepository;
@@ -104,6 +104,8 @@ public class SystemParameterPageServiceImpl extends BasePageServiceImpl implemen
         systemParameter.setValue(form.getValue());
         systemParameter.setDescription(form.getDescription());
         systemParameter.setDataType(form.getDataType());
+        systemParameter.setIsConfigurableInCms(true);
+        systemParameter.setStatus(Status.NORMAL);
         systemParameter = create(systemParameter);
 
         return systemParameter;

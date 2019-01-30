@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.pojo;
 
 import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
+import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.JoinFormula;
@@ -25,5 +26,10 @@ public class Post extends BasePojo<Long> {
     @ManyToOne
     @JoinFormula("(SELECT D.ID FROM BASE_SERVER.POST_DETAIL D WHERE D.REF_ID = ID AND D.LANG = 'EN')")
     private PostDetail detailEn;
+
+    @IgnoreAutoReflection
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 
 }

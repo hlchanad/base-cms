@@ -30,7 +30,7 @@ public interface DefaultServiceHasCRUD<Pojo extends BasePojo<PK>, PK extends Ser
     default Pojo create(Pojo pojo) {
         CmsUser currentUser = getCurrentUser().getCmsUser();
         pojo.setIsDeleted(false);
-        pojo.setStatus(Status.NORMAL);
+//        pojo.setStatus(Status.NORMAL);
         pojo.setCreatedBy(currentUser.getId());
         pojo.setCreatedAt(new Date());
         pojo.setUpdatedBy(currentUser.getId());

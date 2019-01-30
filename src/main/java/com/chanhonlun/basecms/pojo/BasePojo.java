@@ -1,6 +1,5 @@
 package com.chanhonlun.basecms.pojo;
 
-import com.chanhonlun.basecms.constant.Status;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,9 +15,9 @@ public abstract class BasePojo<PK extends Serializable> {
     @Column(name = "ID")
     protected PK id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS")
-    protected Status status;
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "STATUS")
+//    protected Status status;
 
     @Column(name = "IS_DELETED")
     protected Boolean isDeleted;

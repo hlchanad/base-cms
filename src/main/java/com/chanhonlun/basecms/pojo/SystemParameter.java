@@ -1,5 +1,7 @@
 package com.chanhonlun.basecms.pojo;
 
+import com.chanhonlun.basecms.annotation.IgnoreAutoReflection;
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.constant.SystemParameterDataType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,4 +31,12 @@ public class SystemParameter extends BasePojo<Long> {
     @Column(name = "DATA_TYPE")
     private SystemParameterDataType dataType;
 
+    @IgnoreAutoReflection
+    @Column(name = "IS_CONFIGURABLE_IN_CMS")
+    private Boolean isConfigurableInCms;
+
+    @IgnoreAutoReflection
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
+    protected Status status;
 }

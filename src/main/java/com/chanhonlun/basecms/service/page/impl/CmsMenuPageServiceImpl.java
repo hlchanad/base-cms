@@ -1,6 +1,7 @@
 package com.chanhonlun.basecms.service.page.impl;
 
 import com.chanhonlun.basecms.constant.FieldType;
+import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.form.CmsMenuForm;
 import com.chanhonlun.basecms.pojo.CmsMenu;
 import com.chanhonlun.basecms.pojo.CmsMenuRole;
@@ -199,12 +200,14 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
         cmsMenu.setUrl(form.getUrl());
         cmsMenu.setIcon(form.getIcon());
         cmsMenu.setSequence(form.getSequence());
+        cmsMenu.setStatus(Status.NORMAL);
         cmsMenu = create(cmsMenu);
 
         for (Long roleId : form.getRoles()) {
             CmsMenuRole cmsMenuRole = new CmsMenuRole();
             cmsMenuRole.setCmsMenuId(cmsMenu.getId());
             cmsMenuRole.setRoleId(roleId);
+            cmsMenuRole.setStatus(Status.NORMAL);
             cmsMenuRole = cmsMenuRoleService.create(cmsMenuRole);
         }
 
