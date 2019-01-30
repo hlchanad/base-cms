@@ -1,6 +1,5 @@
 package com.chanhonlun.basecms.service.trait;
 
-import com.chanhonlun.basecms.constant.Status;
 import com.chanhonlun.basecms.model.UserPrincipal;
 import com.chanhonlun.basecms.pojo.BasePojo;
 import com.chanhonlun.basecms.pojo.CmsUser;
