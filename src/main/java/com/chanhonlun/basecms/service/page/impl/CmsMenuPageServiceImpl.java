@@ -125,6 +125,13 @@ public class CmsMenuPageServiceImpl extends BasePageServiceImpl implements CmsMe
     }
 
     @Override
+    public void updateFieldMapValuesForDetail(Map<String, Field> fieldMap, CmsMenu cmsMenu) {
+        ReflectionUtil.updateFieldMapWithValues(fieldMap, cmsMenu);
+        String parentTitle = cmsMenu.getParent() == null ? null : cmsMenu.getParent().getTitle();
+        fieldMap.get("parentId").setValue(parentTitle);
+    }
+
+    @Override
     public Map<String, Field> getFieldMapForDetail(CmsMenu cmsMenu) {
 
         Map<String, Field> fieldMapClone = ReflectionUtil.cloneFieldMap(fieldMap);
