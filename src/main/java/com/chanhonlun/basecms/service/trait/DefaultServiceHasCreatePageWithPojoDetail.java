@@ -64,7 +64,7 @@ public interface DefaultServiceHasCreatePageWithPojoDetail<
                 .pageTitle(pageTitle)
                 .breadcrumbs(getBreadcrumbUtil().getBreadcrumbs())
                 .menu(getSidebarMenuUtil().getSidebarMenuList())
-                .fields(ReflectionUtil.getFields(getFieldMap()))
+                .fields(ReflectionUtil.getFields(getFieldMapForCreate()))
                 .detailFields(ReflectionUtil.getDetailFields(getFieldDetailMapForCreate()))
                 .formConfig(FormConfig.builder()
                         .id(getSection() + "-form")
