@@ -5,7 +5,7 @@ import org.springframework.data.jpa.datatables.repository.DataTablesRepositoryFa
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.chanhonlun.basecms.repository",
+@EnableJpaRepositories(basePackages = {"com.chanhonlun.basecms.repository", "${com.chanhonlun.project.repository}"},
         repositoryFactoryBeanClass = DataTablesRepositoryFactoryBean.class)
 public class DefaultJpaConfiguration {
 }
